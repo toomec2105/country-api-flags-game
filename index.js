@@ -15,8 +15,11 @@ async function init(){
     countryArray = await getArray();
     console.log("Store the countries");
     options = generateOptions();
-    correctAnswer = options[generateCorrectAnswer(options)];
     console.log("corretct option: " + correctAnswer);
+    correctAnswer = options[generateCorrectAnswer(options)];
+    console.log("Extract the name and flag url");
+    let countryNames = extractCountryNames();
+    let flag = extractFlag(correctAnswer);
 }
 
 
@@ -59,4 +62,19 @@ function generateCorrectAnswer(options){
     let index = getRandomInt(0, options.length);
     console.log(index);
     return index;
+}
+
+function extractFlag(correctAnswer){
+    console.log(countryArray[correctAnswer].flag);
+    return countryArray[correctAnswer].flag;
+}
+function extractCountryNames(){
+    let names = [];
+    let countryNmb;
+for(let i = 0; i < options.length; i++){
+    countryNmb = options[i];
+    names[i] = countryArray[countryNmb].name;
+}
+console.log(names);
+return names;
 }
