@@ -7,7 +7,9 @@ let countryArray;
 let options = [];
 let correctAnswer;
 let userAnswer;
-
+let first = document.getElementById("1opt");
+let second = document.getElementById("2opt");
+let third = document.getElementById("3opt");
 console.log("starting the program");
 init();
 
@@ -20,6 +22,8 @@ async function init(){
     console.log("Extract the name and flag url");
     let countryNames = extractCountryNames();
     let flag = extractFlag(correctAnswer);
+    console.log("Render the 3 options(radio buttons)");
+    renderBtns(countryNames);
 }
 
 
@@ -77,4 +81,10 @@ for(let i = 0; i < options.length; i++){
 }
 console.log(names);
 return names;
+}
+
+function renderBtns(countryNames){
+    first.innerText = countryNames[0];
+    second.innerText = countryNames[1];
+    third.innerText = countryNames[2];
 }
