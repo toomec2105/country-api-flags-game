@@ -12,18 +12,35 @@
     <h1>This is a flag of:</h1>
 
 
-    <input type="radio" name="country"><label id="1opt"></label><br>
-    <input type="radio" name="country"><label id="2opt"></label><br>
-    <input type="radio" name="country"><label id="3opt"></label>
+
+
+
+<p id="answer">  </p>
 
 
 
 
-
-
-
-
-
+<form >
+    <fieldset>
+      <legend>Select the country</legend>
+      <div id="options">
+        <input type="radio" id="choice1"
+         name="country" value="0">
+        <label for="choice1"></label>
+  
+        <input type="radio" id="choice2"
+         name="country" value="1">
+        <label for="choice2"></label>
+  
+        <input type="radio" id="choice3"
+         name="country" value="2">
+        <label for="choice3"></label>
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </fieldset>
+  </form>
 
 
 
