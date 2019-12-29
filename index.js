@@ -7,6 +7,7 @@ let countryArray;
 let options = [];
 let correctAnswer;
 let userAnswer;
+let flagImg = document.getElementById("flag");
 let first = document.getElementById("1opt");
 let second = document.getElementById("2opt");
 let third = document.getElementById("3opt");
@@ -15,15 +16,16 @@ init();
 
 async function init(){
     countryArray = await getArray();
-    console.log("Store the countries");
+            console.log("Store the countries");
     options = generateOptions();
-    console.log("corretct option: " + correctAnswer);
+             console.log("corretct option: " + correctAnswer);
     correctAnswer = options[generateCorrectAnswer(options)];
-    console.log("Extract the name and flag url");
+            console.log("Extract the name and flag url");
     let countryNames = extractCountryNames();
     let flag = extractFlag(correctAnswer);
-    console.log("Render the 3 options(radio buttons)");
-    renderBtns(countryNames);
+            console.log("Render the 3 options(radio buttons)");
+    setCountryNamesOnBtns(countryNames);
+    setFlagSrc(flag);
 }
 
 
@@ -44,9 +46,12 @@ async function getArray() {
  * Returns a random number between min (inclusive) and max(exclusive)
  */
 function getRandomInt(min, max) {
+    let maxExclusive = true;   
     min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    max = maxExclusive ? Math.floor(max) - 1  :  Math.floor(max);
+    let random = Math.floor(Math.random() * (max - min + 1)) + min;
+    //debugger;
+    return random;
 }
 console.log(getRandomInt(0,2));
 
@@ -62,7 +67,8 @@ function generateOptions(){
 }
 
 function generateCorrectAnswer(options){
-    console.log("Choose randomindex out of options: ");
+    console.log("otions.length: " + options.length);
+    console.log("Choose random index out of options: ");
     let index = getRandomInt(0, options.length);
     console.log(index);
     return index;
@@ -83,8 +89,12 @@ console.log(names);
 return names;
 }
 
-function renderBtns(countryNames){
+function setCountryNamesOnBtns(countryNames){
     first.innerText = countryNames[0];
     second.innerText = countryNames[1];
     third.innerText = countryNames[2];
+}
+
+function setFlagSrc(flag){
+    flagImg.src = flag;
 }
