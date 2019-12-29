@@ -2,6 +2,14 @@ body {
     background: grey;
 }
 img {
-    height: 150px;
-    width: 200px;
+    
+    max-height: 200px;
+}
+#nextBtn {
+    margin-left: 20px;
+    display: block;
+}
+form {
+    margin-top: 20px;
+    width: 700px;
 }

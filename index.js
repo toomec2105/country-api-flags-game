@@ -6,6 +6,7 @@ const API_URL = "https://restcountries.eu/rest/v2/all"
 let countryArray;
 let options = [];
 let correctAnswer;
+let next = document.getElementById("nextBtn");
 let correctAnswerIndex;
 let userAnswer;
 let flagImg = document.getElementById("flag");
@@ -57,7 +58,10 @@ form.addEventListener("submit", function(event) {
     event.preventDefault();
   }, false);
 
-
+next.addEventListener("click", function(){
+    init();
+    answer.innerHTML = "";
+});
 
 
 
