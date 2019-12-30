@@ -1,85 +1,94 @@
 // set constants for number of options, country array
 // vars: options(array which keeps indexes), correctAnswer(index), userAnswer(index),   
-// https://restcountries.eu/
+
+/* ----------------------- HTML elements -------------------------- */
+let flagImg = document.getElementById("flag");
+let first = document.querySelector("#options label:nth-of-type(1)");
+let second = document.querySelector("#options label:nth-of-type(2)");
+let third = document.querySelector("#options label:nth-of-type(3)");
+let firstInput = document.querySelector("#options input:nth-of-type(1)");
+let secondInput = document.querySelector("#options input:nth-of-type(2)");
+let thirdInput = document.querySelector("#options input:nth-of-type(3)");
+let firstCircle = document.getElementById("circleOne");
+let secondCircle = document.getElementById("circleTwo");
+let thirdCircle = document.getElementById("circleThree");
+let answer = document.getElementById("answer");
+let form = document.querySelector("form");
+// other variables
 const NUMBER_OF_OPTIONS = 3;
 const API_URL = "https://restcountries.eu/rest/v2/all"
 let countryArray;
 let options = [];
 let correctAnswer;
 let next = document.getElementById("nextBtn");
-let correctAnswerIndex;
 let userAnswer;
-let flagImg = document.getElementById("flag");
-let first = document.querySelector("#options label:nth-of-type(1)");
-let second = document.querySelector("#options label:nth-of-type(2)");
-let third = document.querySelector("#options label:nth-of-type(3)");
-let firstCircle = document.getElementById("circleOne");
-let secondCircle = document.getElementById("circleTwo");
-let thirdCircle = document.getElementById("circleThree");
-let answer = document.getElementById("answer");
-let form = document.querySelector("form");
-let countryNames = [];
-//let radios = document.querySelectorAll("input[type=radio]"),
-console.log("starting the program");
+
+
 init();
 
-async function init() {
-    countryArray = await getArray();
-    console.log("Store the countries");
-    options = generateOptions();
-    console.log("corretct option: " + correctAnswer);
-    correctAnswerIndex = generateCorrectAnswer(options);
-    correctAnswer = options[correctAnswerIndex];
-    console.log("Extract the name and flag url");
-    countryNames = extractCountryNames();
-    let flag = extractFlag(correctAnswer);
-    console.log("Render the 3 options(radio buttons)");
-    setCountryNamesOnBtns(countryNames);
-    setFlagSrc(flag);
-    console.log("Adding event listeners");
-    console.log(correctAnswer);
-}
-
-form.addEventListener("submit", function(event) {
+/* -------------------------- Event listeners ---------------------------- */
+form.addEventListener("submit", function (event) {
     var options = new FormData(form);
-    let userAnswer;
-    var output = "";
-    for (const entry of options) {
-      output = output + entry[0] + "=" + entry[1] + "\r";
-      userAnswer = entry[1];
+    let userAnswer = "";
+    for (const option of options) {
+        userAnswer = option[1];
     };
-   // log.innerText = output;
-   if(userAnswer == correctAnswerIndex){
-    answer.innerHTML = "Correct!";
-   }else{
-       answer.innerHTML = "Inncorect! Correct answer is " + countryNames[correctAnswerIndex];
-   }
-   console.log(output);
-    event.preventDefault();
-  }, false);
+    renderResult(Number(userAnswer) === correctAnswer
+        ? "Correct!"
+        : "Inncorect! Correct answer is " + countryArray[correctAnswer].name);
 
-next.addEventListener("click", function(){
-    init();
-    answer.innerHTML = "";
+    event.preventDefault();
+}, false);
+
+next.addEventListener("click", function () {
+    reset();
 });
 
 
 
+/* ------------------------------ main methods --------------------------- */
+
+async function init() {
+    countryArray = await requestCountryData();
+    reset();
+}
 
 
+async function reset() {
+    answer.innerHTML = "";
+    options = generateOptionsAsIndexes(); // 56, 78, 134
+    correctAnswer = options[0]; // 56
+    shuffle(options);
+    renderCountryNamesOnBtns(extractCountryNames());
+    setFlagUrl(extractFlag(correctAnswer));
+}
 
-async function getArray() {
-    console.log("Get array of country data from API");
+function generateOptionsAsIndexes() {
+    let opt1 = getRandomInt(0, countryArray.length);
+    let opt2 = getRandomInt(0, countryArray.length);
+    let opt3 = getRandomInt(0, countryArray.length);
+    return [opt1, opt2, opt3];
+}
+
+function generateCorrectAnswer(options) {
+    let index = getRandomInt(0, options.length);
+    return index;
+}
+
+
+/* ------------------------------ heplers ----------------------------- */
+async function requestCountryData() {
     try {
         let response = await fetch(API_URL);
         let countryArray = await response.json();
-        console.log(countryArray);
         return countryArray;
     } catch (error) {
         console.log(error);
     }
 }
-
+function renderResult(msg) {
+    answer.innerHTML = msg;
+}
 /**
  * Returns a random number between min (inclusive) and max(exclusive)
  */
@@ -88,33 +97,20 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = maxExclusive ? Math.floor(max) - 1 : Math.floor(max);
     let random = Math.floor(Math.random() * (max - min + 1)) + min;
-    //debugger;
     return random;
 }
 
-
-
-function generateOptions() {
-
-    console.log("Get 3 random country indexes: ");
-    let opt1 = getRandomInt(0, countryArray.length);
-    let opt2 = getRandomInt(0, countryArray.length);
-    let opt3 = getRandomInt(0, countryArray.length);
-    console.log(opt1 + ", " + opt2 + ", " + opt3);
-    return [opt1, opt2, opt3];
+function renderCountryNamesOnBtns(countryNames) {
+    first.innerText = countryArray[options[0]].name;
+    second.innerText = countryArray[options[1]].name;
+    third.innerText = countryArray[options[2]].name;
+    firstInput.value = options[0];
+    secondInput.value = options[1];
+    thirdInput.value = options[2];
 }
 
-function generateCorrectAnswer(options) {
-    console.log("otions.length: " + options.length);
-    console.log("Choose random index out of options: ");
-    let index = getRandomInt(0, options.length);
-    console.log(index);
-    return index;
-}
-
-function extractFlag(correctAnswer) {
-    console.log(countryArray[correctAnswer].flag);
-    return countryArray[correctAnswer].flag;
+function setFlagUrl(flag) {
+    flagImg.src = flag;
 }
 
 function extractCountryNames() {
@@ -124,16 +120,18 @@ function extractCountryNames() {
         countryNmb = options[i];
         names[i] = countryArray[countryNmb].name;
     }
-    console.log(names);
     return names;
 }
 
-function setCountryNamesOnBtns(countryNames) {
-    first.innerText = countryNames[0];
-    second.innerText = countryNames[1];
-    third.innerText = countryNames[2]; 
+function extractFlag(correctAnswer) {
+    return countryArray[correctAnswer].flag;
 }
+function shuffle(array) {
 
-function setFlagSrc(flag) {
-    flagImg.src = flag;
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * i);
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
 }
