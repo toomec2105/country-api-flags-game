@@ -1,15 +1,49 @@
 body {
     background: grey;
+    font-family: 'Source Serif Pro', serif;
 }
-img {
-    
-    max-height: 200px;
+
+h1 {
+    background: url(https://assets3.thrillist.com/v1/image/2757164/size/gn-gift_guide_variable_c.jpg);   
+    height: 70px;
+    width:100%;
+    text-align: center;  
 }
+ img {
+    display: block;    
+    margin: 0 auto;
+    max-height: 120px;
+}
+
+
 #nextBtn {
-    margin-left: 20px;
+    font-size: 1em;
     display: block;
+    margin: 0 auto;
 }
 form {
     margin-top: 20px;
-    width: 700px;
+    
 }
+
+label {
+    
+    font-size: 15px;
+}
+#submit {
+    display: block;
+    margin: 0 auto;
+    font-size: 1em;
+}
+p#answer {
+    height: 20px;
+    text-align: center;
+    font-size: 15px;
+}
+p#copyRight {
+    font-size: 0.5em;
+    text-align: center;
+}
+legend {
+    font-size: 20px;
+} 

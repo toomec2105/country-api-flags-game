@@ -3,18 +3,18 @@
 
 /* ----------------------- HTML elements -------------------------- */
 let flagImg = document.getElementById("flag");
-let first = document.querySelector("#options label:nth-of-type(1)");
-let second = document.querySelector("#options label:nth-of-type(2)");
-let third = document.querySelector("#options label:nth-of-type(3)");
-let firstInput = document.querySelector("#options input:nth-of-type(1)");
-let secondInput = document.querySelector("#options input:nth-of-type(2)");
-let thirdInput = document.querySelector("#options input:nth-of-type(3)");
+let first = document.querySelector("#options .option:nth-of-type(1) label");
+let second = document.querySelector("#options .option:nth-of-type(2) label");
+let third = document.querySelector("#options .option:nth-of-type(3) label");
+let firstInput = document.getElementById("choice1");
+let secondInput = document.getElementById("choice2");
+let thirdInput = document.getElementById("choice3");
 let firstCircle = document.getElementById("circleOne");
 let secondCircle = document.getElementById("circleTwo");
 let thirdCircle = document.getElementById("circleThree");
 let answer = document.getElementById("answer");
 let form = document.querySelector("form");
-// other variables
+// other variables 
 const NUMBER_OF_OPTIONS = 3;
 const API_URL = "https://restcountries.eu/rest/v2/all"
 let countryArray;
