@@ -1,0 +1,116 @@
+:root{
+    --text-font-size: 0.5rem; 
+}
+
+
+body {
+    background: rgb(216, 215, 215);
+    font-family: 'Source Serif Pro', serif;
+    margin: 0px 0px;
+    font-size: 1rem;
+}
+
+h1 {
+    background: url(/sky.3c263e26.jpg)  no-repeat center/100%;   
+    height: 70px;
+    width:100%;
+    object-fit: fill;
+    text-align: center;  
+    letter-spacing: .2rem;
+    font-size: 2.5rem;
+    margin-top: 0px;
+    padding-top: 25px;
+}
+ img {
+    display: block;    
+    margin: 0 auto;
+    max-height: 120px;
+}
+
+
+
+form {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+legend {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 1.5rem;
+}
+#submit, #nextBtn {
+    
+    display: block;
+    margin: 0 auto;
+    width: 100px;
+    padding: 0.3rem;
+    margin-bottom: 0.7rem;
+}
+#submit{
+    margin-top: 0.7rem;
+}
+p#answer {
+    height: 20px;
+    text-align: center;
+
+}
+p#copyRight {
+    margin-top: 2.5rem;
+    font-size: 0.8em;
+    text-align: center;
+} 
+@media screen and (min-width: 400px) {
+    p#copyRight {
+        margin-top: 10rem;
+        }
+}
+@media screen and (min-width: 500px) {
+    h1{
+        font-size: 3rem;
+        padding-top: 0.5rem;
+    }
+}
+@media screen and (min-width: 600px) {
+    form{
+        width: 500px;
+        margin: 0 auto;
+    }
+    h1{
+        height: 100px;
+        font-size: 4rem;
+        padding-top: 0.6rem;
+    }
+    p#copyRight {
+        margin-top: 10rem;
+        }
+  }
+
+  @media screen and (min-width: 900px) {
+      html{
+        font-size: 20px;
+      }
+      h1{
+        letter-spacing: 0.7rem;
+        height: 120px;
+      }
+     
+}
+.scoreBoard{
+    display: inline;
+    border: solid 0.1rem red;
+    margin: 0.5rem;
+    padding: 0.2rem;
+}
+#scorePanel{
+    background: greenyellow;
+    text-align: center;
+    padding: 0.5rem;
+}
+#resetBtn{
+    display: block;
+    margin: 0.5rem auto;
+    margin-bottom: 0;
+}
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */
