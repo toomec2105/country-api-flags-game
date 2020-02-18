@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Country game</title>
+  <link rel="stylesheet" type="text/css" href="styles/normalize.css">
+  <link rel="stylesheet" type="text/css" href="styles/reset-local.css">
+  <link rel="stylesheet" type="text/css" href="styles/typography.css">
+  <link rel="stylesheet" type="text/css" href="styles/style.css">
+
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <h1>Country Game</h1>
+  </header>
+
+  <main>
+
+
+    <section id="scorePanel">
+      <p id="rightScore" class="scoreBoard">[0]player one: 0/10</p>
+      <p id="leftScore" class="scoreBoard">[0]player two 0/10</p>
+      <button type="button" id="resetBtn">Reset</button>
+    </section>
+
+
+
+
+
+
+
+
+    <section id="questionPanel">
+
+    <div>
+      <img id="flag">
+    </div>
+
+    <div>
+      <p id="answer"></p>
+    </div>
+    <div>
+    <button type="button" id="nextBtn">Next Flag</button>
+    </div>
+    
+    <div>
+      <form>
+        <fieldset>
+          <legend>Select the country:</legend>
+          <div id="options">
+            <div class="option"> 
+              <input type="radio" id="choice1" name="country">
+              <label for="choice1"></label>
+            </div>
+            <div class="option"> 
+              <input type="radio" id="choice2" name="country" value="1">
+              <label for="choice2"></label>
+            </div>
+            <div class="option">
+              <input type="radio" id="choice3" name="country" value="2">
+              <label for="choice3"></label>
+            </div>
+          </div>
+          <div>
+            <button type="submit" id="submit">Submit</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    </section>
+  </main>
+
+  <footer>
+  <p id="copyRight">@Copyright Tomasz Ustrzycki</p>
+  </footer>
+  <script src="javascripts/index.js"></script>
+</body>
+
+</html>
