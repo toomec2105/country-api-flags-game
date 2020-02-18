@@ -14,7 +14,7 @@ html{
 h1{   
    font-size: 2.5rem;
    text-align: center;  
-   letter-spacing: .2rem;
+   letter-spacing: .4rem;
 }
 
 legend{
@@ -75,6 +75,12 @@ p#copyRight{
    html{
       font-size: 20px;
   }
+  h1{
+   letter-spacing: 1.2rem;
+   font-size: 7rem;
+  }
+  
+  
 }
 #scorePanel{
       text-align: center;
