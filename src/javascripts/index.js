@@ -19,11 +19,16 @@ let answer = document.getElementById("answer");
 let form = document.querySelector("form");
 let p1Score = document.querySelector("#rightScore");
 let p2Score = document.querySelector("#leftScore");
+
 let p1MatchScore = document.querySelector("#p1MatchScore");
 let p2MatchScore = document.querySelector("#p2MatchScore");
 let resetBtn = document.querySelector("#resetBtn");
+let levelNumber = document.querySelector("#level");
+let matchNumber = document.querySelector("#matchNumber");
+let playersNumber = document.querySelector("#playersNumber");
 // other variables 
 const NUMBER_OF_OPTIONS = 3;
+let gameNumer = 1;
 const API_URL = "https://restcountries.eu/rest/v2/all"
 let countryArray;
 let options = [];
@@ -32,6 +37,7 @@ let next = document.getElementById("nextBtn");
 let userAnswer;
 let match = 1;
 let nextFlagAllowed = false;
+let level = 1;
 
 let game = new Game("Flag game", 2);
 const player1 = new Player(1);
@@ -79,8 +85,8 @@ form.addEventListener("submit", function (event) {
         
     }
     changeTurn();
+    gameNumer++;
     renderScores();
-
     event.preventDefault();
 }, false);
 
@@ -266,6 +272,9 @@ function renderScores() {
     p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
     p1MatchScore.innerHTML = localStorage.getItem("player1");
     p2MatchScore.innerHTML = "  :  " + localStorage.getItem("player2");
+    levelNumber.innerHTML = ",LEVEL: " + level;
+    matchNumber.innerHTML = ",MATCH: " + match;
+    playersNumber.innerHTML = "PLAYERS: " + game.getNoOfPlayers();
 }
 //localStorage.getItem("player1") - match score
 //player1.getScore() -- actual score game.getNoOfTurns()

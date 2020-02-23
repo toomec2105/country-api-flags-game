@@ -78,14 +78,9 @@ p#copyRight {
 
 .scoreBoard {
     display: inline;
-   /*  margin: 0.5rem;
-    padding: 0.2rem; */
 }
 
-#scorePanel {
-    /* background: greenyellow; *//* 
-    padding: 0.5rem; */
-}
+
 
 .activePlayer {
     color: green;
@@ -125,6 +120,7 @@ button {
     p#copyRight {
         margin-top: 6rem;
     }
+    
 }
 
 @media only screen and (min-width: 950px) {

@@ -29,18 +29,30 @@ p#copyRight{
    font-size: 0.8em;
    text-align: center;
 }
-
+@media screen and (min-width: 300px) {
+      .scoreBoard {
+      font-size: 1.3rem;
+   }
+}
+@media screen and (min-width: 400px) {
+   .scoreBoard {
+   font-size: 1.8rem;
+}
+}
 @media screen and (min-width: 500px) {
    h1{
        font-size: 3rem;
    }
+   
 }
 
 @media screen and (min-width: 600px) {
    h1{
        font-size: 4rem;
    }
-
+   .scoreBoard {
+      font-size: 1.4rem;
+   }
 }
 
 
@@ -79,6 +91,9 @@ p#copyRight{
    letter-spacing: 1.2rem;
    font-size: 7rem;
   }
+  .scoreBoard {
+   font-size: 1.3rem;
+}
   
   
 }
