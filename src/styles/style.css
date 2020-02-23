@@ -2,6 +2,9 @@
 @import "reset-local.css";
 @import "typography.css"; */
 
+
+
+
 body {
     background: rgb(216, 215, 215);
     margin: 0px 0px;
@@ -75,17 +78,25 @@ p#copyRight {
 
 .scoreBoard {
     display: inline;
-    margin: 0.5rem;
-    padding: 0.2rem;
+   /*  margin: 0.5rem;
+    padding: 0.2rem; */
 }
 
 #scorePanel {
-    /* background: greenyellow; */
-    padding: 0.5rem;
+    /* background: greenyellow; *//* 
+    padding: 0.5rem; */
 }
 
 .activePlayer {
     color: green;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
 }
 
 button {
@@ -132,9 +143,9 @@ button {
     #scorePanel {
         margin: 1rem;
     }
-    #rightScore, #leftScore {
+    /* #rightScore, #leftScore {
         margin: 2rem;
-    }
+    } */
     #resetBtn {
         margin: 10px auto;
     }
@@ -167,7 +178,7 @@ button {
         height: 110px;
         padding-top: 20px;
     }
-    #rightScore, #leftScore {
+    /* #rightScore, #leftScore {
         margin: 2rem;
-    }
+    } */
 }

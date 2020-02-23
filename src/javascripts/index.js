@@ -19,6 +19,8 @@ let answer = document.getElementById("answer");
 let form = document.querySelector("form");
 let p1Score = document.querySelector("#rightScore");
 let p2Score = document.querySelector("#leftScore");
+let p1MatchScore = document.querySelector("#p1MatchScore");
+let p2MatchScore = document.querySelector("#p2MatchScore");
 let resetBtn = document.querySelector("#resetBtn");
 // other variables 
 const NUMBER_OF_OPTIONS = 3;
@@ -66,10 +68,15 @@ form.addEventListener("submit", function (event) {
     let userGuessed = Number(userAnswer) === correctAnswer;
 
     if (userGuessed) {
+        answer.classList.remove("red"); 
+        answer.classList.add("green"); 
         renderResult("Correct!");
-        updateScore();
+                updateScore();
     } else {
+        answer.classList.remove("green"); 
+        answer.classList.add("red"); 
         renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name);
+        
     }
     changeTurn();
     renderScores();
@@ -85,8 +92,8 @@ next.addEventListener("click", function () {
 });
 
 resetBtn.addEventListener("click", function () {
-    player1.setScore(0);
-    player2.setScore(0);
+    localStorage.setItem('player1', Number(0));
+    localStorage.setItem('player2', Number(0));
     renderScores();
 });
 
@@ -104,6 +111,8 @@ function initGame() {
 
 }
 function initNewMatch() {
+    answer.classList.remove("red"); 
+    answer.classList.remove("green"); 
     if (game.isDraw()) {
         answer.innerHTML = "There is a draw!!!!";
         
@@ -253,6 +262,10 @@ function shuffle(array) {
 }
 
 function renderScores() {
-    p1Score.innerHTML = "[" + localStorage.getItem("player1") + "]" + "player one: " + player1.getScore() + "/" + game.getNoOfTurns();
-    p2Score.innerHTML = "[" + localStorage.getItem("player2") + "]" + "player two: " + player2.getScore() + "/" + game.getNoOfTurns();
+    p1Score.innerHTML = player1.getScore() + "/" + game.getNoOfTurns();
+    p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
+    p1MatchScore.innerHTML = localStorage.getItem("player1");
+    p2MatchScore.innerHTML = "  :  " + localStorage.getItem("player2");
 }
+//localStorage.getItem("player1") - match score
+//player1.getScore() -- actual score game.getNoOfTurns()
