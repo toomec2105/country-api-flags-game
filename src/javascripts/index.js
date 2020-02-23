@@ -23,7 +23,7 @@ let p2Score = document.querySelector("#leftScore");
 let p1MatchScore = document.querySelector("#p1MatchScore");
 let p2MatchScore = document.querySelector("#p2MatchScore");
 let resetBtn = document.querySelector("#resetBtn");
-let levelNumber = document.querySelector("#level");
+let levelNumber = document.querySelector("#levelNumber");
 let matchNumber = document.querySelector("#matchNumber");
 let playersNumber = document.querySelector("#playersNumber");
 
@@ -37,10 +37,10 @@ let options = [];
 let correctAnswer;
 let next = document.getElementById("nextBtn");
 let userAnswer;
-let flagsPerMatch = 1;
+let flagsPerMatch = 2;
 let nextFlagAllowed = false;
 let level = 1;
-let game = new Game("Flag game", 2);
+let game = new Game("Flag game", flagsPerMatch);
 
 
 const player1 = new Player(1);
@@ -289,9 +289,9 @@ function renderScores() {
     p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
     p1MatchScore.innerHTML = localStorage.getItem("player1");
     p2MatchScore.innerHTML = "  :  " + localStorage.getItem("player2");
-    levelNumber.innerHTML = " LEVEL: " + level;
-    matchNumber.innerHTML = " FLAGS PER MATCH: " + flagsPerMatch;
-    playersNumber.innerHTML = "PLAYERS: " + game.getNoOfPlayers();
+    levelNumber.innerHTML = level;
+    matchNumber.innerHTML = flagsPerMatch;
+    playersNumber.innerHTML = game.getNoOfPlayers();
 }
 //localStorage.getItem("player1") - match score
 //player1.getScore() -- actual score game.getNoOfTurns()

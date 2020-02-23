@@ -30,7 +30,7 @@ p#copyRight{
    text-align: center;
 }
 @media screen and (min-width: 300px) {
-      .scoreBoard {
+      .scoreBoard, span {
       font-size: 1.3rem;
    }
 }
