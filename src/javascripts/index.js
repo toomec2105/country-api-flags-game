@@ -60,30 +60,11 @@ if (localStorage.getItem("player1") === null) {
 }
 /* -------------------------- Event listeners ---------------------------- */
 form.addEventListener("submit", function (event) {
+    let userAnswer = getUserAnswer();
+
     nextFlagAllowed = true;
-    var options = new FormData(form);
-    let userAnswer = "";
-    firstInput.disabled = true;
-    secondInput.disabled = true;
-    thirdInput.disabled = true;
-
-    for (const option of options) {
-        userAnswer = option[1];
-    };
-
-    let userGuessed = Number(userAnswer) === correctAnswer;
-
-    if (userGuessed) {
-        answer.classList.remove("red"); 
-        answer.classList.add("green"); 
-        renderResult("Correct!");
-                updateScore();
-    } else {
-        answer.classList.remove("green"); 
-        answer.classList.add("red"); 
-        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name);
-        
-    }
+    disableRadioButtons();
+    renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
     gameNumer++;
     renderScores();
@@ -103,6 +84,35 @@ resetBtn.addEventListener("click", function () {
     renderScores();
 });
 
+
+function getUserAnswer() {
+    let userAnswer = "";
+    var options = new FormData(form);
+    for (const option of options) {
+        userAnswer = option[1];
+    };
+    return userAnswer;
+}
+
+function disableRadioButtons() {
+    firstInput.disabled = true;
+    secondInput.disabled = true;
+    thirdInput.disabled = true;
+}
+
+function renderAnswer(userGuessed) {
+    if (userGuessed) {
+        answer.classList.remove("red");
+        answer.classList.add("green");
+        renderResult("Correct!");
+        updateScore();
+    }
+    else {
+        answer.classList.remove("green");
+        answer.classList.add("red");
+        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name);
+    }
+}
 
 /* ------------------------------ main methods --------------------------- */
 
