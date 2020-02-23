@@ -26,20 +26,23 @@ let resetBtn = document.querySelector("#resetBtn");
 let levelNumber = document.querySelector("#level");
 let matchNumber = document.querySelector("#matchNumber");
 let playersNumber = document.querySelector("#playersNumber");
+
+let radioBtns = document.querySelectorAll("input[type=radio]");
 // other variables 
 const NUMBER_OF_OPTIONS = 3;
-let gameNumer = 1;
+let gameNumber = 1;
 const API_URL = "https://restcountries.eu/rest/v2/all"
 let countryArray;
 let options = [];
 let correctAnswer;
 let next = document.getElementById("nextBtn");
 let userAnswer;
-let match = 1;
+let flagsPerMatch = 1;
 let nextFlagAllowed = false;
 let level = 1;
-
 let game = new Game("Flag game", 2);
+
+
 const player1 = new Player(1);
 const player2 = new Player(2);
 game.addPlayer(player1);
@@ -59,14 +62,13 @@ if (localStorage.getItem("player1") === null) {
     renderScores()
 }
 /* -------------------------- Event listeners ---------------------------- */
-form.addEventListener("submit", function (event) {
-    let userAnswer = getUserAnswer();
-
+form.addEventListener("change", function (event) {
     nextFlagAllowed = true;
     disableRadioButtons();
+    let userAnswer = getUserAnswer();
     renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
-    gameNumer++;
+    gameNumber++;
     renderScores();
     event.preventDefault();
 }, false);
@@ -87,10 +89,15 @@ resetBtn.addEventListener("click", function () {
 
 function getUserAnswer() {
     let userAnswer = "";
-    var options = new FormData(form);
-    for (const option of options) {
-        userAnswer = option[1];
-    };
+    for (var i = 0; i < radioBtns.length; i++) {
+        if (radioBtns[i].checked) {
+
+            userAnswer = radioBtns[i].value;
+
+        }
+    }
+    
+
     return userAnswer;
 }
 
@@ -127,11 +134,11 @@ function initGame() {
 
 }
 function initNewMatch() {
-    answer.classList.remove("red"); 
-    answer.classList.remove("green"); 
+    answer.classList.remove("red");
+    answer.classList.remove("green");
     if (game.isDraw()) {
         answer.innerHTML = "There is a draw!!!!";
-        
+
     }
     else {
         if (player1.getScore() > player2.getScore()) {
@@ -146,7 +153,7 @@ function initNewMatch() {
             answer.innerHTML = "player two has won.";
         }
     }
-    p1Score.classList.add("activePlayer"); 
+    p1Score.classList.add("activePlayer");
     p2Score.classList.remove("activePlayer");
     player1.setScore(0);
     player2.setScore(0);
@@ -165,31 +172,31 @@ function changeTurn() {
         console.log("incrementing turn");
         game.incrementTurn();
     } else {
-        
-        
+
+
 
         if (game.getCurrentPlayer().getId() === player1.getId()) {
             console.log("swapping players");
             p1Score.classList.remove("activePlayer");
-            p2Score.classList.add("activePlayer");            
+            p2Score.classList.add("activePlayer");
             game.setCurrentPlayer(player2);
 
-        } else{
+        } else {
             console.log("Current player id" + game.getCurrentPlayer().getId());
-            
-            console.log("init new match");          
+
+            console.log("init new match");
             game.setCurrentPlayer(player1);
             initNewMatch();
         }
 
         console.log("resetting turn to 0");
         game.resetCurrentTurn();
-      
+
     }
 }
 
 async function reset() {
-    
+
     answer.innerHTML = "";
     options = generateOptionsAsIndexes(); // 56, 78, 134
     correctAnswer = options[0]; // 56
@@ -282,8 +289,8 @@ function renderScores() {
     p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
     p1MatchScore.innerHTML = localStorage.getItem("player1");
     p2MatchScore.innerHTML = "  :  " + localStorage.getItem("player2");
-    levelNumber.innerHTML = ",LEVEL: " + level;
-    matchNumber.innerHTML = ",MATCH: " + match;
+    levelNumber.innerHTML = " LEVEL: " + level;
+    matchNumber.innerHTML = " FLAGS PER MATCH: " + flagsPerMatch;
     playersNumber.innerHTML = "PLAYERS: " + game.getNoOfPlayers();
 }
 //localStorage.getItem("player1") - match score
