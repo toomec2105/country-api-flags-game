@@ -16,7 +16,9 @@ fieldset {
     margin: 0 2rem;
     height: 140px;
 }
-
+.option{
+    margin-top: 0.4rem;
+}
 h1 {
     background: url(../imgs/sky.jpg) no-repeat;
     height: 70px;
@@ -31,8 +33,6 @@ img {
     margin: 0 auto;
     max-height: 120px;
 }
-
-@m
 
 form {
     margin-left: 0.5rem;
