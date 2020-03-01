@@ -215,6 +215,15 @@ function generateOptionsAsIndexes() {
     let opt1 = getRandomInt(0, countryArray.length);
     let opt2 = getRandomInt(0, countryArray.length);
     let opt3 = getRandomInt(0, countryArray.length);
+    while(opt1 === opt2){
+        opt2 = getRandomInt(0, countryArray.length);
+    }
+    while(opt1 === opt3){
+        opt3 = getRandomInt(0, countryArray.length);
+    }
+    while(opt3 === opt2){
+        opt2 = getRandomInt(0, countryArray.length);
+    }
     return [opt1, opt2, opt3];
 }
 
