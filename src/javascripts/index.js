@@ -41,7 +41,9 @@ let flagsPerMatch = 2;
 let nextFlagAllowed = false;
 let level = 1;
 let game = new Game("Flag game", flagsPerMatch);
-
+let difficulty = "easy";
+let easyFlags = ["Poland", "Netherlands", "Indonesia", "Saudi Arabia", "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan", "United Kingdom of Great Britain and Northern Ireland", "Sweden","Turkey", "Germany", "United States of America", "Spain", "United Kingdom", "Cyprus","Greece", "Austria", "Croatia", "Italy", "Russian Federation","Ireland", "Poland", "France", "China", "Norway","Portugal"];
+let mediumFlags = ["Mexico", "Georgia", "Bosnia and Herzegovina", "Macedonia (the former Yugoslav Republic of)", "Saint Martin (French part)", "Malta", "Luxembourg", "Bulgaria", "Tunisia", "Republic of Kosovo", "Iraq", "India", "Egypt","Chile", "Uruguay", "Belgium", "Mongolia", "Greenland", "Lithuania","Montenegro", "Holy See", "Viet Nam", "Slovakia", "Slovenia", "Albania", "Hungary", "Czech Republic", "Denmark", "Macedonia", "Belarus", "Ukraine", "Estonia", "Lithuana", "Luxenbourg", "Latvia", "Romania"];
 
 const player1 = new Player(1);
 const player2 = new Player(2);
@@ -215,6 +217,7 @@ function generateOptionsAsIndexes() {
     let opt1 = getRandomInt(0, countryArray.length);
     let opt2 = getRandomInt(0, countryArray.length);
     let opt3 = getRandomInt(0, countryArray.length);
+    
     while(opt1 === opt2){
         opt2 = getRandomInt(0, countryArray.length);
     }
@@ -224,16 +227,44 @@ function generateOptionsAsIndexes() {
     while(opt3 === opt2){
         opt2 = getRandomInt(0, countryArray.length);
     }
+    while(isCountryHardEnough(opt1) === false){
+        opt1 = getRandomInt(0, countryArray.length);
+    }
     return [opt1, opt2, opt3];
 }
 
-function generateCorrectAnswer(options) {
-    let index = getRandomInt(0, options.length);
-    return index;
-}
-
-
 /* ------------------------------ heplers ----------------------------- */
+function isCountryHardEnough(opt){
+    if(difficulty === "easy"){
+        for(let i=0; i<easyFlags.length;i++){
+            if(countryArray[opt].name === easyFlags[i]){
+             return true;   
+            }
+        }
+    }
+    if(difficulty === "medium"){
+        for(let i=0; i<mediumFlags.length;i++){
+            if(countryArray[opt].name === mediumFlags[i]){
+             return true;   
+            }
+        }
+    }
+    if(difficulty === "hard"){
+        for(let i=0; i<easyFlags.length;i++){
+            if(countryArray[opt].name === easyFlags[i]){
+             return false;   
+            }
+        }
+        for(let i=0; i<mediumFlags.length;i++){
+            if(countryArray[opt].name === mediumFlags[i]){
+             return false;   
+            }
+        }
+        
+        return true;
+    }
+    return false;
+}
 async function requestCountryData() {
     try {
         let response = await fetch(API_URL);
