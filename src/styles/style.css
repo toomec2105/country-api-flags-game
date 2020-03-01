@@ -14,7 +14,8 @@ fieldset {
     border-width: 0.1rem;
     padding: 0.3rem;
     margin: 0 2rem;
-    height: 140px;
+    width: 480px;
+
 }
 .option{
     margin-top: 0.4rem;
@@ -149,8 +150,8 @@ button {
         max-height: 300px;
     }
     fieldset {
-        height: 280px;
         margin: 0 5rem;
+
     }
     h1 {
         padding-top: 0.8rem;
@@ -162,7 +163,7 @@ button {
 @media only screen and (min-width: 1300px) {
     fieldset {
         margin: 0 20rem;
-        height: 200px;
+        max-height: 210px;
     }
 }
 

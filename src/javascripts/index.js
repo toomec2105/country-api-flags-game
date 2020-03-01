@@ -289,7 +289,10 @@ function getRandomInt(min, max) {
 }
 
 function renderCountryNamesOnBtns(countryNames) {
-    first.innerText = countryArray[options[0]].name;
+/*     first.innerText = countryArray[options[0]].name;
+    second.innerText = countryArray[options[1]].name;
+    third.innerText = countryArray[options[2]].name; */
+        first.innerText = countryArray[options[0]].name;
     second.innerText = countryArray[options[1]].name;
     third.innerText = countryArray[options[2]].name;
     firstInput.value = options[0];
