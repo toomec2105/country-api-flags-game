@@ -2,8 +2,9 @@
 @import "reset-local.css";
 @import "typography.css"; */
 
-
-
+.invisible{
+visibility: hidden;
+}
 
 body {
     background: rgb(216, 215, 215);

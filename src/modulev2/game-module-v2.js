@@ -62,7 +62,7 @@ export function Game(gameName, numberOfTurns) {
     this.setCurrentPlayer = (player) => {
         currentPlayer = player;
     }
-
+    
     this.getWinners = () => {
         const result = _isDrawInternal();
         const winners = [];

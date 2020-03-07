@@ -59,6 +59,7 @@ p1Score.classList.add("activePlayer");
 if (localStorage.getItem("player1") === null) {
     localStorage.setItem('player1', Number(0));
     localStorage.setItem('player2', Number(0));
+    
     renderScores()
 } else {
     renderScores()
@@ -66,6 +67,7 @@ if (localStorage.getItem("player1") === null) {
 /* -------------------------- Event listeners ---------------------------- */
 form.addEventListener("change", function (event) {
     nextFlagAllowed = true;
+    next.classList.remove("invisible");
     disableRadioButtons();
     let userAnswer = getUserAnswer();
     renderAnswer(Number(userAnswer) === correctAnswer);
@@ -79,12 +81,20 @@ next.addEventListener("click", function () {
     if (nextFlagAllowed) {
         reset();
         nextFlagAllowed = false;
+        next.classList.add("invisible");
     }
 });
 
 resetBtn.addEventListener("click", function () {
+    
+    game.resetCurrentTurn();
     localStorage.setItem('player1', Number(0));
     localStorage.setItem('player2', Number(0));
+    p1Score.classList.add("activePlayer");
+    p2Score.classList.remove("activePlayer");
+    game.setCurrentPlayer(player1);
+    player1.setScore(0);
+    player2.setScore(0);
     renderScores();
 });
 
@@ -165,33 +175,22 @@ function updateScore() {
     console.log("Updating score");
     let currPlayer = game.getCurrentPlayer();
     currPlayer.setScore(currPlayer.getScore() + 1);
-
+    console.log("increasing player score and rendering");
 }
 
 function changeTurn() {
-    console.log("Change turns");
     if (game.getCurrentTurn() < game.getNoOfTurns()) {
-        console.log("incrementing turn");
         game.incrementTurn();
     } else {
-
-
-
         if (game.getCurrentPlayer().getId() === player1.getId()) {
-            console.log("swapping players");
             p1Score.classList.remove("activePlayer");
             p2Score.classList.add("activePlayer");
             game.setCurrentPlayer(player2);
 
         } else {
-            console.log("Current player id" + game.getCurrentPlayer().getId());
-
-            console.log("init new match");
             game.setCurrentPlayer(player1);
             initNewMatch();
         }
-
-        console.log("resetting turn to 0");
         game.resetCurrentTurn();
 
     }
@@ -292,7 +291,7 @@ function renderCountryNamesOnBtns(countryNames) {
 /*     first.innerText = countryArray[options[0]].name;
     second.innerText = countryArray[options[1]].name;
     third.innerText = countryArray[options[2]].name; */
-        first.innerText = countryArray[options[0]].name;
+    first.innerText = countryArray[options[0]].name;
     second.innerText = countryArray[options[1]].name;
     third.innerText = countryArray[options[2]].name;
     firstInput.value = options[0];
