@@ -77,6 +77,11 @@ p#copyRight {
     margin-top: 3rem;
 }
 
+#scoreBox{
+    border: 0.002rem solid black ;
+    margin: 0.5rem 2rem;
+}
+
 .scoreBoard {
     display: inline;
 }
@@ -178,6 +183,9 @@ fieldset{
     h1 {
         height: 110px;
         padding-top: 20px;
+    }
+    #scoreBox{
+        margin: 0.5rem 35rem;
     }
     /* #rightScore, #leftScore {
         margin: 2rem;

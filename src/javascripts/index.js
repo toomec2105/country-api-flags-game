@@ -149,7 +149,7 @@ function initNewMatch() {
     answer.classList.remove("red");
     answer.classList.remove("green");
     if (game.isDraw()) {
-        answer.innerHTML = "There is a draw!!!!";
+        answer.innerHTML = "It is a draw!!!!";
 
     }
     else {
