@@ -68,6 +68,8 @@ if (localStorage.getItem("player1") === null) {
 form.addEventListener("change", function (event) {
     nextFlagAllowed = true;
     next.classList.remove("invisible");
+    next.classList.add("visible");
+
     disableRadioButtons();
     let userAnswer = getUserAnswer();
     renderAnswer(Number(userAnswer) === correctAnswer);
@@ -82,6 +84,8 @@ next.addEventListener("click", function () {
         reset();
         nextFlagAllowed = false;
         next.classList.add("invisible");
+        next.classList.remove("visible");
+
     }
 });
 

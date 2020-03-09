@@ -2,8 +2,8 @@
 @import "reset-local.css";
 @import "typography.css"; */
 
-.invisible{
-visibility: hidden;
+#submit{
+    display: block;
 }
 
 body {
@@ -53,7 +53,6 @@ legend {
 }
 
 #submit, #nextBtn {
-    display: block;
     margin: 0 auto;
     width: 100px;
     padding: 0.3rem;
@@ -107,7 +106,22 @@ button {
     padding: 1px 6px;
     cursor: default;
 }
+.invisible{
 
+    display: none;
+}
+
+#choice1, #choice2, #choice3{
+    margin-top: 1rem;
+}
+
+
+#nextBtn{
+    margin-left: 120px;
+}
+.visible{
+    display: block;
+}
 @media only screen and (min-width: 720px) {
 fieldset{
     margin: 0 7rem;
@@ -167,6 +181,7 @@ fieldset{
         height: 150px;
         font-size: 2.5rem;
     }
+    
 }
 
 @media only screen and (min-width: 1300px) {
