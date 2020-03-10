@@ -2,6 +2,8 @@
 @import "reset-local.css";
 @import "typography.css"; */
 
+
+
 #submit{
     display: block;
 }
@@ -12,7 +14,6 @@ body {
 }
 
 fieldset {
-    border-width: 0.1rem;
     padding: 0.3rem;
     margin: 0 2rem;
 
@@ -41,6 +42,7 @@ form {
 }
 
 legend {
+    display: none;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
@@ -194,6 +196,10 @@ fieldset{
 @media only screen and (min-width: 1700px) {
     fieldset {
         margin: 0 35rem;
+        border-width: 0.1rem;
+    }
+    legend{
+        display: block;
     }
     h1 {
         height: 110px;
