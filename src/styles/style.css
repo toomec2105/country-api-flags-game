@@ -2,7 +2,13 @@
 @import "reset-local.css";
 @import "typography.css"; */
 
+#menu{
+background: url(../imgs/sky.jpg) no-repeat;
+}
 
+#backToGame{
+margin-left: 43%;
+}
 
 #submit{
     display: block;
@@ -22,7 +28,6 @@ fieldset {
     margin-top: 0.4rem;
 }
 h1 {
-    background: url(../imgs/sky.jpg) no-repeat;
     height: 70px;
     width: 100%;
     object-fit: fill;

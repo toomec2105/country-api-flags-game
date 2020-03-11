@@ -57,7 +57,6 @@ init();
 initGame();
 p1Score.classList.add("activePlayer");
 optionsPage.classList.add("invisible");
-optionsPage.classList.remove("visible");
 
 if (localStorage.getItem("player1") === null) {
     localStorage.setItem('player1', Number(0));
@@ -94,19 +93,23 @@ next.addEventListener("click", function () {
 
 opt.addEventListener("click", function () {
     console.log("clicked");
-    
+        if(opt.innerText === "Options"){
         optionsPage.classList.remove("invisible");
         gamePage.classList.remove("visible");
         gamePage.classList.add("invisible");
         optionsPage.classList.add("visible");
-       
-});
-back.addEventListener("click", function () {
+        opt.innerText = "Back to game";
+        }else{
+            console.log("Back to game value");
+            
         gamePage.classList.remove("invisible");
         optionsPage.classList.add("invisible");
         optionsPage.classList.remove("visible");
         gamePage.classList.add("visible");
+        opt.innerText = "Options";
+        }
 });
+
 resetBtn.addEventListener("click", function () {
     
     game.resetCurrentTurn();
