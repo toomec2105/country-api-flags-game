@@ -19,13 +19,16 @@ let answer = document.getElementById("answer");
 let form = document.querySelector("form");
 let p1Score = document.querySelector("#rightScore");
 let p2Score = document.querySelector("#leftScore");
-
+let opt = document.querySelector("#options");
 let p1MatchScore = document.querySelector("#p1MatchScore");
 let p2MatchScore = document.querySelector("#p2MatchScore");
 let resetBtn = document.querySelector("#resetBtn");
 let levelNumber = document.querySelector("#levelNumber");
 let matchNumber = document.querySelector("#matchNumber");
 let playersNumber = document.querySelector("#playersNumber");
+let optionsPage = document.querySelector("#optionsPage");
+let gamePage = document.querySelector("#gamePage");
+let back = document.querySelector("#backToGame");
 
 let radioBtns = document.querySelectorAll("input[type=radio]");
 // other variables 
@@ -39,9 +42,9 @@ let next = document.getElementById("nextBtn");
 let userAnswer;
 let flagsPerMatch = 2;
 let nextFlagAllowed = false;
-let level = 1;
+let level = "hard";
 let game = new Game("Flag game", flagsPerMatch);
-let difficulty = "easy";
+let difficulty = "hard";
 let easyFlags = ["Poland", "Netherlands", "Indonesia", "Saudi Arabia", "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan", "United Kingdom of Great Britain and Northern Ireland", "Sweden","Turkey", "Germany", "United States of America", "Spain", "United Kingdom", "Cyprus","Greece", "Austria", "Croatia", "Italy", "Russian Federation","Ireland", "Poland", "France", "China", "Norway","Portugal"];
 let mediumFlags = ["Mexico", "Georgia", "Bosnia and Herzegovina", "Macedonia (the former Yugoslav Republic of)", "Saint Martin (French part)", "Malta", "Luxembourg", "Bulgaria", "Tunisia", "Republic of Kosovo", "Iraq", "India", "Egypt","Chile", "Uruguay", "Belgium", "Mongolia", "Greenland", "Lithuania","Montenegro", "Holy See", "Viet Nam", "Slovakia", "Slovenia", "Albania", "Hungary", "Czech Republic", "Denmark", "Macedonia", "Belarus", "Ukraine", "Estonia", "Lithuana", "Luxenbourg", "Latvia", "Romania"];
 
@@ -53,8 +56,8 @@ game.setCurrentPlayer(player1);
 init();
 initGame();
 p1Score.classList.add("activePlayer");
-
-
+optionsPage.classList.add("invisible");
+optionsPage.classList.remove("visible");
 
 if (localStorage.getItem("player1") === null) {
     localStorage.setItem('player1', Number(0));
@@ -89,6 +92,21 @@ next.addEventListener("click", function () {
     }
 });
 
+opt.addEventListener("click", function () {
+    console.log("clicked");
+    
+        optionsPage.classList.remove("invisible");
+        gamePage.classList.remove("visible");
+        gamePage.classList.add("invisible");
+        optionsPage.classList.add("visible");
+       
+});
+back.addEventListener("click", function () {
+        gamePage.classList.remove("invisible");
+        optionsPage.classList.add("invisible");
+        optionsPage.classList.remove("visible");
+        gamePage.classList.add("visible");
+});
 resetBtn.addEventListener("click", function () {
     
     game.resetCurrentTurn();
