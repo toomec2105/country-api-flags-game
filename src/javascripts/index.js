@@ -98,7 +98,7 @@ opt.addEventListener("click", function () {
         gamePage.classList.remove("visible");
         gamePage.classList.add("invisible");
         optionsPage.classList.add("visible");
-        opt.innerText = "Back to game";
+        opt.innerText = "Play";
         }else{
             console.log("Back to game value");
             
