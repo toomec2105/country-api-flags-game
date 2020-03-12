@@ -36,7 +36,7 @@ p#copyRight{
 }
 @media screen and (min-width: 300px) {
       .scoreBoard, span {
-      font-size: 1.2rem;
+      font-size: 1rem;
    }
 }
 @media screen and (min-width: 400px) {
