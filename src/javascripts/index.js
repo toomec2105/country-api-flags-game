@@ -31,6 +31,7 @@ let gamePage = document.querySelector("#gamePage");
 let back = document.querySelector("#backToGame");
 let levelChoice = document.querySelector("#level-select");
 let radioBtns = document.querySelectorAll("input[type=radio]");
+let playBtn = document.querySelector("#play");
 // other variables 
 const NUMBER_OF_OPTIONS = 3;
 let gameNumber = 1;
@@ -45,8 +46,8 @@ let nextFlagAllowed = false;
 let level = "hard";
 let game = new Game("Flag game", flagsPerMatch);
 let difficulty = "hard";
-let easyFlags = ["Poland", "Netherlands", "Indonesia", "Saudi Arabia", "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan", "United Kingdom of Great Britain and Northern Ireland", "Sweden","Turkey", "Germany", "United States of America", "Spain", "United Kingdom", "Cyprus","Greece", "Austria", "Croatia", "Italy", "Russian Federation","Ireland", "Poland", "France", "China", "Norway","Portugal"];
-let mediumFlags = ["Mexico", "Georgia", "Bosnia and Herzegovina", "Macedonia (the former Yugoslav Republic of)", "Saint Martin (French part)", "Malta", "Luxembourg", "Bulgaria", "Tunisia", "Republic of Kosovo", "Iraq", "India", "Egypt","Chile", "Uruguay", "Belgium", "Mongolia", "Greenland", "Lithuania","Montenegro", "Holy See", "Viet Nam", "Slovakia", "Slovenia", "Albania", "Hungary", "Czech Republic", "Denmark", "Macedonia", "Belarus", "Ukraine", "Estonia", "Lithuana", "Luxenbourg", "Latvia", "Romania"];
+let easyFlags = ["Korea (Republic of)", "Australia", "Poland", "Netherlands", "Indonesia", "Saudi Arabia", "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan", "United Kingdom of Great Britain and Northern Ireland", "Sweden","Turkey", "Germany", "United States of America", "Spain", "United Kingdom", "Cyprus","Greece", "Austria", "Croatia", "Italy", "Russian Federation","Ireland", "Poland", "France", "China", "Norway","Portugal"];
+let mediumFlags = ["Liechtenstein", "Thailand", "Puerto Rico", "Korea (Democratic People's Republic of)", "Kenya", "Mexico", "Georgia", "Bosnia and Herzegovina", "Macedonia (the former Yugoslav Republic of)", "Saint Martin (French part)", "Malta", "Luxembourg", "Bulgaria", "Tunisia", "Republic of Kosovo", "Iraq", "India", "Egypt","Chile", "Uruguay", "Belgium", "Mongolia", "Greenland", "Lithuania","Montenegro", "Holy See", "Viet Nam", "Slovakia", "Slovenia", "Albania", "Hungary", "Czech Republic", "Denmark", "Macedonia", "Belarus", "Ukraine", "Estonia", "Lithuana", "Luxenbourg", "Latvia", "Romania"];
 
 const player1 = new Player(1);
 const player2 = new Player(2);
@@ -57,6 +58,7 @@ init();
 initGame();
 p1Score.classList.add("activePlayer");
 optionsPage.classList.add("invisible");
+playBtn.classList.add("bold");
 
 if (localStorage.getItem("player1") === null) {
     localStorage.setItem('player1', Number(0));
@@ -97,22 +99,23 @@ next.addEventListener("click", function () {
 });
 
 opt.addEventListener("click", function () {
-    console.log("clicked");
-        if(opt.innerText === "Options"){
+    
         optionsPage.classList.remove("invisible");
         gamePage.classList.remove("visible");
         gamePage.classList.add("invisible");
         optionsPage.classList.add("visible");
-        opt.innerText = " Play";
-        }else{
-            console.log("Back to game value");
-            
-        gamePage.classList.remove("invisible");
-        optionsPage.classList.add("invisible");
-        optionsPage.classList.remove("visible");
-        gamePage.classList.add("visible");
-        opt.innerText = "Options";
-        }
+        playBtn.classList.remove("bold");
+        opt.classList.add("bold");
+});
+
+playBtn.addEventListener("click", function () {
+    opt.classList.remove("bold");
+    playBtn.classList.add("bold");
+    
+    gamePage.classList.remove("invisible");
+    optionsPage.classList.add("invisible");
+    optionsPage.classList.remove("visible");
+    gamePage.classList.add("visible");
 });
 
 resetBtn.addEventListener("click", function () {

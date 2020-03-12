@@ -6,11 +6,11 @@
 background: url(../imgs/sky.jpg) no-repeat;
 }
 
-#settings{
-    width: 50px;
-    margin: 0 auto;
-
+#toolBar{
+    margin-left: 12.5rem;
 }
+
+
 #optionsPage{
     width: 330px;
     margin: 0 auto;
@@ -127,7 +127,9 @@ button {
 #choice1, #choice2, #choice3{
     margin-top: 1rem;
 }
-
+.bold{
+    font-weight: bold;
+}
 
 #nextBtn{
     margin-left: 120px;
