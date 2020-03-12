@@ -19,7 +19,7 @@ let answer = document.getElementById("answer");
 let form = document.querySelector("form");
 let p1Score = document.querySelector("#rightScore");
 let p2Score = document.querySelector("#leftScore");
-let opt = document.querySelector("#options");
+let opt = document.querySelector("#settings");
 let p1MatchScore = document.querySelector("#p1MatchScore");
 let p2MatchScore = document.querySelector("#p2MatchScore");
 let resetBtn = document.querySelector("#resetBtn");
@@ -29,7 +29,7 @@ let playersNumber = document.querySelector("#playersNumber");
 let optionsPage = document.querySelector("#optionsPage");
 let gamePage = document.querySelector("#gamePage");
 let back = document.querySelector("#backToGame");
-
+let levelChoice = document.querySelector("#level-select");
 let radioBtns = document.querySelectorAll("input[type=radio]");
 // other variables 
 const NUMBER_OF_OPTIONS = 3;
@@ -67,6 +67,11 @@ if (localStorage.getItem("player1") === null) {
     renderScores()
 }
 /* -------------------------- Event listeners ---------------------------- */
+levelChoice.addEventListener("change", function (event) {
+difficulty = levelChoice.value;
+reset();
+});
+
 form.addEventListener("change", function (event) {
     nextFlagAllowed = true;
     next.classList.remove("invisible");
@@ -98,7 +103,7 @@ opt.addEventListener("click", function () {
         gamePage.classList.remove("visible");
         gamePage.classList.add("invisible");
         optionsPage.classList.add("visible");
-        opt.innerText = "Play";
+        opt.innerText = " Play";
         }else{
             console.log("Back to game value");
             

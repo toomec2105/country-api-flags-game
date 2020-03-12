@@ -6,8 +6,12 @@
 background: url(../imgs/sky.jpg) no-repeat;
 }
 
-#options{
-margin-left: 45%;
+#settings{
+    margin-left: 49%;
+
+}
+#optionsPage{
+    margin-left: 45%;
 }
 
 #submit{
