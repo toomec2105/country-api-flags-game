@@ -43,9 +43,9 @@ let next = document.getElementById("nextBtn");
 let userAnswer;
 let flagsPerMatch = 2;
 let nextFlagAllowed = false;
-let level = "hard";
+let level = "medium";
 let game = new Game("Flag game", flagsPerMatch);
-let difficulty = "hard";
+let difficulty = "medium";
 let easyFlags = ["Korea (Republic of)", "Australia", "Poland", "Netherlands", "Indonesia", "Saudi Arabia", "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan", "United Kingdom of Great Britain and Northern Ireland", "Sweden","Turkey", "Germany", "United States of America", "Spain", "United Kingdom", "Cyprus","Greece", "Austria", "Croatia", "Italy", "Russian Federation","Ireland", "Poland", "France", "China", "Norway","Portugal"];
 let mediumFlags = ["Liechtenstein", "Thailand", "Puerto Rico", "Korea (Democratic People's Republic of)", "Kenya", "Mexico", "Georgia", "Bosnia and Herzegovina", "Macedonia (the former Yugoslav Republic of)", "Saint Martin (French part)", "Malta", "Luxembourg", "Bulgaria", "Tunisia", "Republic of Kosovo", "Iraq", "India", "Egypt","Chile", "Uruguay", "Belgium", "Mongolia", "Greenland", "Lithuania","Montenegro", "Holy See", "Viet Nam", "Slovakia", "Slovenia", "Albania", "Hungary", "Czech Republic", "Denmark", "Macedonia", "Belarus", "Ukraine", "Estonia", "Lithuana", "Luxenbourg", "Latvia", "Romania"];
 
@@ -364,9 +364,9 @@ function renderScores() {
     p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
     p1MatchScore.innerHTML = localStorage.getItem("player1");
     p2MatchScore.innerHTML = "  :  " + localStorage.getItem("player2");
-    levelNumber.innerHTML = level;
+    /* levelNumber.innerHTML = level;
     matchNumber.innerHTML = flagsPerMatch;
-    playersNumber.innerHTML = game.getNoOfPlayers();
+    playersNumber.innerHTML = game.getNoOfPlayers(); */
 }
 //localStorage.getItem("player1") - match score
 //player1.getScore() -- actual score game.getNoOfTurns()
