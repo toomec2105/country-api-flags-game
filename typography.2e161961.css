@@ -1,0 +1,109 @@
+html{ 
+   font-size: 15px;/*for using REM units*/
+ }
+ body{
+   color: #222;
+   font-size: 0.9rem;
+   font-family: 'Source Serif Pro', serif;
+ }
+
+ :root{
+   --text-font-size: 0.5rem; 
+}
+fieldset{
+   font-size: 1.1rem;
+}
+p.scoreBoard{
+font-size: 1rem;
+}
+h1{   
+   font-size: 2rem;
+   text-align: center;  
+   letter-spacing: .4rem;
+}
+
+legend{
+   font-size: 1.4rem;
+}
+
+p#answer{
+   text-align: center;
+}
+
+p#copyRight{
+   font-size: 0.8em;
+   text-align: center;
+}
+@media screen and (min-width: 300px) {
+      .scoreBoard, span {
+      font-size: 1rem;
+   }
+}
+@media screen and (min-width: 400px) {
+   .scoreBoard {
+   font-size: 1.8rem;
+}
+}
+@media screen and (min-width: 500px) {
+   h1{
+       font-size: 2.6rem;
+   }
+   
+}
+
+@media screen and (min-width: 600px) {
+   h1{
+       font-size: 3.6rem;
+   }
+   .scoreBoard {
+      font-size: 1.4rem;
+   }
+}
+
+
+@media only screen and (min-width: 750px) {
+   html{
+       font-size: 1.8rem;
+   }
+   h1{
+      font-size: 1.7rem;
+   }
+
+}
+
+
+@media screen and (min-width: 900px) {
+      html{
+        font-size: 20px;
+      }
+      h1{
+        letter-spacing: 0.7rem;
+        font-size: 1.7rem;
+      }
+   }
+
+   @media only screen and (min-width: 950px) {
+      html{
+          font-size: 2rem;
+      }
+   }
+
+@media only screen and (min-width: 1700px) {
+   html{
+      font-size: 20px;
+  }
+  h1{
+   letter-spacing: 1.2rem;
+   font-size: 7rem;
+  }
+  .scoreBoard {
+   font-size: 1.3rem;
+}
+  
+  
+}
+#scorePanel{
+      text-align: center;
+}
+
+/*# sourceMappingURL=/typography.2e161961.css.map */
