@@ -16,6 +16,7 @@ let firstCircle = document.getElementById("circleOne");
 let secondCircle = document.getElementById("circleTwo");
 let thirdCircle = document.getElementById("circleThree");
 let answer = document.getElementById("answer");
+let result = document.getElementById("result");
 let form = document.querySelector("form");
 let p1Score = document.querySelector("#rightScore");
 let p2Score = document.querySelector("#leftScore");
@@ -179,23 +180,22 @@ function initGame() {
 
 }
 function initNewMatch() {
-    answer.classList.remove("red");
-    answer.classList.remove("green");
+
     if (game.isDraw()) {
-        answer.innerHTML = "It is a draw!!!!";
+        result.innerHTML = "It is a draw!!!!";
 
     }
     else {
         if (player1.getScore() > player2.getScore()) {
             let score = localStorage.getItem("player1");
             localStorage.setItem("player1", Number(score) + 1);
-            answer.innerHTML = "player one has won.";
+            result.innerHTML = "player one has won.";
 
         }
         else {
             let score = localStorage.getItem("player2");
             localStorage.setItem("player2", Number(score) + 1);
-            answer.innerHTML = "player two has won.";
+            result.innerHTML = "player two has won.";
         }
     }
     p1Score.classList.add("activePlayer");
@@ -230,7 +230,7 @@ function changeTurn() {
 }
 
 async function reset() {
-
+    result.innerHTML = "";
     answer.innerHTML = "";
     options = generateOptionsAsIndexes(); // 56, 78, 134
     correctAnswer = options[0]; // 56
