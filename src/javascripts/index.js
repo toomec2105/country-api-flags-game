@@ -49,7 +49,7 @@ let game = new Game("Flag game", flagsPerMatch);
 let difficulty = "medium";
 let easyFlags = ["Korea (Republic of)", "Australia", "Poland", "Netherlands", "Indonesia", "Saudi Arabia", "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan", "United Kingdom of Great Britain and Northern Ireland", "Sweden","Turkey", "Germany", "United States of America", "Spain", "United Kingdom", "Cyprus","Greece", "Austria", "Croatia", "Italy", "Russian Federation","Ireland", "Poland", "France", "China", "Norway","Portugal"];
 let mediumFlags = ["Liechtenstein", "Thailand", "Puerto Rico", "Korea (Democratic People's Republic of)", "Kenya", "Mexico", "Georgia", "Bosnia and Herzegovina", "Macedonia (the former Yugoslav Republic of)", "Saint Martin (French part)", "Malta", "Luxembourg", "Bulgaria", "Tunisia", "Republic of Kosovo", "Iraq", "India", "Egypt","Chile", "Uruguay", "Belgium", "Mongolia", "Greenland", "Lithuania","Montenegro", "Holy See", "Viet Nam", "Slovakia", "Slovenia", "Albania", "Hungary", "Czech Republic", "Denmark", "Macedonia", "Belarus", "Ukraine", "Estonia", "Lithuana", "Luxenbourg", "Latvia", "Romania"];
-
+let currentlyUnavailableFlags = [];
 const player1 = new Player(1);
 const player2 = new Player(2);
 game.addPlayer(player1);
@@ -72,6 +72,7 @@ if (localStorage.getItem("player1") === null) {
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
 difficulty = levelChoice.value;
+currentlyUnavailableFlags = [];
 reset();
 });
 
@@ -259,9 +260,11 @@ function generateOptionsAsIndexes() {
     while(opt3 === opt2){
         opt2 = getRandomInt(0, countryArray.length);
     }
-    while(isCountryHardEnough(opt1) === false){
+    
+     while(checkIfAvaileble(countryArray[opt1].name) === false || isCountryHardEnough(opt1) === false){
         opt1 = getRandomInt(0, countryArray.length);
-    }
+    } 
+     currentlyUnavailableFlags.push(countryArray[opt1].name); 
     return [opt1, opt2, opt3];
 }
 
@@ -370,3 +373,25 @@ function renderScores() {
 }
 //localStorage.getItem("player1") - match score
 //player1.getScore() -- actual score game.getNoOfTurns()
+
+
+ function checkIfAvaileble(country){
+     
+    console.log("Tyle nie moze byc: " + currentlyUnavailableFlags.length);
+     if(difficulty === "easy" && currentlyUnavailableFlags.length  === easyFlags.length -5){
+        currentlyUnavailableFlags = [];
+     }
+
+     if(difficulty === "medium" && currentlyUnavailableFlags.length  === mediumFlags.length - 5){
+        currentlyUnavailableFlags = [];
+     }
+     if(difficulty === "hard" && currentlyUnavailableFlags.length  === countryArray.length - easyFlags.length - mediumFlags.length -5){
+        currentlyUnavailableFlags = [];
+     }
+    for( let i=0; i < currentlyUnavailableFlags.length; i++){
+        if(country === currentlyUnavailableFlags[i]){
+            return false;
+        }
+    }
+    return true;
+} 
