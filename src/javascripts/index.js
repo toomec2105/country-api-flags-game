@@ -393,13 +393,13 @@ function generateOtherCountries(){
 function generateOptionsAsIndexes() {
     let opt1;
     generateOtherCountries();
-    if(easyFlagsMutable.length < 2){
+    if(easyFlagsMutable.length < 1){
         easyFlagsMutable = easyFlagsImmutable.slice();
     }
-    if(mediumFlagsMutable.length < 2){
+    if(mediumFlagsMutable.length < 1){
         mediumFlagsMutable = mediumFlagsImmutable.slice();
     }
-    if(hardFlagsMutable.length < 2){
+    if(hardFlagsMutable.length < 1){
         hardFlagsMutable = hardFlagsImmutable.slice();
     }
     if(difficulty === "easy"){
