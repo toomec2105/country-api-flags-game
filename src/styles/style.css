@@ -8,7 +8,7 @@ padding-bottom: 0.3rem;
 }
 
 #toolBar{
-    width: 6.65rem;
+    width: 7rem;
     margin: 0 auto;
     
 }
@@ -91,7 +91,6 @@ p#final {
 
 p#copyRight {
     margin-top: 2rem;
-    bottom: 8px;
 }
 #rights{
     width: 10rem;
