@@ -26,6 +26,7 @@ let gamePage = document.querySelector("#gamePage");
 let levelChoice = document.querySelector("#level-select");
 let radioBtns = document.querySelectorAll("input[type=radio]");
 let playBtn = document.querySelector("#play");
+let next = document.getElementById("nextBtn");
 // other variables 
 
 let opt2;
@@ -34,11 +35,7 @@ const API_URL = "https://restcountries.eu/rest/v2/all"
 let countryArray;
 let options = [];
 let correctAnswer;
-let next = document.getElementById("nextBtn");
-
-
 let nextFlagAllowed = false;
-
 let difficulty = "medium";
 let indexOfAnswer = 0;
 let easyFlagsImmutable = ["Korea (Republic of)", "Netherlands", "Indonesia", 
@@ -81,7 +78,7 @@ if (localStorage.getItem("player1") === null) {
 } else {
     renderScores()
 }
-let j = 0;
+
 
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
@@ -269,9 +266,6 @@ function getRandomInt(min, max) {
 }
 
 function renderCountryNamesOnBtns(countryNames) {
-/*     first.innerText = countryArray[options[0]].name;
-    second.innerText = countryArray[options[1]].name;
-    third.innerText = countryArray[options[2]].name; */
     first.innerText = countryArray[options[0]].name;
     second.innerText = countryArray[options[1]].name;
     third.innerText = countryArray[options[2]].name;
@@ -298,7 +292,6 @@ function extractFlag(correctAnswer) {
     return countryArray[correctAnswer].flag;
 }
 function shuffle(array) {
-
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * i);
         const temp = array[i];
@@ -326,6 +319,7 @@ function generateOtherCountries(){
      opt3 = getRandomInt(0, countryArray.length);
 
 }
+
 function generateOptionsAsIndexes() {
     let opt1;
     generateOtherCountries();
@@ -355,17 +349,13 @@ function generateOptionsAsIndexes() {
     while(opt2 === indexOfAnswer || indexOfAnswer === opt3 || opt2 === opt3){
         generateOtherCountries();
     }
-
-
-   
-    
-
     return [indexOfAnswer, opt2, opt3];
 }
 
 
 
 function createMasterFlagsArray(){
+    let j = 0;
     for(let i=0; i < countryArray.length; i++){
         if(easyFlagsImmutable.includes(countryArray[i].name) === false && mediumFlagsImmutable.includes(countryArray[i].name) === false && hardFlagsImmutable.includes(countryArray[i].name) === false){
             masterFlagsImmutable[j] = countryArray[i].name;
