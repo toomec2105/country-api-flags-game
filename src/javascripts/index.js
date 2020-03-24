@@ -1,8 +1,5 @@
 import { Player } from "../modulev2/player-module-v2";
 import { Game } from "../modulev2/game-module-v2";
-// set constants for number of options, country array
-// vars: options(array which keeps indexes), correctAnswer(index), userAnswer(index),   
-
 
 /* ----------------------- HTML elements -------------------------- */
 let flagImg = document.getElementById("flag");
@@ -62,6 +59,9 @@ let flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
 let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
 const player2 = new Player(2);
+
+
+
 game.addPlayer(player1);
 game.addPlayer(player2);
 game.setCurrentPlayer(player1); 
@@ -215,7 +215,7 @@ function changeTurn() {
 async function reset() {
     result.innerHTML = "";
     answer.innerHTML = "";
-    options = generateOptionsAsIndexes(); // 56, 78, 134
+    options = generateOptionsAsIndexes(); // np 56, 78, 134
     correctAnswer = options[0]; // 56
     shuffle(options);
     renderCountryNamesOnBtns(extractCountryNames());
@@ -305,19 +305,14 @@ function renderScores() {
     p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
     p1MatchScore.innerHTML = localStorage.getItem("player1");
     p2MatchScore.innerHTML = "  :  " + localStorage.getItem("player2");
-    /* levelNumber.innerHTML = level;
-    matchNumber.innerHTML = flagsPerMatch;
-    playersNumber.innerHTML = game.getNoOfPlayers(); */
 }
-//localStorage.getItem("player1") - match score
-//player1.getScore() -- actual score game.getNoOfTurns()
+
 
 
 
 function generateOtherCountries(){
      opt2 = getRandomInt(0, countryArray.length);
      opt3 = getRandomInt(0, countryArray.length);
-
 }
 
 function generateOptionsAsIndexes() {
