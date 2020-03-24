@@ -135,12 +135,10 @@ next.addEventListener("click", function () {
         nextFlagAllowed = false;
         next.classList.add("invisible");
         next.classList.remove("visible");
-
     }
 });
 
 opt.addEventListener("click", function () {
-    
         optionsPage.classList.remove("invisible");
         gamePage.classList.remove("visible");
         gamePage.classList.add("invisible");
@@ -152,7 +150,6 @@ opt.addEventListener("click", function () {
 playBtn.addEventListener("click", function () {
     opt.classList.remove("bold");
     playBtn.classList.add("bold");
-    
     gamePage.classList.remove("invisible");
     optionsPage.classList.add("invisible");
     optionsPage.classList.remove("visible");
@@ -160,7 +157,6 @@ playBtn.addEventListener("click", function () {
 });
 
 resetBtn.addEventListener("click", function () {
-    
     game.resetCurrentTurn();
     localStorage.setItem('player1', Number(0));
     localStorage.setItem('player2', Number(0));
@@ -192,7 +188,6 @@ function disableRadioButtons() {
     secondInput.disabled = true;
     thirdInput.disabled = true;
 }
-
 function renderAnswer(userGuessed) {
     if (userGuessed) {
         answer.classList.remove("red");
@@ -211,28 +206,12 @@ function renderAnswer(userGuessed) {
 
 async function init() {
     countryArray = await requestCountryData();
-    for(let i=0; i < countryArray.length; i++){
-        if(easyFlagsImmutable.includes(countryArray[i].name) || mediumFlagsImmutable.includes(countryArray[i].name)){
-       
-        }else{
-           masterFlagsImmutable[j] = countryArray[i].name;
-           
-           j++;
-       }
-       }
-       masterFlagsMutable = masterFlagsImmutable.slice();
-
-printSortedArray(masterFlagsImmutable);
+    createMasterFlagsArray();
+    masterFlagsMutable = masterFlagsImmutable.slice();[]
+    printSortedArray(masterFlagsImmutable);
     reset();
 }
-
-function initGame() {
-    console.log("Init game");
-
-
-}
 function initNewMatch() {
-
     if (game.isDraw()) {
         result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
 
@@ -256,6 +235,7 @@ function initNewMatch() {
     player2.setScore(0);
     renderScores();
 }
+
 function updateScore() {
     console.log("Updating score");
     let currPlayer = game.getCurrentPlayer();
@@ -300,36 +280,24 @@ async function reset() {
 
 
 /* ------------------------------ heplers ----------------------------- */
-function isCountryHardEnough(opt){
+function isCountryHardEnough(opt1){
     if(difficulty === "easy"){
-        for(let i=0; i<easyFlagsImmutable.length;i++){
-            if(countryArray[opt].name === easyFlagsImmutable[i]){
-             return true;   
-            }
-        }
+        let index = getRandomInt(0, easyFlagsMutable.length)
+        opt1 = easyFlagsMutable[index];
+        easyFlagsMutable.splice(index, 1);
+    }if(difficulty === "medium"){
+        let index = getRandomInt(0, mediumFlagsMutable.length);
+        opt1 = mediumFlagsMutable[index];
+       mediumFlagsMutable.splice(index, 1);
+    }if(difficulty === "hard"){
+        let index = getRandomInt(0, hardFlagsMutable.length);
+        opt1 = hardFlagsMutable[index];
+        hardFlagsMutable.splice(index, 1);
+    }if(difficulty === "master"){
+        let index = getRandomInt(0, masterFlagsMutable.length);
+        opt1 = masterFlagsMutable[index];
+        masterFlagsMutable.splice(index, 1);
     }
-    if(difficulty === "medium"){
-        for(let i=0; i<mediumFlagsImmutable.length;i++){
-            if(countryArray[opt].name === mediumFlagsImmutable[i]){
-             return true;   
-            }
-        }
-    }
-    if(difficulty === "hard"){
-        for(let i=0; i<easyFlagsImmutable.length;i++){
-            if(countryArray[opt].name === easyFlagsImmutable[i]){
-             return false;   
-            }
-        }
-        for(let i=0; i<mediumFlagsImmutable.length;i++){
-            if(countryArray[opt].name === mediumFlagsImmutable[i]){
-             return false;   
-            }
-        }
-        
-        return true;
-    }
-    return false;
 }
 async function requestCountryData() {
     try {
@@ -424,23 +392,7 @@ function generateOptionsAsIndexes() {
     if(masterFlagsMutable.length < 1){
         masterFlagsMutable = masterFlagsImmutable.slice();
     }
-    if(difficulty === "easy"){
-        let index = getRandomInt(0, easyFlagsMutable.length)
-        opt1 = easyFlagsMutable[index];
-        easyFlagsMutable.splice(index, 1);
-    }if(difficulty === "medium"){
-        let index = getRandomInt(0, mediumFlagsMutable.length);
-        opt1 = mediumFlagsMutable[index];
-       mediumFlagsMutable.splice(index, 1);
-    }if(difficulty === "hard"){
-        let index = getRandomInt(0, hardFlagsMutable.length);
-        opt1 = hardFlagsMutable[index];
-        hardFlagsMutable.splice(index, 1);
-    }if(difficulty === "master"){
-        let index = getRandomInt(0, masterFlagsMutable.length);
-        opt1 = masterFlagsMutable[index];
-        masterFlagsMutable.splice(index, 1);
-    }
+    isCountryHardEnough(opt1);
     for(let i=0; i<countryArray.length; i++){
         if(opt1 === countryArray[i].name){
             indexOfAnswer = i;
@@ -468,5 +420,13 @@ function printSortedArray(arr){
     for(let i=0; i < arr.length; i++){
         
         console.log(arr[i]);
+    }
+}
+function createMasterFlagsArray(){
+    for(let i=0; i < countryArray.length; i++){
+        if(easyFlagsImmutable.includes(countryArray[i].name) === false && mediumFlagsImmutable.includes(countryArray[i].name) === false && hardFlagsImmutable.includes(countryArray[i].name) === false){
+            masterFlagsImmutable[j] = countryArray[i].name;
+            j++;
+        }
     }
 }
