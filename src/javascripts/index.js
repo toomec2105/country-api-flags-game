@@ -87,18 +87,7 @@ let j = 0;
 levelChoice.addEventListener("change", function (event) {
 difficulty = levelChoice.value;
 currentlyUnavailableFlags = [];
-if(difficulty === "easy"){
-    flagsPerMatch = Math.round((easyFlagsImmutable.length-1) / 2);
-}
-if(difficulty === "medium"){
-    flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
-}
-if(difficulty === "hard"){
-    flagsPerMatch = Math.round((hardFlagsImmutable.length -1)/ 2);
-}
-if(difficulty === "master"){
-    flagsPerMatch = Math.round((masterFlagsImmutable.length-1) / 2);
-}
+setQuestionNumber();
 game = new Game("Flag game", flagsPerMatch);
 renderScores();
 reset();
@@ -195,21 +184,7 @@ async function init() {
     reset();
 }
 function initNewMatch() {
-    if (game.isDraw()) {
-        result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
-    }
-    else {
-        if (player1.getScore() > player2.getScore()) {
-            let score = localStorage.getItem("player1");
-            localStorage.setItem("player1", Number(score) + 1);
-            result.innerHTML = "player one has won. No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
-        }
-        else {
-            let score = localStorage.getItem("player2");
-            localStorage.setItem("player2", Number(score) + 1);
-            result.innerHTML = "player two has won. No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
-        }
-    }
+    printMatchResult();
     p1Score.classList.add("activePlayer");
     p2Score.classList.remove("activePlayer");
     player1.setScore(0);
@@ -396,5 +371,38 @@ function createMasterFlagsArray(){
             masterFlagsImmutable[j] = countryArray[i].name;
             j++;
         }
+    }
+}
+
+function printMatchResult(){
+    if (game.isDraw()) {
+        result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+    }
+    else {
+        if (player1.getScore() > player2.getScore()) {
+            let score = localStorage.getItem("player1");
+            localStorage.setItem("player1", Number(score) + 1);
+            result.innerHTML = "player one has won. No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+        }
+        else {
+            let score = localStorage.getItem("player2");
+            localStorage.setItem("player2", Number(score) + 1);
+            result.innerHTML = "player two has won. No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+        }
+    }
+}
+
+function setQuestionNumber(){
+    if(difficulty === "easy"){
+        flagsPerMatch = Math.round((easyFlagsImmutable.length-1) / 2);
+    }
+    if(difficulty === "medium"){
+        flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
+    }
+    if(difficulty === "hard"){
+        flagsPerMatch = Math.round((hardFlagsImmutable.length -1)/ 2);
+    }
+    if(difficulty === "master"){
+        flagsPerMatch = Math.round((masterFlagsImmutable.length-1) / 2);
     }
 }
