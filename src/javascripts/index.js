@@ -83,9 +83,10 @@ if (localStorage.getItem("player1") === null) {
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
 difficulty = levelChoice.value;
-currentlyUnavailableFlags = [];
 setQuestionNumber();
+let currPlayerWhenChangeLVL = game.getCurrentPlayer();
 game = new Game("Flag game", flagsPerMatch);
+game.setCurrentPlayer(currPlayerWhenChangeLVL); 
 renderScores();
 reset();
 });
@@ -98,7 +99,6 @@ form.addEventListener("change", function (event) {
     let userAnswer = getUserAnswer();
     renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
-    gameNumber++;
     renderScores();
     event.preventDefault();
 }, false);
@@ -190,6 +190,7 @@ function initNewMatch() {
 }
 
 function updateScore() {
+    
     let currPlayer = game.getCurrentPlayer();
     currPlayer.setScore(currPlayer.getScore() + 1);
 }
