@@ -383,7 +383,8 @@ function setQuestionNumber(){
         flagsPerMatch = Math.round((easyFlagsImmutable.length-1) / 2);
     }
     if(difficulty === "medium"){
-        flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
+        answer.classList.add("LastAnswer");
+        flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2); 
     }
     if(difficulty === "hard"){
         flagsPerMatch = Math.round((hardFlagsImmutable.length -1)/ 2);
