@@ -24,6 +24,7 @@ let levelChoice = document.querySelector("#level-select");
 let radioBtns = document.querySelectorAll("input[type=radio]");
 let playBtn = document.querySelector("#play");
 let next = document.getElementById("nextBtn");
+let nextDiv = document.getElementById("nextBtnDiv");
 // other variables 
 
 let opt2;
@@ -55,7 +56,7 @@ let mediumFlagsMutable = mediumFlagsImmutable.slice();
 let hardFlagsMutable = hardFlagsImmutable.slice();
 let masterFlagsMutable = [];
 let masterFlagsImmutable = [];
-let flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
+let flagsPerMatch = 2//Math.round((mediumFlagsImmutable.length -1)/ 2);
 let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
 const player2 = new Player(2);
@@ -104,6 +105,10 @@ form.addEventListener("change", function (event) {
 }, false);
 
 next.addEventListener("click", function () {
+    if(nextDiv.classList.contains("bigMargin") === true){
+        nextDiv.classList.remove("bigMargin");
+        nextDiv.classList.add("normalMargin");
+    }
     if (nextFlagAllowed) {
         reset();
         nextFlagAllowed = false;
@@ -181,6 +186,8 @@ async function init() {
     reset();
 }
 function initNewMatch() {
+    nextDiv.classList.remove("normalMargin");
+    nextDiv.classList.add("bigMargin");
     printMatchResult();
     p1Score.classList.add("activePlayer");
     p2Score.classList.remove("activePlayer");
@@ -361,6 +368,7 @@ function createMasterFlagsArray(){
 }
 
 function printMatchResult(){
+   
     if (game.isDraw()) {
         result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }

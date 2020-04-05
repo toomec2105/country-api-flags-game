@@ -120,7 +120,12 @@
     .red {
         color: red;
     }
-    
+    .bigMargin{
+        margin-top: 70px;
+    }
+    .normalMargin{
+        margin-top: 0px;
+    }
     button {
         background-color: buttonface;
         color: buttontext;
@@ -192,6 +197,9 @@
         #nextBtn{
             margin-left: 300px;
         }
+        .bigMargin{
+            margin-top: 130px;
+        }
        
         
     }
@@ -203,7 +211,9 @@
         #nextBtn {
             margin: 1rem auto;
         }
-       
+        .bigMargin{
+        margin-top: 3rem;
+        }
     }
     
     @media only screen and (min-width: 1000px) {
@@ -257,3 +267,4 @@
         } */
         
     }
+    
