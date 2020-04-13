@@ -2,30 +2,32 @@ import { Player } from "../modulev2/player-module-v2";
 import { Game } from "../modulev2/game-module-v2";
 
 /* ----------------------- HTML elements -------------------------- */
-let flagImg = document.getElementById("flag");
-let first = document.querySelector("#options .option:nth-of-type(1) label");
-let second = document.querySelector("#options .option:nth-of-type(2) label");
-let third = document.querySelector("#options .option:nth-of-type(3) label");
-let firstInput = document.getElementById("choice1");
-let secondInput = document.getElementById("choice2");
-let thirdInput = document.getElementById("choice3");
-let answer = document.getElementById("answer");
-let result = document.getElementById("result");
-let form = document.querySelector("form");
-let p1Score = document.querySelector("#rightScore");
-let p2Score = document.querySelector("#leftScore");
-let opt = document.querySelector("#settings");
-let p1MatchScore = document.querySelector("#p1MatchScore");
-let p2MatchScore = document.querySelector("#p2MatchScore");
-let resetBtn = document.querySelector("#resetBtn");
-let optionsPage = document.querySelector("#optionsPage");
-let gamePage = document.querySelector("#gamePage");
-let levelChoice = document.querySelector("#level-select");
-let radioBtns = document.querySelectorAll("input[type=radio]");
-let playBtn = document.querySelector("#play");
-let next = document.getElementById("nextBtn");
-let nextDiv = document.getElementById("nextBtnDiv");
+const flagImg = document.getElementById("flag");
+const first = document.querySelector("#options .option:nth-of-type(1) label");
+const second = document.querySelector("#options .option:nth-of-type(2) label");
+const third = document.querySelector("#options .option:nth-of-type(3) label");
+const firstInput = document.getElementById("choice1");
+const secondInput = document.getElementById("choice2");
+const thirdInput = document.getElementById("choice3");
+const answer = document.getElementById("answer");
+const result = document.getElementById("result");
+const form = document.querySelector("form");
+const p1Score = document.querySelector("#rightScore");
+const p2Score = document.querySelector("#leftScore");
+const opt = document.querySelector("#settings");
+const p1MatchScore = document.querySelector("#p1MatchScore");
+const p2MatchScore = document.querySelector("#p2MatchScore");
+const resetBtn = document.querySelector("#resetBtn");
+const optionsPage = document.querySelector("#optionsPage");
+const gamePage = document.querySelector("#gamePage");
+const levelChoice = document.querySelector("#level-select");
+const radioBtns = document.querySelectorAll("input[type=radio]");
+const playBtn = document.querySelector("#play");
+const next = document.getElementById("nextBtn");
+const nextDiv = document.getElementById("nextBtnDiv");
 // other variables 
+
+
 
 let opt2;
 let opt3;
@@ -60,7 +62,14 @@ let flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
 let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
 const player2 = new Player(2);
-
+next.style.cursor = "pointer";
+resetBtn.style.cursor = "pointer";
+first.style.cursor = "pointer";
+second.style.cursor = "pointer";
+third.style.cursor = "pointer";
+playBtn.style.cursor = "pointer";
+opt.style.cursor = "pointer";
+levelChoice.style.cursor = "pointer";
 
 
 game.addPlayer(player1);
