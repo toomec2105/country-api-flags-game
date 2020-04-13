@@ -70,7 +70,12 @@ third.style.cursor = "pointer";
 playBtn.style.cursor = "pointer";
 opt.style.cursor = "pointer";
 levelChoice.style.cursor = "pointer";
-
+const allFlags = {
+    easy: easyFlagsImmutable,
+    medium: mediumFlagsImmutable,
+    hard: hardFlagsImmutable,
+    master: masterFlagsImmutable
+    }
 
 game.addPlayer(player1);
 game.addPlayer(player2);
@@ -395,18 +400,5 @@ function printMatchResult(){
     }
 }
 
-function setQuestionNumber(){
-    if(difficulty === "easy"){
-        flagsPerMatch = Math.round((easyFlagsImmutable.length-1) / 2);
-    }
-    if(difficulty === "medium"){
-        answer.classList.add("LastAnswer");
-        flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2); 
-    }
-    if(difficulty === "hard"){
-        flagsPerMatch = Math.round((hardFlagsImmutable.length -1)/ 2);
-    }
-    if(difficulty === "master"){
-        flagsPerMatch = Math.round((masterFlagsImmutable.length-1) / 2);
-    }
-}
+        const setQuestionNumber = (difficulty) => Math.round((allFlags[difficulty].length - 1) / 2);
+    
