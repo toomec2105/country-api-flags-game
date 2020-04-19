@@ -1,9 +1,13 @@
+/* eslint no-console: 1 */
+
 import { Player } from "../modulev2/player-module-v2";
 import { Game } from "../modulev2/game-module-v2";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
 const first = document.querySelector("#options .option:nth-of-type(1) label");
+console.log("lint");
+//-------------
 const second = document.querySelector("#options .option:nth-of-type(2) label");
 const third = document.querySelector("#options .option:nth-of-type(3) label");
 const firstInput = document.getElementById("choice1");
@@ -31,34 +35,34 @@ const nextDiv = document.getElementById("nextBtnDiv");
 
 let opt2;
 let opt3;
-const API_URL = "https://restcountries.eu/rest/v2/all"
+const API_URL = "https://restcountries.eu/rest/v2/all";
 let countryArray;
 let options = [];
 let correctAnswer;
 let nextFlagAllowed = false;
 let difficulty = "medium";
 let indexOfAnswer = 0;
-let easyFlagsImmutable = ["Korea (Republic of)", "Netherlands", "Indonesia", 
+const easyFlagsImmutable = ["Korea (Republic of)", "Netherlands", "Indonesia", 
 "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan", 
 "United Kingdom of Great Britain and Northern Ireland", "Sweden","Turkey", "Germany", "United States of America", 
 "Spain", "Cyprus", "Slovakia", "Greece", "Austria", "Croatia", "Italy", "Denmark", "Russian Federation", 
 "Poland", "France", "China", "Uruguay", "Belgium", "Czech Republic", "Ukraine", "Holy See", "Norway","Portugal", "Sudan", "Finland", "Nepal", "New Zeland", "Iceland", "United States Minor Outlying Islands"];
-let mediumFlagsImmutable = [ "Australia", "Puerto Rico", "Korea (Democratic People's Republic of)",  
+const mediumFlagsImmutable = [ "Australia", "Puerto Rico", "Korea (Democratic People's Republic of)",  
 "Mexico",   "Macedonia (the former Yugoslav Republic of)", 
 "Saint Martin (French part)", "Malta", "Luxembourg", "Ireland", "Bulgaria",  "Republic of Kosovo", "Iraq", "India", 
 "Egypt","Chile", "Mongolia",  "Lithuania","Montenegro", "Viet Nam", 
 "Slovenia", "Albania", "Hungary", "Macedonia", "Belarus", 
 "Estonia", "Romania", "Saudi Arabia", "Nicaragua", "Venezuela (Bolivarian Republic of)", "Syrian Arab Republic", "Serbia", "Hong Kong", "Argentina"];
-let hardFlagsImmutable = ["Tunisia", "Liechtenstein", "Bosnia and Herzegovina", "Greenland", "Kenya", "Georgia", "Thailand", "Panama", "Jersey", "Bhutan", "Cambodia", "Tobago",
+const hardFlagsImmutable = ["Tunisia", "Liechtenstein", "Bosnia and Herzegovina", "Greenland", "Kenya", "Georgia", "Thailand", "Panama", "Jersey", "Bhutan", "Cambodia", "Tobago",
 "Kuwait", "Haiti", "Algieria", "Lebanon", "Sri Lanka", "Libya", "Jamaica", "Colombia", "Ecuador", "Paraguay", "Afghanistan", "San Marino", "Sudan", "Andora", "Senegal", "Somalia",
 "Turkmenistan", "Pakistan", "Iran", "Peru", "Cuba", "Honduras", "Jordan", "Uzbekistan", "South Georgia and the South Sandwich Islands", "Papua New Guinea", "Cook Islands",
 "Virgin Islands (British)", "Heard Island and McDonald Islands", "Western Sahara", "Åland Islands", "French Southern Territories", "Nigeria"];
 let easyFlagsMutable = easyFlagsImmutable.slice();
 let mediumFlagsMutable = mediumFlagsImmutable.slice();
-let hardFlagsMutable = hardFlagsImmutable.slice();
+const hardFlagsMutable = hardFlagsImmutable.slice();
 let masterFlagsMutable = [];
-let masterFlagsImmutable = [];
-let flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
+const masterFlagsImmutable = [];
+const flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
 let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
 const player2 = new Player(2);
@@ -75,7 +79,7 @@ const allFlags = {
     medium: mediumFlagsImmutable,
     hard: hardFlagsImmutable,
     master: masterFlagsImmutable
-    }
+    };
 
 game.addPlayer(player1);
 game.addPlayer(player2);
@@ -86,12 +90,12 @@ optionsPage.classList.add("invisible");
 playBtn.classList.add("bold");
 
 if (localStorage.getItem("player1") === null) {
-    localStorage.setItem('player1', Number(0));
-    localStorage.setItem('player2', Number(0));
+    localStorage.setItem("player1", Number(0));
+    localStorage.setItem("player2", Number(0));
     
-    renderScores()
+    renderScores();
 } else {
-    renderScores()
+    renderScores();
 }
 
 
@@ -99,7 +103,7 @@ if (localStorage.getItem("player1") === null) {
 levelChoice.addEventListener("change", function (event) {
 difficulty = levelChoice.value;
 setQuestionNumber();
-let currPlayerWhenChangeLVL = game.getCurrentPlayer();
+const currPlayerWhenChangeLVL = game.getCurrentPlayer();
 game = new Game("Flag game", flagsPerMatch);
 game.setCurrentPlayer(currPlayerWhenChangeLVL); 
 renderScores();
@@ -111,7 +115,7 @@ form.addEventListener("change", function (event) {
     next.classList.remove("invisible");
     next.classList.add("visible");
     disableRadioButtons();
-    let userAnswer = getUserAnswer();
+    const userAnswer = getUserAnswer();
     renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
     renderScores();
@@ -151,8 +155,8 @@ playBtn.addEventListener("click", function () {
 
 resetBtn.addEventListener("click", function () {
     game.resetCurrentTurn();
-    localStorage.setItem('player1', Number(0));
-    localStorage.setItem('player2', Number(0));
+    localStorage.setItem("player1", Number(0));
+    localStorage.setItem("player2", Number(0));
     p1Score.classList.add("activePlayer");
     p2Score.classList.remove("activePlayer");
     game.setCurrentPlayer(player1);
@@ -164,7 +168,7 @@ resetBtn.addEventListener("click", function () {
 
 function getUserAnswer() {
     let userAnswer = "";
-    for (var i = 0; i < radioBtns.length; i++) {
+    for (let i = 0; i < radioBtns.length; i++) {
         if (radioBtns[i].checked) {
             userAnswer = radioBtns[i].value;
         }
@@ -212,7 +216,7 @@ function initNewMatch() {
 
 function updateScore() {
     
-    let currPlayer = game.getCurrentPlayer();
+    const currPlayer = game.getCurrentPlayer();
     currPlayer.setScore(currPlayer.getScore() + 1);
 }
 
@@ -266,8 +270,8 @@ function checkIfOutOfFlags(){
 }
 async function requestCountryData() {
     try {
-        let response = await fetch(API_URL);
-        let countryArray = await response.json();
+        const response = await fetch(API_URL);
+        const countryArray = await response.json();
         return countryArray;
     } catch (error) {
         console.log(error);
@@ -280,10 +284,10 @@ function renderResult(msg) {
  * Returns a random number between min (inclusive) and max(exclusive)
  */
 function getRandomInt(min, max) {
-    let maxExclusive = true;
+    const maxExclusive = true;
     min = Math.ceil(min);
     max = maxExclusive ? Math.floor(max) - 1 : Math.floor(max);
-    let random = Math.floor(Math.random() * (max - min + 1)) + min;
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
     return random;
 }
 
@@ -301,7 +305,7 @@ function setFlagUrl(flag) {
 }
 
 function extractCountryNames() {
-    let names = [];
+    const names = [];
     let countryNmb;
     for (let i = 0; i < options.length; i++) {
         countryNmb = options[i];
@@ -342,19 +346,19 @@ function generateOptionsAsIndexes() {
     generateOtherCountries();
     checkIfOutOfFlags();
     if(difficulty === "easy"){
-        let index = getRandomInt(0, easyFlagsMutable.length)
+        const index = getRandomInt(0, easyFlagsMutable.length);
         opt1 = easyFlagsMutable[index];
         easyFlagsMutable.splice(index, 1);
     }if(difficulty === "medium"){
-        let index = getRandomInt(0, mediumFlagsMutable.length);
+        const index = getRandomInt(0, mediumFlagsMutable.length);
         opt1 = mediumFlagsMutable[index];
        mediumFlagsMutable.splice(index, 1);
     }if(difficulty === "hard"){
-        let index = getRandomInt(0, hardFlagsMutable.length);
+        const index = getRandomInt(0, hardFlagsMutable.length);
         opt1 = hardFlagsMutable[index];
         hardFlagsMutable.splice(index, 1);
     }if(difficulty === "master"){
-        let index = getRandomInt(0, masterFlagsMutable.length);
+        const index = getRandomInt(0, masterFlagsMutable.length);
         opt1 = masterFlagsMutable[index];
         masterFlagsMutable.splice(index, 1);
     }
@@ -388,12 +392,12 @@ function printMatchResult(){
     }
     else {
         if (player1.getScore() > player2.getScore()) {
-            let score = localStorage.getItem("player1");
+            const score = localStorage.getItem("player1");
             localStorage.setItem("player1", Number(score) + 1);
             result.innerHTML = "player one has won. No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
         }
         else {
-            let score = localStorage.getItem("player2");
+            const score = localStorage.getItem("player2");
             localStorage.setItem("player2", Number(score) + 1);
             result.innerHTML = "player two has won. No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
         }
