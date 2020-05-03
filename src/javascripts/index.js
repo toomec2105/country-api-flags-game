@@ -42,27 +42,27 @@ let correctAnswer;
 let nextFlagAllowed = false;
 let difficulty = "medium";
 let indexOfAnswer = 0;
-const easyFlagsImmutable = ["Korea (Republic of)", "Netherlands", "Indonesia", 
-"Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan", 
-"United Kingdom of Great Britain and Northern Ireland", "Sweden","Turkey", "Germany", "United States of America", 
-"Spain", "Cyprus", "Slovakia", "Greece", "Austria", "Croatia", "Italy", "Denmark", "Russian Federation", 
-"Poland", "France", "China", "Uruguay", "Belgium", "Czech Republic", "Ukraine", "Holy See", "Norway","Portugal", "Sudan", "Finland", "Nepal", "New Zeland", "Iceland", "United States Minor Outlying Islands"];
-const mediumFlagsImmutable = [ "Australia", "Puerto Rico", "Korea (Democratic People's Republic of)",  
-"Mexico",   "Macedonia (the former Yugoslav Republic of)", 
-"Saint Martin (French part)", "Malta", "Luxembourg", "Ireland", "Bulgaria",  "Republic of Kosovo", "Iraq", "India", 
-"Egypt","Chile", "Mongolia",  "Lithuania","Montenegro", "Viet Nam", 
-"Slovenia", "Albania", "Hungary", "Macedonia", "Belarus", 
-"Estonia", "Romania", "Saudi Arabia", "Nicaragua", "Venezuela (Bolivarian Republic of)", "Syrian Arab Republic", "Serbia", "Hong Kong", "Argentina"];
+const easyFlagsImmutable = ["Korea (Republic of)", "Netherlands", "Indonesia",
+    "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan",
+    "United Kingdom of Great Britain and Northern Ireland", "Sweden", "Turkey", "Germany", "United States of America",
+    "Spain", "Cyprus", "Slovakia", "Greece", "Austria", "Croatia", "Italy", "Denmark", "Russian Federation",
+    "Poland", "France", "China", "Uruguay", "Belgium", "Czech Republic", "Ukraine", "Holy See", "Norway", "Portugal", "Sudan", "Finland", "Nepal", "New Zeland", "Iceland", "United States Minor Outlying Islands"];
+const mediumFlagsImmutable = ["Australia", "Puerto Rico", "Korea (Democratic People's Republic of)",
+    "Mexico", "Macedonia (the former Yugoslav Republic of)",
+    "Saint Martin (French part)", "Malta", "Luxembourg", "Ireland", "Bulgaria", "Republic of Kosovo", "Iraq", "India",
+    "Egypt", "Chile", "Mongolia", "Lithuania", "Montenegro", "Viet Nam",
+    "Slovenia", "Albania", "Hungary", "Macedonia", "Belarus",
+    "Estonia", "Romania", "Saudi Arabia", "Nicaragua", "Venezuela (Bolivarian Republic of)", "Syrian Arab Republic", "Serbia", "Hong Kong", "Argentina"];
 const hardFlagsImmutable = ["Tunisia", "Liechtenstein", "Bosnia and Herzegovina", "Greenland", "Kenya", "Georgia", "Thailand", "Panama", "Jersey", "Bhutan", "Cambodia", "Tobago",
-"Kuwait", "Haiti", "Algieria", "Lebanon", "Sri Lanka", "Libya", "Jamaica", "Colombia", "Ecuador", "Paraguay", "Afghanistan", "San Marino", "Sudan", "Andora", "Senegal", "Somalia",
-"Turkmenistan", "Pakistan", "Iran", "Peru", "Cuba", "Honduras", "Jordan", "Uzbekistan", "South Georgia and the South Sandwich Islands", "Papua New Guinea", "Cook Islands",
-"Virgin Islands (British)", "Heard Island and McDonald Islands", "Western Sahara", "Åland Islands", "French Southern Territories", "Nigeria"];
+    "Kuwait", "Haiti", "Algieria", "Lebanon", "Sri Lanka", "Libya", "Jamaica", "Colombia", "Ecuador", "Paraguay", "Afghanistan", "San Marino", "Sudan", "Andora", "Senegal", "Somalia",
+    "Turkmenistan", "Pakistan", "Iran", "Peru", "Cuba", "Honduras", "Jordan", "Uzbekistan", "South Georgia and the South Sandwich Islands", "Papua New Guinea", "Cook Islands",
+    "Virgin Islands (British)", "Heard Island and McDonald Islands", "Western Sahara", "Åland Islands", "French Southern Territories", "Nigeria"];
 let easyFlagsMutable = easyFlagsImmutable.slice();
 let mediumFlagsMutable = mediumFlagsImmutable.slice();
 const hardFlagsMutable = hardFlagsImmutable.slice();
 let masterFlagsMutable = [];
 const masterFlagsImmutable = [];
-const flagsPerMatch = Math.round((mediumFlagsImmutable.length -1)/ 2);
+const flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
 const player2 = new Player(2);
@@ -79,11 +79,11 @@ const allFlags = {
     medium: mediumFlagsImmutable,
     hard: hardFlagsImmutable,
     master: masterFlagsImmutable
-    };
+};
 
 game.addPlayer(player1);
 game.addPlayer(player2);
-game.setCurrentPlayer(player1); 
+game.setCurrentPlayer(player1);
 init();
 p1Score.classList.add("activePlayer");
 optionsPage.classList.add("invisible");
@@ -92,7 +92,7 @@ playBtn.classList.add("bold");
 if (localStorage.getItem("player1") === null) {
     localStorage.setItem("player1", Number(0));
     localStorage.setItem("player2", Number(0));
-    
+
     renderScores();
 } else {
     renderScores();
@@ -101,13 +101,13 @@ if (localStorage.getItem("player1") === null) {
 
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
-difficulty = levelChoice.value;
-setQuestionNumber();
-const currPlayerWhenChangeLVL = game.getCurrentPlayer();
-game = new Game("Flag game", flagsPerMatch);
-game.setCurrentPlayer(currPlayerWhenChangeLVL); 
-renderScores();
-reset();
+    difficulty = levelChoice.value;
+    setQuestionNumber(difficulty);
+    const currPlayerWhenChangeLVL = game.getCurrentPlayer();
+    game = new Game("Flag game", flagsPerMatch);
+    game.setCurrentPlayer(currPlayerWhenChangeLVL);
+    renderScores();
+    reset();
 });
 
 form.addEventListener("change", function (event) {
@@ -123,7 +123,7 @@ form.addEventListener("change", function (event) {
 }, false);
 
 next.addEventListener("click", function () {
-    if(nextDiv.classList.contains("bigMargin") === true){
+    if (nextDiv.classList.contains("bigMargin") === true) {
         nextDiv.classList.remove("bigMargin");
         nextDiv.classList.add("normalMargin");
     }
@@ -136,12 +136,12 @@ next.addEventListener("click", function () {
 });
 
 opt.addEventListener("click", function () {
-        optionsPage.classList.remove("invisible");
-        gamePage.classList.remove("visible");
-        gamePage.classList.add("invisible");
-        optionsPage.classList.add("visible");
-        playBtn.classList.remove("bold");
-        opt.classList.add("bold");
+    optionsPage.classList.remove("invisible");
+    gamePage.classList.remove("visible");
+    gamePage.classList.add("invisible");
+    optionsPage.classList.add("visible");
+    playBtn.classList.remove("bold");
+    opt.classList.add("bold");
 });
 
 playBtn.addEventListener("click", function () {
@@ -215,7 +215,7 @@ function initNewMatch() {
 }
 
 function updateScore() {
-    
+
     const currPlayer = game.getCurrentPlayer();
     currPlayer.setScore(currPlayer.getScore() + 1);
 }
@@ -257,14 +257,14 @@ async function reset() {
 
 
 /* ------------------------------ heplers ----------------------------- */
-function checkIfOutOfFlags(){
-    if(easyFlagsMutable.length < 1){
+function checkIfOutOfFlags() {
+    if (easyFlagsMutable.length < 1) {
         easyFlagsMutable = easyFlagsImmutable.slice();
     }
-    if(mediumFlagsMutable.length < 1){
+    if (mediumFlagsMutable.length < 1) {
         mediumFlagsMutable = mediumFlagsImmutable.slice();
     }
-    if(masterFlagsMutable.length < 1){
+    if (masterFlagsMutable.length < 1) {
         masterFlagsMutable = masterFlagsImmutable.slice();
     }
 }
@@ -336,38 +336,38 @@ function renderScores() {
 
 
 
-function generateOtherCountries(){
-     opt2 = getRandomInt(0, countryArray.length);
-     opt3 = getRandomInt(0, countryArray.length);
+function generateOtherCountries() {
+    opt2 = getRandomInt(0, countryArray.length);
+    opt3 = getRandomInt(0, countryArray.length);
 }
 
 function generateOptionsAsIndexes() {
     let opt1;
     generateOtherCountries();
     checkIfOutOfFlags();
-    if(difficulty === "easy"){
+    if (difficulty === "easy") {
         const index = getRandomInt(0, easyFlagsMutable.length);
         opt1 = easyFlagsMutable[index];
         easyFlagsMutable.splice(index, 1);
-    }if(difficulty === "medium"){
+    } if (difficulty === "medium") {
         const index = getRandomInt(0, mediumFlagsMutable.length);
         opt1 = mediumFlagsMutable[index];
-       mediumFlagsMutable.splice(index, 1);
-    }if(difficulty === "hard"){
+        mediumFlagsMutable.splice(index, 1);
+    } if (difficulty === "hard") {
         const index = getRandomInt(0, hardFlagsMutable.length);
         opt1 = hardFlagsMutable[index];
         hardFlagsMutable.splice(index, 1);
-    }if(difficulty === "master"){
+    } if (difficulty === "master") {
         const index = getRandomInt(0, masterFlagsMutable.length);
         opt1 = masterFlagsMutable[index];
         masterFlagsMutable.splice(index, 1);
     }
-    for(let i=0; i<countryArray.length; i++){
-        if(opt1 === countryArray[i].name){
+    for (let i = 0; i < countryArray.length; i++) {
+        if (opt1 === countryArray[i].name) {
             indexOfAnswer = i;
         }
     }
-    while(opt2 === indexOfAnswer || indexOfAnswer === opt3 || opt2 === opt3){
+    while (opt2 === indexOfAnswer || indexOfAnswer === opt3 || opt2 === opt3) {
         generateOtherCountries();
     }
     return [indexOfAnswer, opt2, opt3];
@@ -375,18 +375,18 @@ function generateOptionsAsIndexes() {
 
 
 
-function createMasterFlagsArray(){
+function createMasterFlagsArray() {
     let j = 0;
-    for(let i=0; i < countryArray.length; i++){
-        if(easyFlagsImmutable.includes(countryArray[i].name) === false && mediumFlagsImmutable.includes(countryArray[i].name) === false && hardFlagsImmutable.includes(countryArray[i].name) === false){
+    for (let i = 0; i < countryArray.length; i++) {
+        if (easyFlagsImmutable.includes(countryArray[i].name) === false && mediumFlagsImmutable.includes(countryArray[i].name) === false && hardFlagsImmutable.includes(countryArray[i].name) === false) {
             masterFlagsImmutable[j] = countryArray[i].name;
             j++;
         }
     }
 }
 
-function printMatchResult(){
-   
+function printMatchResult() {
+
     if (game.isDraw()) {
         result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }
@@ -404,5 +404,7 @@ function printMatchResult(){
     }
 }
 
-        const setQuestionNumber = (difficulty) => Math.round((allFlags[difficulty].length - 1) / 2);
+const setQuestionNumber = (difficulty) => {
     
+    Math.round((allFlags[difficulty].length - 1) / 2);
+}
