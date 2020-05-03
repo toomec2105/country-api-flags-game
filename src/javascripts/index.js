@@ -62,7 +62,7 @@ let mediumFlagsMutable = mediumFlagsImmutable.slice();
 const hardFlagsMutable = hardFlagsImmutable.slice();
 let masterFlagsMutable = [];
 const masterFlagsImmutable = [];
-const flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
+let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
 const player2 = new Player(2);
@@ -102,7 +102,7 @@ if (localStorage.getItem("player1") === null) {
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
     difficulty = levelChoice.value;
-    setQuestionNumber(difficulty);
+    flagsPerMatch = setQuestionNumber();
     const currPlayerWhenChangeLVL = game.getCurrentPlayer();
     game = new Game("Flag game", flagsPerMatch);
     game.setCurrentPlayer(currPlayerWhenChangeLVL);
@@ -345,23 +345,13 @@ function generateOptionsAsIndexes() {
     let opt1;
     generateOtherCountries();
     checkIfOutOfFlags();
-    if (difficulty === "easy") {
-        const index = getRandomInt(0, easyFlagsMutable.length);
-        opt1 = easyFlagsMutable[index];
-        easyFlagsMutable.splice(index, 1);
-    } if (difficulty === "medium") {
-        const index = getRandomInt(0, mediumFlagsMutable.length);
-        opt1 = mediumFlagsMutable[index];
-        mediumFlagsMutable.splice(index, 1);
-    } if (difficulty === "hard") {
-        const index = getRandomInt(0, hardFlagsMutable.length);
-        opt1 = hardFlagsMutable[index];
-        hardFlagsMutable.splice(index, 1);
-    } if (difficulty === "master") {
-        const index = getRandomInt(0, masterFlagsMutable.length);
-        opt1 = masterFlagsMutable[index];
-        masterFlagsMutable.splice(index, 1);
-    }
+    const mutableArray = allFlags[difficulty];
+    
+   
+        const index = getRandomInt(0, mutableArray.length);
+        opt1 = mutableArray[index];
+        mutableArray.splice(index, 1);
+    
     for (let i = 0; i < countryArray.length; i++) {
         if (opt1 === countryArray[i].name) {
             indexOfAnswer = i;
@@ -404,7 +394,4 @@ function printMatchResult() {
     }
 }
 
-const setQuestionNumber = (difficulty) => {
-    
-    Math.round((allFlags[difficulty].length - 1) / 2);
-}
+const setQuestionNumber = () => Math.round((allFlags[difficulty].length - 1) / 2);
