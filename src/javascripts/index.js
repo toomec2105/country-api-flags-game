@@ -368,7 +368,9 @@ function generateOptionsAsIndexes() {
 function createMasterFlagsArray() {
     let j = 0;
     for (let i = 0; i < countryArray.length; i++) {
-        if (easyFlagsImmutable.includes(countryArray[i].name) === false && mediumFlagsImmutable.includes(countryArray[i].name) === false && hardFlagsImmutable.includes(countryArray[i].name) === false) {
+        if (!easyFlagsImmutable.includes(countryArray[i].name) && 
+        !mediumFlagsImmutable.includes(countryArray[i].name) && 
+        !hardFlagsImmutable.includes(countryArray[i].name)) {
             masterFlagsImmutable[j] = countryArray[i].name;
             j++;
         }
