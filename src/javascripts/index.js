@@ -287,7 +287,8 @@ function getRandomInt(min, max) {
     const maxExclusive = true;
     min = Math.ceil(min);
     max = maxExclusive ? Math.floor(max) - 1 : Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;;
+}
 
 function renderCountryNamesOnBtns(countryNames) {
     first.innerText = countryArray[options[0]].name;
@@ -306,8 +307,7 @@ function extractCountryNames() {
     const names = [];
     let countryNmb;
     for (let i = 0; i < options.length; i++) {
-        countryNmb = options[i];
-        names[i] = countryArray[countryNmb].name;
+        names[i] = countryArray[options[i]].name;
     }
     return names;
 }
