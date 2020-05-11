@@ -287,9 +287,7 @@ function getRandomInt(min, max) {
     const maxExclusive = true;
     min = Math.ceil(min);
     max = maxExclusive ? Math.floor(max) - 1 : Math.floor(max);
-    const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    return random;
-}
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 
 function renderCountryNamesOnBtns(countryNames) {
     first.innerText = countryArray[options[0]].name;
