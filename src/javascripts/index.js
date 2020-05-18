@@ -74,6 +74,7 @@ third.style.cursor = "pointer";
 playBtn.style.cursor = "pointer";
 opt.style.cursor = "pointer";
 levelChoice.style.cursor = "pointer";
+
 const allFlags = {
     easy: easyFlagsImmutable,
     medium: mediumFlagsImmutable,
