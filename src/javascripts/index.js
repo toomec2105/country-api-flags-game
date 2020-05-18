@@ -2,11 +2,11 @@
 
 import { Player } from "../modulev2/player-module-v2";
 import { Game } from "../modulev2/game-module-v2";
+import { getAPIDataAsJsObjects } from "../modulev2/api-data-fetcher";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
 const first = document.querySelector("#options .option:nth-of-type(1) label");
-console.log("lint");
 //-------------
 const second = document.querySelector("#options .option:nth-of-type(2) label");
 const third = document.querySelector("#options .option:nth-of-type(3) label");
@@ -35,7 +35,7 @@ const nextDiv = document.getElementById("nextBtnDiv");
 
 let opt2;
 let opt3;
-const API_URL = "https://restcountries.eu/rest/v2/all";
+export const API_URL = "https://restcountries.eu/rest/v2/all";
 let countryArray;
 let options = [];
 let correctAnswer;
@@ -50,11 +50,11 @@ const easyFlagsImmutable = ["Korea (Republic of)", "Netherlands", "Indonesia",
 const mediumFlagsImmutable = ["Australia", "Puerto Rico", "Korea (Democratic People's Republic of)",
     "Mexico", "Macedonia (the former Yugoslav Republic of)",
     "Saint Martin (French part)", "Malta", "Luxembourg", "Ireland", "Bulgaria", "Republic of Kosovo", "Iraq", "India",
-    "Egypt", "Chile", "Mongolia", "Lithuania", "Montenegro", "Viet Nam",
+    "Egypt", "Chile", "Mongolia", "Lithuania", "Montenegro", "Viet Nam", "Jamaica",
     "Slovenia", "Albania", "Hungary", "Macedonia", "Belarus",
     "Estonia", "Romania", "Saudi Arabia", "Nicaragua", "Venezuela (Bolivarian Republic of)", "Syrian Arab Republic", "Serbia", "Hong Kong", "Argentina"];
 const hardFlagsImmutable = ["Tunisia", "Liechtenstein", "Bosnia and Herzegovina", "Greenland", "Kenya", "Georgia", "Thailand", "Panama", "Jersey", "Bhutan", "Cambodia", "Tobago",
-    "Kuwait", "Haiti", "Algieria", "Lebanon", "Sri Lanka", "Libya", "Jamaica", "Colombia", "Ecuador", "Paraguay", "Afghanistan", "San Marino", "Sudan", "Andora", "Senegal", "Somalia",
+    "Kuwait", "Haiti", "Algieria", "Lebanon", "Sri Lanka", "Libya", "Colombia", "Ecuador", "Paraguay", "Afghanistan", "San Marino", "Sudan", "Andora", "Senegal", "Somalia",
     "Turkmenistan", "Pakistan", "Iran", "Peru", "Cuba", "Honduras", "Jordan", "Uzbekistan", "South Georgia and the South Sandwich Islands", "Papua New Guinea", "Cook Islands",
     "Virgin Islands (British)", "Heard Island and McDonald Islands", "Western Sahara", "Åland Islands", "French Southern Territories", "Nigeria"];
 let easyFlagsMutable = easyFlagsImmutable.slice();
@@ -199,7 +199,7 @@ function renderAnswer(userGuessed) {
 /* ------------------------------ main methods --------------------------- */
 
 async function init() {
-    countryArray = await requestCountryData();
+    countryArray = await getAPIDataAsJsObjects(API_URL);
     createMasterFlagsArray();
     masterFlagsMutable = masterFlagsImmutable.slice();
     reset();
@@ -269,15 +269,7 @@ function checkIfOutOfFlags() {
         masterFlagsMutable = masterFlagsImmutable.slice();
     }
 }
-async function requestCountryData() {
-    try {
-        const response = await fetch(API_URL);
-        const countryArray = await response.json();
-        return countryArray;
-    } catch (error) {
-        console.log(error);
-    }
-}
+// xxx
 function renderResult(msg) {
     answer.innerHTML = msg;
 }
