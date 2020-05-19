@@ -75,6 +75,8 @@ playBtn.style.cursor = "pointer";
 opt.style.cursor = "pointer";
 levelChoice.style.cursor = "pointer";
 
+
+//module that takes 4 arrays and creates a js object with difficulties
 const allFlags = {
     easy: easyFlagsImmutable,
     medium: mediumFlagsImmutable,
@@ -82,10 +84,12 @@ const allFlags = {
     master: masterFlagsImmutable
 };
 
+
+
+init();
 game.addPlayer(player1);
 game.addPlayer(player2);
 game.setCurrentPlayer(player1);
-init();
 p1Score.classList.add("activePlayer");
 optionsPage.classList.add("invisible");
 playBtn.classList.add("bold");
