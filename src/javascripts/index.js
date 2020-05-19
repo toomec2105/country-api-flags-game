@@ -87,9 +87,11 @@ const allFlags = {
 
 
 init();
+// module doing the game stuff
 game.addPlayer(player1);
 game.addPlayer(player2);
 game.setCurrentPlayer(player1);
+
 p1Score.classList.add("activePlayer");
 optionsPage.classList.add("invisible");
 playBtn.classList.add("bold");
@@ -170,7 +172,7 @@ resetBtn.addEventListener("click", function () {
     renderScores();
 });
 
-
+//can be set into a module
 function getUserAnswer() {
     let userAnswer = "";
     for (let i = 0; i < radioBtns.length; i++) {
@@ -180,12 +182,15 @@ function getUserAnswer() {
     }
     return userAnswer;
 }
-
+// maby maby sth like disableButtons(btn1, btn2);
 function disableRadioButtons() {
     firstInput.disabled = true;
     secondInput.disabled = true;
     thirdInput.disabled = true;
 }
+
+
+//this is useful
 function renderAnswer(userGuessed) {
     if (userGuessed) {
         answer.classList.remove("red");
@@ -219,12 +224,12 @@ function initNewMatch() {
     renderScores();
 }
 
+//must be
 function updateScore() {
-
     const currPlayer = game.getCurrentPlayer();
     currPlayer.setScore(currPlayer.getScore() + 1);
 }
-
+//also important
 function changeTurn() {
     if (game.getCurrentTurn() < game.getNoOfTurns()) {
         game.incrementTurn();
@@ -251,6 +256,7 @@ async function reset() {
     shuffle(options);
     renderCountryNamesOnBtns(extractCountryNames());
     setFlagUrl(extractFlag(correctAnswer));
+    //disableInputs();
     firstInput.disabled = false;
     secondInput.disabled = false;
     thirdInput.disabled = false;
@@ -268,6 +274,9 @@ function checkIfOutOfFlags() {
     }
     if (mediumFlagsMutable.length < 1) {
         mediumFlagsMutable = mediumFlagsImmutable.slice();
+    }
+    if (hardFlagsMutable.length < 1) {
+        hardFlagsMutable = hardFlagsImmutable.slice();
     }
     if (masterFlagsMutable.length < 1) {
         masterFlagsMutable = masterFlagsImmutable.slice();
