@@ -295,7 +295,7 @@ function getRandomInt(min, max) {
     max = maxExclusive ? Math.floor(max) - 1 : Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;;
 }
-
+//possibly
 function renderCountryNamesOnBtns(countryNames) {
     first.innerText = countryArray[options[0]].name;
     second.innerText = countryArray[options[1]].name;
@@ -304,11 +304,11 @@ function renderCountryNamesOnBtns(countryNames) {
     secondInput.value = options[1];
     thirdInput.value = options[2];
 }
-
+//its only for flag program
 function setFlagUrl(flag) {
     flagImg.src = flag;
 }
-
+//get things from an object np capitals
 function extractCountryNames() {
     const names = [];
     let countryNmb;
@@ -317,10 +317,12 @@ function extractCountryNames() {
     }
     return names;
 }
-
+//can work
 function extractFlag(correctAnswer) {
     return countryArray[correctAnswer].flag;
 }
+
+//works everywhere
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * i);
@@ -329,7 +331,7 @@ function shuffle(array) {
         array[j] = temp;
     }
 }
-
+//can be used
 function renderScores() {
     p1Score.innerHTML = player1.getScore() + "/" + game.getNoOfTurns();
     p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
@@ -382,7 +384,7 @@ function createMasterFlagsArray() {
         }
     }
 }
-
+//will work for simmilar programs
 function printMatchResult() {
 
     if (game.isDraw()) {
@@ -401,5 +403,5 @@ function printMatchResult() {
         }
     }
 }
-
+//also usefull
 const setQuestionNumber = () => Math.round((allFlags[difficulty].length - 1) / 2);
