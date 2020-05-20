@@ -304,7 +304,6 @@ function setFlagUrl(flag) {
 //get things from an object np capitals
 function extractCountryNames() {
     const names = [];
-    let countryNmb;
     for (let i = 0; i < options.length; i++) {
         names[i] = countryArray[options[i]].name;
     }
@@ -317,13 +316,8 @@ function extractFlag(correctAnswer) {
 
 //works everywhere
 function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * i);
-        let temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
+    array.sort(() => Math.random() - 0.5);
+  }
 //can be used
 function renderScores() {
     p1Score.innerHTML = player1.getScore() + "/" + game.getNoOfTurns();
