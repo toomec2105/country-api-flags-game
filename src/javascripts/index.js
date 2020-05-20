@@ -51,7 +51,7 @@ const mediumFlagsImmutable = ["Australia", "Puerto Rico", "Korea (Democratic Peo
     "Mexico", "Macedonia (the former Yugoslav Republic of)",
     "Saint Martin (French part)", "Malta", "Luxembourg", "Ireland", "Bulgaria", "Republic of Kosovo", "Iraq", "India",
     "Egypt", "Chile", "Mongolia", "Lithuania", "Montenegro", "Viet Nam", "Jamaica",
-    "Slovenia", "Albania", "Hungary", "Macedonia", "Belarus",
+    "Slovenia", "Albania", "Hungary", "Belarus",
     "Estonia", "Romania", "Saudi Arabia", "Nicaragua", "Venezuela (Bolivarian Republic of)", "Syrian Arab Republic", "Serbia", "Hong Kong", "Argentina"];
 const hardFlagsImmutable = ["Tunisia", "Liechtenstein", "Bosnia and Herzegovina", "Greenland", "Kenya", "Georgia", "Thailand", "Panama", "Jersey", "Bhutan", "Cambodia", "Tobago",
     "Kuwait", "Haiti", "Algieria", "Lebanon", "Sri Lanka", "Libya", "Colombia", "Ecuador", "Paraguay", "Afghanistan", "San Marino", "Sudan", "Andora", "Senegal", "Somalia",
@@ -271,7 +271,7 @@ async function reset() {
 function checkIfOutOfFlags() {
     
     if(allFlags[difficulty].length < 2){
-  eval(varString + " = " + newValue);
+  debugger;
         allFlags[difficulty] = eval(difficulty + "FlagsImmutable").slice();
     }
 }
