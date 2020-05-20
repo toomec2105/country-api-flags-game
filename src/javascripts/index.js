@@ -270,17 +270,9 @@ async function reset() {
 /* ------------------------------ heplers ----------------------------- */
 function checkIfOutOfFlags() {
     
-    if (allFlags["easy"].length < 2) {
-        allFlags["easy"] = easyFlagsImmutable.slice();
-    }
-    if (allFlags["medium"].length < 2) {
-        allFlags["medium"] = mediumFlagsImmutable.slice();
-        }
-    if (allFlags["hard"].length < 2) {
-        allFlags["hard"] = hardFlagsImmutable.slice();
-    }
-    if (allFlags["master"].length < 2) {
-        allFlags["master"] = masterFlagsImmutable.slice();
+    if(allFlags[difficulty].length < 2){
+  eval(varString + " = " + newValue);
+        allFlags[difficulty] = eval(difficulty + "FlagsImmutable").slice();
     }
 }
 // xxx
