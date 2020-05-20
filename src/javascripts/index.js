@@ -77,11 +77,11 @@ levelChoice.style.cursor = "pointer";
 
 
 //module that takes 4 arrays and creates a js object with difficulties
-const allFlags = {
-    easy: easyFlagsImmutable,
-    medium: mediumFlagsImmutable,
-    hard: hardFlagsImmutable,
-    master: masterFlagsImmutable
+let allFlags = {
+    easy: easyFlagsMutable,
+    medium: mediumFlagsMutable,
+    hard: hardFlagsMutable,
+    master: masterFlagsMutable
 };
 
 
@@ -269,17 +269,18 @@ async function reset() {
 
 /* ------------------------------ heplers ----------------------------- */
 function checkIfOutOfFlags() {
-    if (easyFlagsMutable.length < 1) {
-        easyFlagsMutable = easyFlagsImmutable.slice();
+    
+    if (allFlags["easy"].length < 2) {
+        allFlags["easy"] = easyFlagsImmutable.slice();
     }
-    if (mediumFlagsMutable.length < 1) {
-        mediumFlagsMutable = mediumFlagsImmutable.slice();
+    if (allFlags["medium"].length < 2) {
+        allFlags["medium"] = mediumFlagsImmutable.slice();
+        }
+    if (allFlags["hard"].length < 2) {
+        allFlags["hard"] = hardFlagsImmutable.slice();
     }
-    if (hardFlagsMutable.length < 1) {
-        hardFlagsMutable = hardFlagsImmutable.slice();
-    }
-    if (masterFlagsMutable.length < 1) {
-        masterFlagsMutable = masterFlagsImmutable.slice();
+    if (allFlags["master"].length < 2) {
+        allFlags["master"] = masterFlagsImmutable.slice();
     }
 }
 // xxx
@@ -326,7 +327,7 @@ function extractFlag(correctAnswer) {
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * i);
-        const temp = array[i];
+        let temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
@@ -352,7 +353,6 @@ function generateOptionsAsIndexes() {
     generateOtherCountries();
     checkIfOutOfFlags();
     const mutableArray = allFlags[difficulty];
-    
    
         const index = getRandomInt(0, mutableArray.length);
         opt1 = mutableArray[index];
