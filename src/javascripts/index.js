@@ -5,6 +5,7 @@ import { Game } from "../modulev2/game-module-v2";
 import { getAPIDataAsJsObjects } from "../modulev2/api-data-fetcher";
 import { getRandomInt } from "../modulev2/getRandomInt";
 import { disableRadioButtons } from "../modulev2/disableRadioButtons";
+import { extractElementsProperties } from "../modulev2/extractCountryNames";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -36,8 +37,8 @@ const nextDiv = document.getElementById("nextBtnDiv");
 let opt2;
 let opt3;
 export const API_URL = "https://restcountries.eu/rest/v2/all";
-let countryArray;
-let options = [];
+export let countryArray;
+export let options = [];
 let correctAnswer;
 let nextFlagAllowed = false;
 let difficulty = "medium";
@@ -245,7 +246,7 @@ async function reset() {
     options = generateOptionsAsIndexes(); // np 56, 78, 134
     correctAnswer = options[0]; // 56
     shuffle(options);
-    renderCountryNamesOnBtns(extractCountryNames());
+    renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
     setFlagUrl(extractFlag(correctAnswer));
     //disableInputs();
     topRadioButton.disabled = false;
@@ -282,14 +283,6 @@ function renderCountryNamesOnBtns(countryNames) {
 //its only for flag program
 function setFlagUrl(flag) {
     flagImg.src = flag;
-}
-//get things from an object np capitals
-function extractCountryNames() {
-    const names = [];
-    for (let i = 0; i < options.length; i++) {
-        names[i] = countryArray[options[i]].name;
-    }
-    return names;
 }
 //can work
 function extractFlag(correctAnswer) {

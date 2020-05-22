@@ -2,7 +2,7 @@
 export function disableRadioButtons(buttonsArray) {
 
     if (Array.isArray(buttonsArray)) {
-        var i;
+        let i;
         for (i = 0; i < buttonsArray.length; i++) {
             buttonsArray[i].disabled = true;
         }
