@@ -4,6 +4,7 @@ import { Player } from "../modulev2/player-module-v2";
 import { Game } from "../modulev2/game-module-v2";
 import { getAPIDataAsJsObjects } from "../modulev2/api-data-fetcher";
 import { getRandomInt } from "../modulev2/getRandomInt";
+import { disableRadioButtons } from "../modulev2/disableRadioButtons";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -11,9 +12,9 @@ const first = document.querySelector("#options .option:nth-of-type(1) label");
 //-------------
 const second = document.querySelector("#options .option:nth-of-type(2) label");
 const third = document.querySelector("#options .option:nth-of-type(3) label");
-const firstInput = document.getElementById("choice1");
-const secondInput = document.getElementById("choice2");
-const thirdInput = document.getElementById("choice3");
+const topRadioButton = document.getElementById("choice1");
+const middleRadioButton = document.getElementById("choice2");
+const bottomRadioButton = document.getElementById("choice3");
 const answer = document.getElementById("answer");
 const result = document.getElementById("result");
 const form = document.querySelector("form");
@@ -31,8 +32,6 @@ const playBtn = document.querySelector("#play");
 const next = document.getElementById("nextBtn");
 const nextDiv = document.getElementById("nextBtnDiv");
 // other variables 
-
-
 
 let opt2;
 let opt3;
@@ -88,7 +87,6 @@ let allFlags = {
 
 
 init();
-// module doing the game stuff
 game.addPlayer(player1);
 game.addPlayer(player2);
 game.setCurrentPlayer(player1);
@@ -122,7 +120,7 @@ form.addEventListener("change", function (event) {
     nextFlagAllowed = true;
     next.classList.remove("invisible");
     next.classList.add("visible");
-    disableRadioButtons();
+    disableRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton]);
     const userAnswer = getUserAnswer();
     renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
@@ -183,14 +181,6 @@ function getUserAnswer() {
     }
     return userAnswer;
 }
-// maby maby sth like disableButtons(btn1, btn2);
-function disableRadioButtons() {
-    firstInput.disabled = true;
-    secondInput.disabled = true;
-    thirdInput.disabled = true;
-}
-
-
 //this is useful
 function renderAnswer(userGuessed) {
     if (userGuessed) {
@@ -258,12 +248,12 @@ async function reset() {
     renderCountryNamesOnBtns(extractCountryNames());
     setFlagUrl(extractFlag(correctAnswer));
     //disableInputs();
-    firstInput.disabled = false;
-    secondInput.disabled = false;
-    thirdInput.disabled = false;
-    firstInput.checked = false;
-    secondInput.checked = false;
-    thirdInput.checked = false;
+    topRadioButton.disabled = false;
+    middleRadioButton.disabled = false;
+    bottomRadioButton.disabled = false;
+    topRadioButton.checked = false;
+    middleRadioButton.checked = false;
+    bottomRadioButton.checked = false;
 }
 
 
@@ -285,9 +275,9 @@ function renderCountryNamesOnBtns(countryNames) {
     first.innerText = countryArray[options[0]].name;
     second.innerText = countryArray[options[1]].name;
     third.innerText = countryArray[options[2]].name;
-    firstInput.value = options[0];
-    secondInput.value = options[1];
-    thirdInput.value = options[2];
+    topRadioButton.value = options[0];
+    middleRadioButton.value = options[1];
+    bottomRadioButton.value = options[2];
 }
 //its only for flag program
 function setFlagUrl(flag) {
