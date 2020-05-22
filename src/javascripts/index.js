@@ -3,6 +3,7 @@
 import { Player } from "../modulev2/player-module-v2";
 import { Game } from "../modulev2/game-module-v2";
 import { getAPIDataAsJsObjects } from "../modulev2/api-data-fetcher";
+import { getRandomInt } from "../modulev2/getRandomInt";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -278,15 +279,6 @@ function checkIfOutOfFlags() {
 // xxx
 function renderResult(msg) {
     answer.innerHTML = msg;
-}
-/**
- * Returns a random number between min (inclusive) and max(exclusive)
- */
-function getRandomInt(min, max) {
-    const maxExclusive = true;
-    min = Math.ceil(min);
-    max = maxExclusive ? Math.floor(max) - 1 : Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;;
 }
 //possibly
 function renderCountryNamesOnBtns(countryNames) {
