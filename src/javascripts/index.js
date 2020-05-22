@@ -6,7 +6,6 @@ import { getAPIDataAsJsObjects } from "../modulev2/api-data-fetcher";
 import { getRandomInt } from "../modulev2/getRandomInt";
 import { disableRadioButtons } from "../modulev2/disableRadioButtons";
 import { extractElementsProperties } from "../modulev2/extractCountryNames";
-import { setQuestionNumber } from "../modulev2/setQuestionNumber";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -42,7 +41,7 @@ export let countryArray;
 export let options = [];
 let correctAnswer;
 let nextFlagAllowed = false;
-export let difficulty = "medium";
+let difficulty = "medium";
 let indexOfAnswer = 0;
 const easyFlagsImmutable = ["Korea (Republic of)", "Netherlands", "Indonesia",
     "Mayotte", "Antarctica", "Israel", "Canada", "Switzerland", "Brazil", "Japan",
@@ -79,7 +78,7 @@ levelChoice.style.cursor = "pointer";
 
 
 //module that takes 4 arrays and creates a js object with difficulties
-export let allFlags = {
+let allFlags = {
     easy: easyFlagsMutable,
     medium: mediumFlagsMutable,
     hard: hardFlagsMutable,
@@ -110,7 +109,7 @@ if (localStorage.getItem("player1") === null) {
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
     difficulty = levelChoice.value;
-    flagsPerMatch = setQuestionNumber(allFlags, difficulty);
+    flagsPerMatch = setQuestionNumber();
     const currPlayerWhenChangeLVL = game.getCurrentPlayer();
     game = new Game("Flag game", flagsPerMatch);
     game.setCurrentPlayer(currPlayerWhenChangeLVL);
@@ -365,3 +364,5 @@ function printMatchResult() {
         }
     }
 }
+//also usefull
+const setQuestionNumber = () => Math.round((allFlags[difficulty].length - 1) / 2);
