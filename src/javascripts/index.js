@@ -1,15 +1,16 @@
 /* eslint no-console: 1 */
 
-import { Player } from "../modulev2/player-module-v2";
-import { Game } from "../modulev2/game-module-v2";
+import { Player } from "../module-game/player-module-v2";
+import { Game } from "../module-game/game-module-v2";
 import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
-import { getRandomInt } from "../modulev2/getRandomInt";
-import { disableRadioButtons } from "../modulev2/disableRadioButtons";
-import { extractElementsProperties } from "../modulev2/extractCountryNames";
+import { getRandomInt } from "../module-universal/getRandomInt";
+import { disableRadioButtons } from "../module-view/disableRadioButtons";
+import { extractElementsProperties } from "../module-flags/extractCountryNames";
 import { hasDuplicates } from "../module-universal/array-utilities/hasDuplicates";
-import { updateScore } from "../modulev2/updateScore";
-import { renderResult } from "../modulev2/renderResult";
+import { updateScore } from "../module-game/updateScore";
+import { renderResult } from "../module-view/renderResult";
 import { shuffle } from "../module-universal/array-utilities/shuffle";
+import { getUserAnswer } from "../module-view/getUserAnswer";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -129,7 +130,7 @@ form.addEventListener("change", function (event) {
     next.classList.remove("invisible");
     next.classList.add("visible");
     disableRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton]);
-    const userAnswer = getUserAnswer();
+    const userAnswer = getUserAnswer(radioBtns);
     renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
     renderScores();
@@ -178,17 +179,6 @@ resetBtn.addEventListener("click", function () {
     player2.setScore(0);
     renderScores();
 });
-
-
-function getUserAnswer() {
-    let userAnswer = "";
-    for (let i = 0; i < radioBtns.length; i++) {
-        if (radioBtns[i].checked) {
-            userAnswer = radioBtns[i].value;
-        }
-    }
-    return userAnswer;
-}
 
 function renderAnswer(userGuessed) {
     if (userGuessed) {
@@ -348,17 +338,6 @@ function printMatchResult() {
     }
 }
 const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").length - 1) / 2);
-
-
-function getUserAnswer() {
-    let userAnswer = "";
-    for (let i = 0; i < radioBtns.length; i++) {
-        if (radioBtns[i].checked) {
-            userAnswer = radioBtns[i].value;
-        }
-    }
-    return userAnswer;
-}
 
 function renderAnswer(userGuessed) {
     if (userGuessed) {
