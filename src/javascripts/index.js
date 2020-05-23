@@ -2,11 +2,14 @@
 
 import { Player } from "../modulev2/player-module-v2";
 import { Game } from "../modulev2/game-module-v2";
-import { getAPIDataAsJsObjects } from "../modulev2/api-data-fetcher";
+import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
 import { getRandomInt } from "../modulev2/getRandomInt";
 import { disableRadioButtons } from "../modulev2/disableRadioButtons";
 import { extractElementsProperties } from "../modulev2/extractCountryNames";
-import { hasDuplicates } from "../modulev2/hasDuplicates";
+import { hasDuplicates } from "../module-universal/array-utilities/hasDuplicates";
+import { updateScore } from "../modulev2/updateScore";
+import { renderResult } from "../modulev2/renderResult";
+import { shuffle } from "../module-universal/array-utilities/shuffle";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -71,7 +74,7 @@ const hardFlagsMutable = hardFlagsImmutable.slice();
 let masterFlagsMutable = [];
 const masterFlagsImmutable = [];
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
-let game = new Game("Flag game", flagsPerMatch);
+export let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
 const player2 = new Player(2);
 next.style.cursor = "pointer";
@@ -84,15 +87,12 @@ opt.style.cursor = "pointer";
 levelChoice.style.cursor = "pointer";
 
 
-//module that takes 4 arrays and creates a js object with difficulties
 let allFlags = {
     easy: easyFlagsMutable,
     medium: mediumFlagsMutable,
     hard: hardFlagsMutable,
     master: masterFlagsMutable
 };
-
-
 
 init();
 game.addPlayer(player1);
@@ -179,7 +179,7 @@ resetBtn.addEventListener("click", function () {
     renderScores();
 });
 
-//can be set into a module
+
 function getUserAnswer() {
     let userAnswer = "";
     for (let i = 0; i < radioBtns.length; i++) {
@@ -189,18 +189,18 @@ function getUserAnswer() {
     }
     return userAnswer;
 }
-//this is useful
+
 function renderAnswer(userGuessed) {
     if (userGuessed) {
         answer.classList.remove("red");
         answer.classList.add("green");
-        renderResult("Correct!");
+        renderResult("Correct!", answer);
         updateScore();
     }
     else {
         answer.classList.remove("green");
         answer.classList.add("red");
-        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name);
+        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
     }
 }
 
@@ -223,12 +223,6 @@ function initNewMatch() {
     renderScores();
 }
 
-//must be
-function updateScore() {
-    const currPlayer = game.getCurrentPlayer();
-    currPlayer.setScore(currPlayer.getScore() + 1);
-}
-//also important
 function changeTurn() {
     if (game.getCurrentTurn() < game.getNoOfTurns()) {
         game.incrementTurn();
@@ -255,7 +249,6 @@ async function reset() {
     shuffle(options);
     renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
     setFlagUrl(extractFlag(correctAnswer));
-    //disableInputs();
     topRadioButton.disabled = false;
     middleRadioButton.disabled = false;
     bottomRadioButton.disabled = false;
@@ -263,8 +256,6 @@ async function reset() {
     middleRadioButton.checked = false;
     bottomRadioButton.checked = false;
 }
-
-
 
 /* ------------------------------ heplers ----------------------------- */
 function checkIfOutOfFlags() {
@@ -274,12 +265,7 @@ function checkIfOutOfFlags() {
         allFlags[difficulty] = eval(difficulty + "FlagsImmutable").slice();
     }
 }
-// xxx
-function renderResult(msg) {
-    answer.innerHTML = msg;
-}
-//possibly
-function renderCountryNamesOnBtns(countryNames) {
+function renderCountryNamesOnBtns() {
     first.innerText = countryArray[options[0]].name;
     second.innerText = countryArray[options[1]].name;
     third.innerText = countryArray[options[2]].name;
@@ -287,29 +273,21 @@ function renderCountryNamesOnBtns(countryNames) {
     middleRadioButton.value = options[1];
     bottomRadioButton.value = options[2];
 }
-//its only for flag program
+
 function setFlagUrl(flag) {
     flagImg.src = flag;
 }
-//can work
+
 function extractFlag(correctAnswer) {
     return countryArray[correctAnswer].flag;
 }
 
-//works everywhere
-function shuffle(array) {
-    array.sort(() => Math.random() - 0.5);
-  }
-//can be used
 function renderScores() {
     p1Score.innerHTML = player1.getScore() + "/" + game.getNoOfTurns();
     p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
     p1MatchScore.innerHTML = localStorage.getItem("player1");
     p2MatchScore.innerHTML = "  :  " + localStorage.getItem("player2");
 }
-
-
-
 
 function generateOtherCountries() {
     opt2 = getRandomInt(0, countryArray.length);
@@ -337,8 +315,6 @@ function generateOptionsAsIndexes() {
     return [indexOfAnswer, opt2, opt3];
 }
 
-
-
 function createMasterFlagsArray() {
     let j = 0;
     let currCountry;
@@ -353,7 +329,6 @@ function createMasterFlagsArray() {
     }
     hasDuplicates(masterFlagsImmutable);
 }
-//will work for simmilar programs
 function printMatchResult() {
 
     if (game.isDraw()) {
@@ -372,7 +347,29 @@ function printMatchResult() {
         }
     }
 }
-//also usefull
 const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").length - 1) / 2);
 
 
+function getUserAnswer() {
+    let userAnswer = "";
+    for (let i = 0; i < radioBtns.length; i++) {
+        if (radioBtns[i].checked) {
+            userAnswer = radioBtns[i].value;
+        }
+    }
+    return userAnswer;
+}
+
+function renderAnswer(userGuessed) {
+    if (userGuessed) {
+        answer.classList.remove("red");
+        answer.classList.add("green");
+        renderResult("Correct!", answer);
+        updateScore();
+    }
+    else {
+        answer.classList.remove("green");
+        answer.classList.add("red");
+        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
+    }
+}
