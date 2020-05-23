@@ -6,6 +6,7 @@ import { getAPIDataAsJsObjects } from "../modulev2/api-data-fetcher";
 import { getRandomInt } from "../modulev2/getRandomInt";
 import { disableRadioButtons } from "../modulev2/disableRadioButtons";
 import { extractElementsProperties } from "../modulev2/extractCountryNames";
+import { hasDuplicates } from "../modulev2/hasDuplicates";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -58,6 +59,12 @@ const hardFlagsImmutable = ["Tunisia", "Liechtenstein", "Bosnia and Herzegovina"
     "Kuwait", "Haiti", "Algieria", "Lebanon", "Sri Lanka", "Libya", "Colombia", "Ecuador", "Paraguay", "Afghanistan", "San Marino", "Sudan", "Andora", "Senegal", "Somalia",
     "Turkmenistan", "Pakistan", "Iran", "Peru", "Cuba", "Honduras", "Jordan", "Uzbekistan", "South Georgia and the South Sandwich Islands", "Papua New Guinea", "Cook Islands",
     "Virgin Islands (British)", "Heard Island and McDonald Islands", "Western Sahara", "Åland Islands", "French Southern Territories", "Nigeria"];
+    hasDuplicates(easyFlagsImmutable);
+    hasDuplicates(mediumFlagsImmutable);
+    hasDuplicates(hardFlagsImmutable);
+    
+
+
 let easyFlagsMutable = easyFlagsImmutable.slice();
 let mediumFlagsMutable = mediumFlagsImmutable.slice();
 const hardFlagsMutable = hardFlagsImmutable.slice();
@@ -344,6 +351,7 @@ function createMasterFlagsArray() {
             j++;
         }
     }
+    hasDuplicates(masterFlagsImmutable);
 }
 //will work for simmilar programs
 function printMatchResult() {
@@ -366,3 +374,5 @@ function printMatchResult() {
 }
 //also usefull
 const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").length - 1) / 2);
+
+
