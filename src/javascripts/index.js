@@ -71,7 +71,7 @@ const hardFlagsImmutable = ["Tunisia", "Liechtenstein", "Bosnia and Herzegovina"
 
 let easyFlagsMutable = easyFlagsImmutable.slice();
 let mediumFlagsMutable = mediumFlagsImmutable.slice();
-const hardFlagsMutable = hardFlagsImmutable.slice();
+let hardFlagsMutable = hardFlagsImmutable.slice();
 let masterFlagsMutable = [];
 const masterFlagsImmutable = [];
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
@@ -251,8 +251,7 @@ async function reset() {
 function checkIfOutOfFlags() {
     
     if(allFlags[difficulty].length < 2){
-  debugger;
-        allFlags[difficulty] = eval(difficulty + "FlagsImmutable").slice();
+       allFlags[difficulty] = eval(difficulty + "FlagsImmutable").slice();
     }
 }
 function renderCountryNamesOnBtns() {
