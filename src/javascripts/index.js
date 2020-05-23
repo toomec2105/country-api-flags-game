@@ -365,4 +365,4 @@ function printMatchResult() {
     }
 }
 //also usefull
-const setQuestionNumber = () => Math.round((allFlags[difficulty].length - 1) / 2);
+const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").length - 1) / 2);
