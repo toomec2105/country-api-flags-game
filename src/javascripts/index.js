@@ -5,12 +5,13 @@ import { Game } from "../module-game/game-module-v2";
 import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
 import { getRandomInt } from "../module-universal/getRandomInt";
 import { disableRadioButtons } from "../module-view/disableRadioButtons";
-import { extractElementsProperties } from "../module-flags/extractCountryNames";
+import { extractElementsProperties } from "../module-country-api/extractCountryNames";
 import { hasDuplicates } from "../module-universal/array-utilities/hasDuplicates";
 import { updateScore } from "../module-game/updateScore";
 import { renderResult } from "../module-view/renderResult";
 import { shuffle } from "../module-universal/array-utilities/shuffle";
 import { getUserAnswer } from "../module-view/getUserAnswer";
+import { getLevelItemsArrMap } from "../module-country-api/extractCountryNames";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -63,17 +64,17 @@ const hardFlagsImmutable = ["Tunisia", "Liechtenstein", "Bosnia and Herzegovina"
     "Kuwait", "Haiti", "Algieria", "Lebanon", "Sri Lanka", "Libya", "Colombia", "Ecuador", "Paraguay", "Afghanistan", "San Marino", "Sudan", "Andora", "Senegal", "Somalia",
     "Turkmenistan", "Pakistan", "Iran", "Peru", "Cuba", "Honduras", "Jordan", "Uzbekistan", "South Georgia and the South Sandwich Islands", "Papua New Guinea", "Cook Islands",
     "Virgin Islands (British)", "Heard Island and McDonald Islands", "Western Sahara", "Åland Islands", "French Southern Territories", "Nigeria"];
-    hasDuplicates(easyFlagsImmutable);
-    hasDuplicates(mediumFlagsImmutable);
-    hasDuplicates(hardFlagsImmutable);
-    
-
-
-let easyFlagsMutable = easyFlagsImmutable.slice();
-let mediumFlagsMutable = mediumFlagsImmutable.slice();
-let hardFlagsMutable = hardFlagsImmutable.slice();
-let masterFlagsMutable = [];
 const masterFlagsImmutable = [];
+
+hasDuplicates(easyFlagsImmutable);
+hasDuplicates(mediumFlagsImmutable);
+hasDuplicates(hardFlagsImmutable);
+
+
+
+
+let allFlags = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
+
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 export let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
@@ -87,13 +88,6 @@ playBtn.style.cursor = "pointer";
 opt.style.cursor = "pointer";
 levelChoice.style.cursor = "pointer";
 
-
-let allFlags = {
-    easy: easyFlagsMutable,
-    medium: mediumFlagsMutable,
-    hard: hardFlagsMutable,
-    master: masterFlagsMutable
-};
 
 init();
 game.addPlayer(player1);
@@ -199,7 +193,6 @@ function renderAnswer(userGuessed) {
 async function init() {
     countryArray = await getAPIDataAsJsObjects(API_URL);
     createMasterFlagsArray();
-    masterFlagsMutable = masterFlagsImmutable.slice();
     reset();
 }
 function initNewMatch() {
@@ -234,7 +227,7 @@ function changeTurn() {
 async function reset() {
     result.innerHTML = "";
     answer.innerHTML = "";
-    options = generateOptionsAsIndexes(); // np 56, 78, 134
+    options = generateOptionsAsIndexes(allFlags); // np 56, 78, 134
     correctAnswer = options[0]; // 56
     shuffle(options);
     renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
@@ -248,10 +241,10 @@ async function reset() {
 }
 
 /* ------------------------------ heplers ----------------------------- */
-function checkIfOutOfFlags() {
-    
-    if(allFlags[difficulty].length < 2){
-       allFlags[difficulty] = eval(difficulty + "FlagsImmutable").slice();
+function checkIfOutOfFlags(difficultyCoutriesObj) {
+
+    if (difficultyCoutriesObj[difficulty].length < 2) {
+        difficultyCoutriesObj[difficulty] = eval(difficulty + "FlagsImmutable").slice();
     }
 }
 function renderCountryNamesOnBtns() {
@@ -283,16 +276,15 @@ function generateOtherCountries() {
     opt3 = getRandomInt(0, countryArray.length);
 }
 
-function generateOptionsAsIndexes() {
+function generateOptionsAsIndexes(difficultyCountriesObj) {
     let opt1;
     generateOtherCountries();
-    checkIfOutOfFlags();
-    const mutableArray = allFlags[difficulty];
-   
-        const index = getRandomInt(0, mutableArray.length);
-        opt1 = mutableArray[index];
-        mutableArray.splice(index, 1);
-    
+    checkIfOutOfFlags(difficultyCountriesObj);
+    const mutableArray = difficultyCountriesObj[difficulty];
+
+    const randomIndex = getRandomInt(0, mutableArray.length);
+    opt1 = mutableArray[randomIndex];
+    mutableArray.splice(randomIndex, 1);
     for (let i = 0; i < countryArray.length; i++) {
         if (opt1 === countryArray[i].name) {
             indexOfAnswer = i;
@@ -309,9 +301,9 @@ function createMasterFlagsArray() {
     let currCountry;
     for (let i = 0; i < countryArray.length; i++) {
         currCountry = countryArray[i].name;
-        if (!easyFlagsImmutable.includes(currCountry) && 
-        !mediumFlagsImmutable.includes(currCountry) && 
-        !hardFlagsImmutable.includes(currCountry)) {
+        if (!easyFlagsImmutable.includes(currCountry) &&
+            !mediumFlagsImmutable.includes(currCountry) &&
+            !hardFlagsImmutable.includes(currCountry)) {
             masterFlagsImmutable[j] = currCountry;
             j++;
         }
