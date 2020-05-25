@@ -12,7 +12,7 @@ import { renderResult } from "../module-view/renderResult";
 import { shuffle } from "../module-universal/array-utilities/shuffle";
 import { getUserAnswer } from "../module-view/getUserAnswer";
 import { getLevelItemsArrMap } from "../module-country-api/extractCountryNames";
-import { easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable } from "./immutableArrays";
+import { getEasyArray, getMediumArray, getHardArray } from "../module-country-api/immutableArrays";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -52,9 +52,9 @@ let difficulty = "medium";
 let indexOfAnswer = 0;
 const masterFlagsImmutable = [];
 
-hasDuplicates(easyFlagsImmutable);
-hasDuplicates(mediumFlagsImmutable);
-hasDuplicates(hardFlagsImmutable);
+let easyFlagsImmutable = getEasyArray();
+let mediumFlagsImmutable = getMediumArray();
+let hardFlagsImmutable = getHardArray();
 
 
 
