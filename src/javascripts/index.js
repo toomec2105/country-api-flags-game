@@ -13,6 +13,7 @@ import { shuffle } from "../module-universal/array-utilities/shuffle";
 import { getUserAnswer } from "../module-view/getUserAnswer";
 import { getLevelItemsArrMap } from "../module-country-api/extractCountryNames";
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutableArrays";
+import { enableButtons } from "../module-view/enableButtons";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -219,14 +220,11 @@ async function reset() {
     shuffle(options);
     renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
     setFlagUrl(extractFlag(correctAnswer));
-    topRadioButton.disabled = false;
-    middleRadioButton.disabled = false;
-    bottomRadioButton.disabled = false;
+    enableButtons();
     topRadioButton.checked = false;
     middleRadioButton.checked = false;
     bottomRadioButton.checked = false;
 }
-
 /* ------------------------------ heplers ----------------------------- */
 function checkIfOutOfFlags(difficultyCoutriesObj) {
 
