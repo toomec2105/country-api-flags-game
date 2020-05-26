@@ -220,7 +220,7 @@ async function reset() {
     shuffle(options);
     renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
     setFlagUrl(extractFlag(correctAnswer));
-    enableButtons();
+    enableButtons([topRadioButton, middleRadioButton, bottomRadioButton]);
     topRadioButton.checked = false;
     middleRadioButton.checked = false;
     bottomRadioButton.checked = false;
