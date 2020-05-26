@@ -1,25 +1,14 @@
 // maby maby sth like disableButtons(btn1, btn2);
-export function disableRadioButtons(buttonsArray) {
+export function toggleRadioButtons(buttonsArray, isDisabled) {
 
     if (Array.isArray(buttonsArray)) {
         let i;
         for (i = 0; i < buttonsArray.length; i++) {
-            buttonsArray[i].disabled = true;
+            buttonsArray[i].disabled = isDisabled;
         }
     } else {
         throw Error("Argument must be an Array.");
 
     }
 
-}
-export function enableButtons(buttonsArray) {
-    if (Array.isArray(buttonsArray)) {
-        let i;
-        for (i = 0; i < buttonsArray.length; i++) {
-            buttonsArray[i].disabled = false;
-        }
-    }
-    else {
-        throw Error("Argument must be an Array.");
-    }
 }

@@ -4,7 +4,7 @@ import { Player } from "../module-game/player-module-v2";
 import { Game } from "../module-game/game-module-v2";
 import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
 import { getRandomInt } from "../module-universal/getRandomInt";
-import { disableRadioButtons , enableButtons} from "../module-view/btnUtills";
+import { toggleRadioButtons} from "../module-view/btnUtills";
 import { extractElementsProperties } from "../module-country-api/extractCountryNames";
 import { updateScore } from "../module-game/updateScore";
 import { renderResult } from "../module-view/renderResult";
@@ -110,7 +110,7 @@ form.addEventListener("change", function (event) {
     nextFlagAllowed = true;
     next.classList.remove("invisible");
     next.classList.add("visible");
-    disableRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton]);
+    toggleRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton], true);
     const userAnswer = getUserAnswer(radioBtns);
     renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
@@ -219,7 +219,7 @@ async function reset() {
     shuffle(options);
     renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
     setFlagUrl(extractFlag(correctAnswer));
-    enableButtons([topRadioButton, middleRadioButton, bottomRadioButton]);
+    toggleRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton], false);
     topRadioButton.checked = false;
     middleRadioButton.checked = false;
     bottomRadioButton.checked = false;
