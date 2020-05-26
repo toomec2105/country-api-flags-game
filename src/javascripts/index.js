@@ -3,17 +3,16 @@
 import { Player } from "../module-game/player-module-v2";
 import { Game } from "../module-game/game-module-v2";
 import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
-import { getRandomInt } from "../module-universal/getRandomInt";
-import { toggleRadioButtons} from "../module-view/btnUtills";
-import { extractElementsProperties } from "../module-country-api/extractCountryNames";
-import { updateScore } from "../module-game/updateScore";
-import { renderResult } from "../module-view/renderResult";
+import { getRandomInt } from "../module-universal/get-random-int";
+import { toggleRadioButtons} from "../module-view/btn-utills";
+import { extractElementsProperties } from "../module-country-api/extract-country-names";
+import { updateScore } from "../module-game/update-score";
+import { renderResult } from "../module-view/render-result";
 import { shuffle } from "../module-universal/array-utilities/shuffle";
-import { getUserAnswer } from "../module-view/getUserAnswer";
-import { getLevelItemsArrMap } from "../module-country-api/extractCountryNames";
-import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutableArrays";
-import { setCursorType } from "../module-universal/setCursorType";
-
+import { getUserAnswer } from "../module-view/get-user-answer";
+import { getLevelItemsArrMap } from "../module-country-api/extract-country-names";
+import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutable-arrays";
+import { setCursorType } from "../module-universal/set-cursor-type";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -43,9 +42,9 @@ const nextDiv = document.getElementById("nextBtnDiv");
 // other variables 
 let opt2;
 let opt3;
-export const API_URL = "https://restcountries.eu/rest/v2/all";
-export let countryArray;
-export let options = [];
+const API_URL = "https://restcountries.eu/rest/v2/all";
+let countryArray;
+let options = [];
 let correctAnswer;
 let nextFlagAllowed = false;
 let difficulty = "medium";
@@ -55,9 +54,6 @@ let masterFlagsImmutable = [];
 let easyFlagsImmutable = getEasyArray();
 let mediumFlagsImmutable = getMediumArray();
 let hardFlagsImmutable = getHardArray();
-
-
-
 
 let allFlags = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
 
@@ -85,7 +81,6 @@ if (localStorage.getItem("player1") === null) {
 } else {
     renderScores();
 }
-
 
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
@@ -166,7 +161,6 @@ function renderAnswer(userGuessed) {
         renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
     }
 }
-
 /* ------------------------------ main methods --------------------------- */
 
 async function init() {
@@ -272,9 +266,7 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
     return [indexOfAnswer, opt2, opt3];
 }
 
-
 function printMatchResult() {
-
     if (game.isDraw()) {
         result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }
@@ -305,5 +297,4 @@ function renderAnswer(userGuessed) {
         answer.classList.add("red");
         renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
     }
-
 }
