@@ -12,7 +12,7 @@ import { renderResult } from "../module-view/renderResult";
 import { shuffle } from "../module-universal/array-utilities/shuffle";
 import { getUserAnswer } from "../module-view/getUserAnswer";
 import { getLevelItemsArrMap } from "../module-country-api/extractCountryNames";
-import { getEasyArray, getMediumArray, getHardArray } from "../module-country-api/immutableArrays";
+import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutableArrays";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -50,7 +50,7 @@ let correctAnswer;
 let nextFlagAllowed = false;
 let difficulty = "medium";
 let indexOfAnswer = 0;
-const masterFlagsImmutable = [];
+let masterFlagsImmutable = [];
 
 let easyFlagsImmutable = getEasyArray();
 let mediumFlagsImmutable = getMediumArray();
@@ -76,6 +76,7 @@ levelChoice.style.cursor = "pointer";
 
 
 init();
+
 game.addPlayer(player1);
 game.addPlayer(player2);
 game.setCurrentPlayer(player1);
@@ -178,7 +179,7 @@ function renderAnswer(userGuessed) {
 
 async function init() {
     countryArray = await getAPIDataAsJsObjects(API_URL);
-    createMasterFlagsArray();
+    masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
     reset();
 }
 function initNewMatch() {
@@ -282,20 +283,7 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
     return [indexOfAnswer, opt2, opt3];
 }
 
-function createMasterFlagsArray() {
-    let j = 0;
-    let currCountry;
-    for (let i = 0; i < countryArray.length; i++) {
-        currCountry = countryArray[i].name;
-        if (!easyFlagsImmutable.includes(currCountry) &&
-            !mediumFlagsImmutable.includes(currCountry) &&
-            !hardFlagsImmutable.includes(currCountry)) {
-            masterFlagsImmutable[j] = currCountry;
-            j++;
-        }
-    }
-    hasDuplicates(masterFlagsImmutable);
-}
+
 function printMatchResult() {
 
     if (game.isDraw()) {

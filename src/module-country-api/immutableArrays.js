@@ -27,3 +27,19 @@ export function getHardArray(){
     hasDuplicates(hardArray);
     return hardArray;
 }  
+export function getMasterArray(easyArray, mediumArray, hardArray, countryArray) {
+    let j = 0;
+    let masterArray = [];
+    let currCountry;
+    for (let i = 0; i < countryArray.length; i++) {
+        currCountry = countryArray[i].name;
+        if (!easyArray.includes(currCountry) &&
+            !mediumArray.includes(currCountry) &&
+            !hardArray.includes(currCountry)) {
+            masterArray[j] = currCountry;
+            j++;
+        }
+    }
+    hasDuplicates(masterArray);
+    return masterArray;
+}
