@@ -12,6 +12,7 @@ import { shuffle } from "../module-universal/array-utilities/shuffle";
 import { getUserAnswer } from "../module-view/getUserAnswer";
 import { getLevelItemsArrMap } from "../module-country-api/extractCountryNames";
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutableArrays";
+import { setCursorType } from "../module-universal/setCursorType";
 
 
 /* ----------------------- HTML elements -------------------------- */
@@ -40,7 +41,6 @@ const playBtn = document.querySelector("#play");
 const next = document.getElementById("nextBtn");
 const nextDiv = document.getElementById("nextBtnDiv");
 // other variables 
-console.log(cursorStuff);
 let opt2;
 let opt3;
 export const API_URL = "https://restcountries.eu/rest/v2/all";
@@ -65,16 +65,8 @@ let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 export let game = new Game("Flag game", flagsPerMatch);
 const player1 = new Player(1);
 const player2 = new Player(2);
-next.style.cursor = "pointer";
-resetBtn.style.cursor = "pointer";
-first.style.cursor = "pointer";
-second.style.cursor = "pointer";
-third.style.cursor = "pointer";
-playBtn.style.cursor = "pointer";
-opt.style.cursor = "pointer";
-levelChoice.style.cursor = "pointer";
 
-
+setCursorType(cursorStuff, "pointer");
 init();
 
 game.addPlayer(player1);
@@ -313,4 +305,5 @@ function renderAnswer(userGuessed) {
         answer.classList.add("red");
         renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
     }
+
 }
