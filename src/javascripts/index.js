@@ -17,7 +17,6 @@ import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../m
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
 const first = document.querySelector("#options .option:nth-of-type(1) label");
-//-------------
 const second = document.querySelector("#options .option:nth-of-type(2) label");
 const third = document.querySelector("#options .option:nth-of-type(3) label");
 const topRadioButton = document.getElementById("choice1");
@@ -36,11 +35,12 @@ const optionsPage = document.querySelector("#optionsPage");
 const gamePage = document.querySelector("#gamePage");
 const levelChoice = document.querySelector("#level-select");
 const radioBtns = document.querySelectorAll("input[type=radio]");
+const cursorStuff = document.querySelectorAll(".pointer");
 const playBtn = document.querySelector("#play");
 const next = document.getElementById("nextBtn");
 const nextDiv = document.getElementById("nextBtnDiv");
 // other variables 
-
+console.log(cursorStuff);
 let opt2;
 let opt3;
 export const API_URL = "https://restcountries.eu/rest/v2/all";
