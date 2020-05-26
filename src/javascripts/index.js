@@ -4,16 +4,15 @@ import { Player } from "../module-game/player-module-v2";
 import { Game } from "../module-game/game-module-v2";
 import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
 import { getRandomInt } from "../module-universal/getRandomInt";
-import { disableRadioButtons } from "../module-view/disableRadioButtons";
+import { disableRadioButtons , enableButtons} from "../module-view/btnUtills";
 import { extractElementsProperties } from "../module-country-api/extractCountryNames";
-import { hasDuplicates } from "../module-universal/array-utilities/hasDuplicates";
 import { updateScore } from "../module-game/updateScore";
 import { renderResult } from "../module-view/renderResult";
 import { shuffle } from "../module-universal/array-utilities/shuffle";
 import { getUserAnswer } from "../module-view/getUserAnswer";
 import { getLevelItemsArrMap } from "../module-country-api/extractCountryNames";
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutableArrays";
-import { enableButtons } from "../module-view/enableButtons";
+
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
