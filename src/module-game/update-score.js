@@ -1,6 +1,5 @@
-import { game } from "../javascripts/index";
-//must be
-export function updateScore() {
+
+export function updateScore(game) {
     const currPlayer = game.getCurrentPlayer();
     currPlayer.setScore(currPlayer.getScore() + 1);
 }

@@ -4,7 +4,7 @@ import { Player } from "../module-game/player-module-v2";
 import { Game } from "../module-game/game-module-v2";
 import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
 import { getRandomInt } from "../module-universal/get-random-int";
-import { setRadioButtons} from "../module-view/btn-utills";
+import { setRadioButtons } from "../module-view/btn-utills";
 import { extractElementsProperties } from "../module-country-api/extract-country-names";
 import { updateScore } from "../module-game/update-score";
 import { renderResult } from "../module-view/render-result";
@@ -13,6 +13,7 @@ import { getUserAnswer } from "../module-view/get-user-answer";
 import { getLevelItemsArrMap } from "../module-country-api/extract-country-names";
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutable-arrays";
 import { setCursorType } from "../module-view/set-cursor-type";
+import { Persistence } from "../module-persistence/persistence";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -28,8 +29,8 @@ const form = document.querySelector("form");
 const p1Score = document.querySelector("#rightScore");
 const p2Score = document.querySelector("#leftScore");
 const opt = document.querySelector("#settings");
-const p1MatchScore = document.querySelector("#p1MatchScore");
-const p2MatchScore = document.querySelector("#p2MatchScore");
+const player1MatchScore = document.querySelector("#p1MatchScore");
+const player2MatchScore = document.querySelector("#p2MatchScore");
 const resetBtn = document.querySelector("#resetBtn");
 const optionsPage = document.querySelector("#optionsPage");
 const gamePage = document.querySelector("#gamePage");
@@ -39,10 +40,13 @@ const cursorStuff = document.querySelectorAll(".pointer");
 const playBtn = document.querySelector("#play");
 const next = document.getElementById("nextBtn");
 const nextDiv = document.getElementById("nextBtnDiv");
-// other variables 
+
+/* -----------------------  other variables  -------------------------- */
+const API_URL = "https://restcountries.eu/rest/v2/all";
+const player1 = new Player(1);
+const player2 = new Player(2);
 let opt2;
 let opt3;
-const API_URL = "https://restcountries.eu/rest/v2/all";
 let countryArray;
 let options = [];
 let correctAnswer;
@@ -50,37 +54,32 @@ let nextFlagAllowed = false;
 let difficulty = "medium";
 let indexOfAnswer = 0;
 let masterFlagsImmutable = [];
-
+let persistence = new Persistence();
 let easyFlagsImmutable = getEasyArray();
 let mediumFlagsImmutable = getMediumArray();
 let hardFlagsImmutable = getHardArray();
-
 let allFlags = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
-
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
-export let game = new Game("Flag game", flagsPerMatch);
-const player1 = new Player(1);
-const player2 = new Player(2);
+let game = new Game("Flag game", flagsPerMatch);
 
-setCursorType(cursorStuff, "pointer");
+/* -----------------------  logic  -------------------------- */
+
 init();
 
 game.addPlayer(player1);
 game.addPlayer(player2);
 game.setCurrentPlayer(player1);
-
+renderTottalMatches();
 p1Score.classList.add("activePlayer");
 optionsPage.classList.add("invisible");
 playBtn.classList.add("bold");
 
-if (localStorage.getItem("player1") === null) {
-    localStorage.setItem("player1", Number(0));
-    localStorage.setItem("player2", Number(0));
-
-    renderScores();
-} else {
-    renderScores();
+if (persistence.get("player1") === null) {
+    persistence.put("player1", Number(0));
+    persistence.put("player2", Number(0));
 }
+renderScores();
+
 
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
@@ -138,8 +137,8 @@ playBtn.addEventListener("click", function () {
 
 resetBtn.addEventListener("click", function () {
     game.resetCurrentTurn();
-    localStorage.setItem("player1", Number(0));
-    localStorage.setItem("player2", Number(0));
+    persistence.put("player1", Number(0));
+    persistence.put("player2", Number(0));
     p1Score.classList.add("activePlayer");
     p2Score.classList.remove("activePlayer");
     game.setCurrentPlayer(player1);
@@ -153,7 +152,7 @@ function renderAnswer(userGuessed) {
         answer.classList.remove("red");
         answer.classList.add("green");
         renderResult("Correct!", answer);
-        updateScore();
+        updateScore(game);
     }
     else {
         answer.classList.remove("green");
@@ -164,6 +163,7 @@ function renderAnswer(userGuessed) {
 /* ------------------------------ main methods --------------------------- */
 
 async function init() {
+    setCursorType(cursorStuff, "pointer");
     countryArray = await getAPIDataAsJsObjects(API_URL);
     masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
     reset();
@@ -177,6 +177,7 @@ function initNewMatch() {
     player1.setScore(0);
     player2.setScore(0);
     renderScores();
+    renderTottalMatches();
 }
 
 function changeTurn() {
@@ -239,8 +240,11 @@ function extractFlag(correctAnswer) {
 function renderScores() {
     p1Score.innerHTML = player1.getScore() + "/" + game.getNoOfTurns();
     p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
-    p1MatchScore.innerHTML = localStorage.getItem("player1");
-    p2MatchScore.innerHTML = "  :  " + localStorage.getItem("player2");
+
+}
+function renderTottalMatches() {
+    player1MatchScore.innerHTML = persistence.get("player1");
+    player2MatchScore.innerHTML = "  :  " + persistence.get("player2");
 }
 
 function generateOtherCountries() {
@@ -273,17 +277,19 @@ function printMatchResult() {
         result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }
     else {
+
         if (player1.getScore() > player2.getScore()) {
-            const score = localStorage.getItem("player1");
-            localStorage.setItem("player1", Number(score) + 1);
-            result.innerHTML = "player one has won. No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+            printCurrentMatchEndMsg("player1");
         }
         else {
-            const score = localStorage.getItem("player2");
-            localStorage.setItem("player2", Number(score) + 1);
-            result.innerHTML = "player two has won. No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+            printCurrentMatchEndMsg("player2");
         }
     }
+}
+function printCurrentMatchEndMsg(winner) {
+    const score = persistence.get(winner);
+    persistence.put(winner, Number(score) + 1); // We persist only total matches, not current score
+    result.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
 }
 const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").length - 1) / 2);
 
@@ -292,7 +298,7 @@ function renderAnswer(userGuessed) {
         answer.classList.remove("red");
         answer.classList.add("green");
         renderResult("Correct!", answer);
-        updateScore();
+        updateScore(game);
     }
     else {
         answer.classList.remove("green");
