@@ -4,7 +4,7 @@ import { Player } from "../module-game/player-module-v2";
 import { Game } from "../module-game/game-module-v2";
 import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
 import { getRandomInt } from "../module-universal/get-random-int";
-import { toggleRadioButtons} from "../module-view/btn-utills";
+import { setRadioButtons} from "../module-view/btn-utills";
 import { extractElementsProperties } from "../module-country-api/extract-country-names";
 import { updateScore } from "../module-game/update-score";
 import { renderResult } from "../module-view/render-result";
@@ -12,7 +12,7 @@ import { shuffle } from "../module-universal/array-utilities/shuffle";
 import { getUserAnswer } from "../module-view/get-user-answer";
 import { getLevelItemsArrMap } from "../module-country-api/extract-country-names";
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutable-arrays";
-import { setCursorType } from "../module-universal/set-cursor-type";
+import { setCursorType } from "../module-view/set-cursor-type";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -97,7 +97,7 @@ form.addEventListener("change", function (event) {
     nextFlagAllowed = true;
     next.classList.remove("invisible");
     next.classList.add("visible");
-    toggleRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton], true);
+    setRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton], "disabled", true);
     const userAnswer = getUserAnswer(radioBtns);
     renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
@@ -205,7 +205,9 @@ async function reset() {
     shuffle(options);
     renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
     setFlagUrl(extractFlag(correctAnswer));
-    toggleRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton], false);
+    let optionsRadioButtons = [topRadioButton, middleRadioButton, bottomRadioButton];
+    setRadioButtons(optionsRadioButtons, "disabled", false);
+    setRadioButtons(optionsRadioButtons, "checked", false);
     topRadioButton.checked = false;
     middleRadioButton.checked = false;
     bottomRadioButton.checked = false;
