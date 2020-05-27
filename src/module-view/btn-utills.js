@@ -1,6 +1,6 @@
 export function setRadioButtons(buttonsArray, property, isDisabled) {
     if (typeof isDisabled != "boolean"){
-        throw Error("Second argument must be a boolean.");
+        throw Error("Third argument must be a boolean.");
       }
     if (Array.isArray(buttonsArray)) {
         let i;
@@ -19,7 +19,7 @@ export function setRadioButtons(buttonsArray, property, isDisabled) {
                 throw Error("Second argument for setRadioButtons function must be equal to checked or disabled");
         }
     } else {
-        throw Error("Argument must be an Array.");
+        throw Error("First argument must be an Array.");
 
     }
 
