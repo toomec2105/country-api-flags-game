@@ -66,19 +66,7 @@ let game = new Game("Flag game", flagsPerMatch);
 
 init();
 
-game.addPlayer(player1);
-game.addPlayer(player2);
-game.setCurrentPlayer(player1);
-renderTottalMatches();
-p1Score.classList.add("activePlayer");
-optionsPage.classList.add("invisible");
-playBtn.classList.add("bold");
 
-if (persistence.get("player1") === null) {
-    persistence.put("player1", Number(0));
-    persistence.put("player2", Number(0));
-}
-renderScores();
 
 
 /* -------------------------- Event listeners ---------------------------- */
@@ -167,6 +155,19 @@ async function init() {
     countryArray = await getAPIDataAsJsObjects(API_URL);
     masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
     reset();
+    game.addPlayer(player1);
+    game.addPlayer(player2);
+    game.setCurrentPlayer(player1);
+    renderTottalMatches();
+    p1Score.classList.add("activePlayer");
+    optionsPage.classList.add("invisible");
+    playBtn.classList.add("bold");
+
+    if (persistence.get("player1") === null) {
+        persistence.put("player1", Number(0));
+        persistence.put("player2", Number(0));
+    }
+    renderScores();
 }
 function initNewMatch() {
     nextDiv.classList.remove("normalMargin");
