@@ -210,13 +210,9 @@ async function reset() {
     let optionsRadioButtons = [topRadioButton, middleRadioButton, bottomRadioButton];
     setRadioButtons(optionsRadioButtons, "disabled", false);
     setRadioButtons(optionsRadioButtons, "checked", false);
-    topRadioButton.checked = false;
-    middleRadioButton.checked = false;
-    bottomRadioButton.checked = false;
 }
 /* ------------------------------ heplers ----------------------------- */
 function checkIfOutOfFlags(difficultyCoutriesObj) {
-
     if (difficultyCoutriesObj[difficulty].length < 2) {
         difficultyCoutriesObj[difficulty] = eval(difficulty + "FlagsImmutable").slice();
     }
