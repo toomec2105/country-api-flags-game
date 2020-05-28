@@ -54,11 +54,11 @@ let nextFlagAllowed = false;
 let difficulty = "medium";
 let indexOfAnswer = 0;
 let masterFlagsImmutable = [];
-let persistence = new Persistence();
-let easyFlagsImmutable = getEasyArray();
-let mediumFlagsImmutable = getMediumArray();
-let hardFlagsImmutable = getHardArray();
-let level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
+const persistence = new Persistence();
+const easyFlagsImmutable = getEasyArray();
+const mediumFlagsImmutable = getMediumArray();
+const hardFlagsImmutable = getHardArray();
+const level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 let game = new Game("Flag game", flagsPerMatch);
 
@@ -67,13 +67,13 @@ let game = new Game("Flag game", flagsPerMatch);
 init();
 
 /* -------------------------- Event listeners ---------------------------- */
-levelChoice.addEventListener("change", function (event) {
+levelChoice.addEventListener("change", function () {
     difficulty = levelChoice.value;
     flagsPerMatch = setQuestionNumber();
     const currPlayerWhenChangeLVL = game.getCurrentPlayer();
     game = new Game("Flag game", flagsPerMatch);
     game.setCurrentPlayer(currPlayerWhenChangeLVL);
-    renderScores();
+    renderCurrentMatchScore();
     reset();
 });
 
@@ -85,7 +85,7 @@ form.addEventListener("change", function (event) {
     const userAnswer = getUserAnswer(radioBtns);
     renderAnswer(Number(userAnswer) === correctAnswer);
     changeTurn();
-    renderScores();
+    renderCurrentMatchScore();
     event.preventDefault();
 }, false);
 
@@ -122,13 +122,15 @@ playBtn.addEventListener("click", function () {
 
 resetBtn.addEventListener("click", function () {
     game.resetCurrentTurn();
-    persistTotalMatches();
+    persistTotalMatchesScore();
+
     player1Score.classList.add("activePlayer");
     player2Score.classList.remove("activePlayer");
     game.setCurrentPlayer(player1);
     player1.setScore(0);
     player2.setScore(0);
-    renderScores();
+    renderTottalMatches();
+    renderCurrentMatchScore();
 });
 
 /* ------------------------------ main methods --------------------------- */
@@ -149,7 +151,7 @@ async function init(){
     if (persistence.get("player1") === null) {
         persistTotalMatchesScore();
     }
-    renderScores();
+    renderCurrentMatchScore();
 
     function setupPlayers() {
         game.addPlayer(player1);
@@ -170,7 +172,7 @@ function initNewMatch() {
     player2Score.classList.remove("activePlayer");
     player1.setScore(0);
     player2.setScore(0);
-    renderScores();
+    renderCurrentMatchScore();
     renderTottalMatches();
 }
 
@@ -200,7 +202,7 @@ async function reset() {
     shuffle(options);
     renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
     setFlagUrl(extractFlag(correctAnswer));
-    let optionsRadioButtons = [topRadioButton, middleRadioButton, bottomRadioButton];
+    const optionsRadioButtons = [topRadioButton, middleRadioButton, bottomRadioButton];
     setRadioButtons(optionsRadioButtons, "disabled", false);
     setRadioButtons(optionsRadioButtons, "checked", false);
 }
@@ -219,19 +221,7 @@ function renderCountryNamesOnBtns() {
     bottomRadioButton.value = options[2];
 }
 
-function renderAnswer(userGuessed) {
-    if (userGuessed) {
-        answer.classList.remove("red");
-        answer.classList.add("green");
-        renderResult("Correct!", answer);
-        updateScore(game);
-    }
-    else {
-        answer.classList.remove("green");
-        answer.classList.add("red");
-        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
-    }
-}
+
 
 function setFlagUrl(flag) {
     flagImg.src = flag;
@@ -241,7 +231,7 @@ function extractFlag(correctAnswer) {
     return countryArray[correctAnswer].flag;
 }
 
-function renderScores() {
+function renderCurrentMatchScore() {
     player1Score.innerHTML = player1.getScore() + "/" + game.getNoOfTurns();
     player2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
 
@@ -257,13 +247,12 @@ function generateOtherCountries() {
 }
 
 function generateOptionsAsIndexes(difficultyCountriesObj) {
-    let opt1;
     generateOtherCountries();
     checkIfOutOfFlags(difficultyCountriesObj);
     const mutableArray = difficultyCountriesObj[difficulty];
 
     const randomIndex = getRandomInt(0, mutableArray.length);
-    opt1 = mutableArray[randomIndex];
+    const opt1 = mutableArray[randomIndex];
     mutableArray.splice(randomIndex, 1);
     for (let i = 0; i < countryArray.length; i++) {
         if (opt1 === countryArray[i].name) {
