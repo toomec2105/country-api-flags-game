@@ -26,8 +26,8 @@ const bottomRadioButton = document.getElementById("choice3");
 const answer = document.getElementById("answer");
 const result = document.getElementById("result");
 const form = document.querySelector("form");
-const p1Score = document.querySelector("#rightScore");
-const p2Score = document.querySelector("#leftScore");
+const player1Score = document.querySelector("#rightScore");
+const player2Score = document.querySelector("#leftScore");
 const opt = document.querySelector("#settings");
 const player1MatchScore = document.querySelector("#p1MatchScore");
 const player2MatchScore = document.querySelector("#p2MatchScore");
@@ -58,16 +58,13 @@ let persistence = new Persistence();
 let easyFlagsImmutable = getEasyArray();
 let mediumFlagsImmutable = getMediumArray();
 let hardFlagsImmutable = getHardArray();
-let allFlags = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
+let level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 let game = new Game("Flag game", flagsPerMatch);
 
 /* -----------------------  logic  -------------------------- */
 
 init();
-
-
-
 
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function (event) {
@@ -125,56 +122,52 @@ playBtn.addEventListener("click", function () {
 
 resetBtn.addEventListener("click", function () {
     game.resetCurrentTurn();
-    persistence.put("player1", Number(0));
-    persistence.put("player2", Number(0));
-    p1Score.classList.add("activePlayer");
-    p2Score.classList.remove("activePlayer");
+    persistTotalMatches();
+    player1Score.classList.add("activePlayer");
+    player2Score.classList.remove("activePlayer");
     game.setCurrentPlayer(player1);
     player1.setScore(0);
     player2.setScore(0);
     renderScores();
 });
 
-function renderAnswer(userGuessed) {
-    if (userGuessed) {
-        answer.classList.remove("red");
-        answer.classList.add("green");
-        renderResult("Correct!", answer);
-        updateScore(game);
-    }
-    else {
-        answer.classList.remove("green");
-        answer.classList.add("red");
-        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
-    }
-}
 /* ------------------------------ main methods --------------------------- */
 
-async function init() {
-    setCursorType(cursorStuff, "pointer");
+async function init(){
     countryArray = await getAPIDataAsJsObjects(API_URL);
     masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
+    setupPlayers();
     reset();
-    game.addPlayer(player1);
-    game.addPlayer(player2);
-    game.setCurrentPlayer(player1);
+    
+    // view
     renderTottalMatches();
-    p1Score.classList.add("activePlayer");
+    setCursorType(cursorStuff, "pointer");
+    player1Score.classList.add("activePlayer");
     optionsPage.classList.add("invisible");
     playBtn.classList.add("bold");
-
+    
     if (persistence.get("player1") === null) {
-        persistence.put("player1", Number(0));
-        persistence.put("player2", Number(0));
+        persistTotalMatchesScore();
     }
     renderScores();
+
+    function setupPlayers() {
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+        game.setCurrentPlayer(player1);
+    }
 }
+function persistTotalMatchesScore() {
+    persistence.put("player1", Number(0));
+    persistence.put("player2", Number(0));
+}
+
 function initNewMatch() {
     nextDiv.classList.remove("normalMargin");
     nextDiv.classList.add("bigMargin");
-    printMatchResult();
-    p1Score.classList.add("activePlayer");
-    p2Score.classList.remove("activePlayer");
+    renderMatchResult();
+    player1Score.classList.add("activePlayer");
+    player2Score.classList.remove("activePlayer");
     player1.setScore(0);
     player2.setScore(0);
     renderScores();
@@ -186,8 +179,8 @@ function changeTurn() {
         game.incrementTurn();
     } else {
         if (game.getCurrentPlayer().getId() === player1.getId()) {
-            p1Score.classList.remove("activePlayer");
-            p2Score.classList.add("activePlayer");
+            player1Score.classList.remove("activePlayer");
+            player2Score.classList.add("activePlayer");
             game.setCurrentPlayer(player2);
 
         } else {
@@ -202,7 +195,7 @@ function changeTurn() {
 async function reset() {
     result.innerHTML = "";
     answer.innerHTML = "";
-    options = generateOptionsAsIndexes(allFlags); // np 56, 78, 134
+    options = generateOptionsAsIndexes(level_ItemsArr_Map); // np 56, 78, 134
     correctAnswer = options[0]; // 56
     shuffle(options);
     renderCountryNamesOnBtns(extractElementsProperties(options, countryArray, "name"));
@@ -226,6 +219,20 @@ function renderCountryNamesOnBtns() {
     bottomRadioButton.value = options[2];
 }
 
+function renderAnswer(userGuessed) {
+    if (userGuessed) {
+        answer.classList.remove("red");
+        answer.classList.add("green");
+        renderResult("Correct!", answer);
+        updateScore(game);
+    }
+    else {
+        answer.classList.remove("green");
+        answer.classList.add("red");
+        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
+    }
+}
+
 function setFlagUrl(flag) {
     flagImg.src = flag;
 }
@@ -235,8 +242,8 @@ function extractFlag(correctAnswer) {
 }
 
 function renderScores() {
-    p1Score.innerHTML = player1.getScore() + "/" + game.getNoOfTurns();
-    p2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
+    player1Score.innerHTML = player1.getScore() + "/" + game.getNoOfTurns();
+    player2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
 
 }
 function renderTottalMatches() {
@@ -269,21 +276,21 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
     return [indexOfAnswer, opt2, opt3];
 }
 
-function printMatchResult() {
+function renderMatchResult() {
     if (game.isDraw()) {
         result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }
     else {
 
         if (player1.getScore() > player2.getScore()) {
-            printCurrentMatchEndMsg("player1");
+            renderCurrentMatchEndMsg("player1");
         }
         else {
-            printCurrentMatchEndMsg("player2");
+            renderCurrentMatchEndMsg("player2");
         }
     }
 }
-function printCurrentMatchEndMsg(winner) {
+function renderCurrentMatchEndMsg(winner) {
     const score = persistence.get(winner);
     persistence.put(winner, Number(score) + 1); // We persist only total matches, not current score
     result.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
