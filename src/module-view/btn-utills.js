@@ -2,17 +2,18 @@ export function setRadioButtons(buttonsArray, property, isDisabled) {
     if (typeof isDisabled != "boolean"){
         throw Error("Third argument must be a boolean.");
       }
+     
     if (Array.isArray(buttonsArray)) {
         let i;
         switch(property){
             case "disabled":
                 for (i = 0; i < buttonsArray.length; i++) {
-                    buttonsArray[i].property = isDisabled;
+                    buttonsArray[i][property] = isDisabled;
                 }
                 break;
             case "checked":
                 for (i = 0; i < buttonsArray.length; i++) {
-                    buttonsArray[i].property = isDisabled;
+                    buttonsArray[i][property] = isDisabled;
                 }
                 break;
             default:
