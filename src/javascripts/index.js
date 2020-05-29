@@ -62,6 +62,14 @@ const level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediu
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 let game = new Game("Flag game", flagsPerMatch);
 
+
+/* ----------------------- devMode settings  -------------------------- */
+// comment out to turn on production mode
+const devMode = true;
+if (devMode) {
+    flagsPerMatch = 3;
+    game = new Game("Flag game", flagsPerMatch);
+} 
 /* -----------------------  logic  -------------------------- */
 
 init();
@@ -135,19 +143,19 @@ resetBtn.addEventListener("click", function () {
 
 /* ------------------------------ main methods --------------------------- */
 
-async function init(){
+async function init() {
     countryArray = await getAPIDataAsJsObjects(API_URL);
     masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
     setupPlayers();
     reset();
-    
+
     // view
     renderTottalMatches();
     setCursorType(cursorStuff, "pointer");
     player1Score.classList.add("activePlayer");
     optionsPage.classList.add("invisible");
     playBtn.classList.add("bold");
-    
+
     if (persistence.get("player1") === null) {
         persistTotalMatchesScore();
     }
