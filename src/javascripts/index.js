@@ -121,8 +121,7 @@ resetBtn.addEventListener("click", function () {
     game.resetCurrentTurn();
     persistTotalMatchesScore();
 
-    player1Score.classList.add("activePlayer");
-    player2Score.classList.remove("activePlayer");
+    toggleActivePlayer();
     game.setCurrentPlayer(player1);
     player1.setScore(0);
     player2.setScore(0);
@@ -176,8 +175,7 @@ function initNewMatch() {
     nextQuestionBtnContainer.classList.remove("normalMargin");
     nextQuestionBtnContainer.classList.add("bigMargin");
     renderMatchResult();
-    player1Score.classList.add("activePlayer");
-    player2Score.classList.remove("activePlayer");
+    toggleActivePlayer();
     player1.setScore(0);
     player2.setScore(0);
     renderCurrentMatchScore();
@@ -189,8 +187,7 @@ function changeTurn() {
         game.incrementTurn();
     } else {
         if (game.getCurrentPlayer().getId() === player1.getId()) {
-            player1Score.classList.remove("activePlayer");
-            player2Score.classList.add("activePlayer");
+            toggleActivePlayer();
             game.setCurrentPlayer(player2);
 
         } else {
@@ -228,8 +225,6 @@ function renderCountryNamesOnBtns() {
     middleRadioButton.value = options[1];
     bottomRadioButton.value = options[2];
 }
-
-
 
 function setFlagUrl(flag) {
     flagImg.src = flag;
@@ -308,13 +303,14 @@ function renderAnswer(userGuessed) {
     }
 }
 function switchOptionsAndGamePage() {
-
     optionsMenuItem.classList.toggle("bold");
     playMenuItem.classList.toggle("bold");
     gameSection.classList.toggle("invisible");
     optionsSection.classList.toggle("invisible");
     optionsSection.classList.toggle("visible");
     gameSection.classList.toggle("visible");
-
-
+}
+function toggleActivePlayer() {
+    player1Score.classList.toggle("activePlayer");
+    player2Score.classList.toggle("activePlayer");
 }
