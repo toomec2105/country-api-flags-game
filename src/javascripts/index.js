@@ -1,5 +1,4 @@
 /* eslint no-console: 1 */
-
 import { Player } from "../module-game/player-module-v2";
 import { Game } from "../module-game/game-module-v2";
 import { getAPIDataAsJsObjects } from "../module-universal/api-data-fetcher";
@@ -17,18 +16,18 @@ import { Persistence } from "../module-persistence/persistence";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
-const first = document.querySelector("#options .option:nth-of-type(1) label");
-const second = document.querySelector("#options .option:nth-of-type(2) label");
-const third = document.querySelector("#options .option:nth-of-type(3) label");
+const firstOption = document.querySelector("#options .option:nth-of-type(1) label");
+const secondOption = document.querySelector("#options .option:nth-of-type(2) label");
+const thirdOption = document.querySelector("#options .option:nth-of-type(3) label");
 const topRadioButton = document.getElementById("choice1");
 const middleRadioButton = document.getElementById("choice2");
 const bottomRadioButton = document.getElementById("choice3");
-const answer = document.getElementById("answer");
-const result = document.getElementById("result");
-const form = document.querySelector("form");
+const renderedAnswer = document.getElementById("answer");
+const playerResult = document.getElementById("result");
+const optionsPanel = document.querySelector("form");
 const player1Score = document.querySelector("#rightScore");
 const player2Score = document.querySelector("#leftScore");
-const opt = document.querySelector("#settings");
+const optionsMenuItem = document.querySelector("#settings");
 const player1MatchScore = document.querySelector("#p1MatchScore");
 const player2MatchScore = document.querySelector("#p2MatchScore");
 const resetBtn = document.querySelector("#resetBtn");
@@ -36,10 +35,10 @@ const optionsPage = document.querySelector("#optionsPage");
 const gamePage = document.querySelector("#gamePage");
 const levelChoice = document.querySelector("#level-select");
 const radioBtns = document.querySelectorAll("input[type=radio]");
-const cursorStuff = document.querySelectorAll(".pointer");
+const cursorClassElements = document.querySelectorAll(".pointer");
 const playBtn = document.querySelector("#play");
-const next = document.getElementById("nextBtn");
-const nextDiv = document.getElementById("nextBtnDiv");
+const nextQuestionBtn = document.getElementById("nextBtn");
+const nextQuestionBtnContainer = document.getElementById("nextBtnDiv");
 
 /* -----------------------  other variables  -------------------------- */
 const API_URL = "https://restcountries.eu/rest/v2/all";
@@ -85,10 +84,10 @@ levelChoice.addEventListener("change", function () {
     reset();
 });
 
-form.addEventListener("change", function (event) {
+optionsPanel.addEventListener("change", function (event) {
     nextFlagAllowed = true;
-    next.classList.remove("invisible");
-    next.classList.add("visible");
+    nextQuestionBtn.classList.remove("invisible");
+    nextQuestionBtn.classList.add("visible");
     setRadioButtons([topRadioButton, middleRadioButton, bottomRadioButton], "disabled", true);
     const userAnswer = getUserAnswer(radioBtns);
     renderAnswer(Number(userAnswer) === correctAnswer);
@@ -97,30 +96,30 @@ form.addEventListener("change", function (event) {
     event.preventDefault();
 }, false);
 
-next.addEventListener("click", function () {
-    if (nextDiv.classList.contains("bigMargin") === true) {
-        nextDiv.classList.remove("bigMargin");
-        nextDiv.classList.add("normalMargin");
+nextQuestionBtn.addEventListener("click", function () {
+    if (nextQuestionBtnContainer.classList.contains("bigMargin") === true) {
+        nextQuestionBtnContainer.classList.remove("bigMargin");
+        nextQuestionBtnContainer.classList.add("normalMargin");
     }
     if (nextFlagAllowed) {
         reset();
         nextFlagAllowed = false;
-        next.classList.add("invisible");
-        next.classList.remove("visible");
+        nextQuestionBtn.classList.add("invisible");
+        nextQuestionBtn.classList.remove("visible");
     }
 });
 
-opt.addEventListener("click", function () {
+optionsMenuItem.addEventListener("click", function () {
     optionsPage.classList.remove("invisible");
     gamePage.classList.remove("visible");
     gamePage.classList.add("invisible");
     optionsPage.classList.add("visible");
     playBtn.classList.remove("bold");
-    opt.classList.add("bold");
+    optionsMenuItem.classList.add("bold");
 });
 
 playBtn.addEventListener("click", function () {
-    opt.classList.remove("bold");
+    optionsMenuItem.classList.remove("bold");
     playBtn.classList.add("bold");
     gamePage.classList.remove("invisible");
     optionsPage.classList.add("invisible");
@@ -151,7 +150,7 @@ async function init() {
 
     // view
     renderTottalMatches();
-    setCursorType(cursorStuff, "pointer");
+    setCursorType(cursorClassElements, "pointer");
     player1Score.classList.add("activePlayer");
     optionsPage.classList.add("invisible");
     playBtn.classList.add("bold");
@@ -173,8 +172,8 @@ function persistTotalMatchesScore() {
 }
 
 function initNewMatch() {
-    nextDiv.classList.remove("normalMargin");
-    nextDiv.classList.add("bigMargin");
+    nextQuestionBtnContainer.classList.remove("normalMargin");
+    nextQuestionBtnContainer.classList.add("bigMargin");
     renderMatchResult();
     player1Score.classList.add("activePlayer");
     player2Score.classList.remove("activePlayer");
@@ -203,8 +202,8 @@ function changeTurn() {
 }
 
 async function reset() {
-    result.innerHTML = "";
-    answer.innerHTML = "";
+    playerResult.innerHTML = "";
+    renderedAnswer.innerHTML = "";
     options = generateOptionsAsIndexes(level_ItemsArr_Map); // np 56, 78, 134
     correctAnswer = options[0]; // 56
     shuffle(options);
@@ -221,9 +220,9 @@ function checkIfOutOfFlags(difficultyCoutriesObj) {
     }
 }
 function renderCountryNamesOnBtns() {
-    first.innerText = countryArray[options[0]].name;
-    second.innerText = countryArray[options[1]].name;
-    third.innerText = countryArray[options[2]].name;
+    firstOption.innerText = countryArray[options[0]].name;
+    secondOption.innerText = countryArray[options[1]].name;
+    thirdOption.innerText = countryArray[options[2]].name;
     topRadioButton.value = options[0];
     middleRadioButton.value = options[1];
     bottomRadioButton.value = options[2];
@@ -275,7 +274,7 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
 
 function renderMatchResult() {
     if (game.isDraw()) {
-        result.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+        playerResult.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }
     else {
 
@@ -290,20 +289,20 @@ function renderMatchResult() {
 function renderCurrentMatchEndMsg(winner) {
     const score = persistence.get(winner);
     persistence.put(winner, Number(score) + 1); // We persist only total matches, not current score
-    result.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+    playerResult.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
 }
 const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").length - 1) / 2);
 
 function renderAnswer(userGuessed) {
     if (userGuessed) {
-        answer.classList.remove("red");
-        answer.classList.add("green");
-        renderResult("Correct!", answer);
+        renderedAnswer.classList.remove("red");
+        renderedAnswer.classList.add("green");
+        renderResult("Correct!", renderedAnswer);
         updateScore(game);
     }
     else {
-        answer.classList.remove("green");
-        answer.classList.add("red");
-        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, answer);
+        renderedAnswer.classList.remove("green");
+        renderedAnswer.classList.add("red");
+        renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, renderedAnswer);
     }
 }
