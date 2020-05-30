@@ -110,21 +110,11 @@ nextQuestionBtn.addEventListener("click", function () {
 });
 
 optionsMenuItem.addEventListener("click", function () {
-    optionsPage.classList.remove("invisible");
-    gamePage.classList.remove("visible");
-    gamePage.classList.add("invisible");
-    optionsPage.classList.add("visible");
-    playBtn.classList.remove("bold");
-    optionsMenuItem.classList.add("bold");
+    switchOptionsAndGamePage("options");
 });
 
 playBtn.addEventListener("click", function () {
-    optionsMenuItem.classList.remove("bold");
-    playBtn.classList.add("bold");
-    gamePage.classList.remove("invisible");
-    optionsPage.classList.add("invisible");
-    optionsPage.classList.remove("visible");
-    gamePage.classList.add("visible");
+    switchOptionsAndGamePage("game");
 });
 
 resetBtn.addEventListener("click", function () {
@@ -139,6 +129,25 @@ resetBtn.addEventListener("click", function () {
     renderTottalMatches();
     renderCurrentMatchScore();
 });
+
+function switchOptionsAndGamePage(pageWeWantToSee) {
+    if (pageWeWantToSee == "options") {
+        optionsMenuItem.classList.add("bold");
+        playBtn.classList.remove("bold");
+        gamePage.classList.add("invisible");
+        optionsPage.classList.remove("invisible");
+        optionsPage.classList.add("visible");
+        gamePage.classList.remove("visible");
+    } else {
+        optionsMenuItem.classList.remove("bold");
+        playBtn.classList.add("bold");
+        gamePage.classList.remove("invisible");
+        optionsPage.classList.add("invisible");
+        optionsPage.classList.remove("visible");
+        gamePage.classList.add("visible");
+    }
+
+}
 
 /* ------------------------------ main methods --------------------------- */
 
