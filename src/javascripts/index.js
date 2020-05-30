@@ -31,12 +31,12 @@ const optionsMenuItem = document.querySelector("#settings");
 const player1MatchScore = document.querySelector("#p1MatchScore");
 const player2MatchScore = document.querySelector("#p2MatchScore");
 const resetBtn = document.querySelector("#resetBtn");
-const optionsPage = document.querySelector("#optionsPage");
-const gamePage = document.querySelector("#gamePage");
+const optionsSection = document.querySelector("#optionsPage");
+const gameSection = document.querySelector("#gamePage");
 const levelChoice = document.querySelector("#level-select");
 const radioBtns = document.querySelectorAll("input[type=radio]");
 const cursorClassElements = document.querySelectorAll(".pointer");
-const playBtn = document.querySelector("#play");
+const playMenuItem = document.querySelector("#play");
 const nextQuestionBtn = document.getElementById("nextBtn");
 const nextQuestionBtnContainer = document.getElementById("nextBtnDiv");
 
@@ -110,11 +110,11 @@ nextQuestionBtn.addEventListener("click", function () {
 });
 
 optionsMenuItem.addEventListener("click", function () {
-    switchOptionsAndGamePage("options");
+    switchOptionsAndGamePage();
 });
 
-playBtn.addEventListener("click", function () {
-    switchOptionsAndGamePage("game");
+playMenuItem.addEventListener("click", function () {
+    switchOptionsAndGamePage();
 });
 
 resetBtn.addEventListener("click", function () {
@@ -130,24 +130,7 @@ resetBtn.addEventListener("click", function () {
     renderCurrentMatchScore();
 });
 
-function switchOptionsAndGamePage(pageWeWantToSee) {
-    if (pageWeWantToSee == "options") {
-        optionsMenuItem.classList.add("bold");
-        playBtn.classList.remove("bold");
-        gamePage.classList.add("invisible");
-        optionsPage.classList.remove("invisible");
-        optionsPage.classList.add("visible");
-        gamePage.classList.remove("visible");
-    } else {
-        optionsMenuItem.classList.remove("bold");
-        playBtn.classList.add("bold");
-        gamePage.classList.remove("invisible");
-        optionsPage.classList.add("invisible");
-        optionsPage.classList.remove("visible");
-        gamePage.classList.add("visible");
-    }
 
-}
 
 /* ------------------------------ main methods --------------------------- */
 
@@ -156,18 +139,27 @@ async function init() {
     masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
     setupPlayers();
     reset();
-
+    styleOptionsAndPlaySections();
     // view
     renderTottalMatches();
     setCursorType(cursorClassElements, "pointer");
     player1Score.classList.add("activePlayer");
-    optionsPage.classList.add("invisible");
-    playBtn.classList.add("bold");
+    optionsSection.classList.add("invisible");
+    playMenuItem.classList.add("bold");
 
     if (persistence.get("player1") === null) {
         persistTotalMatchesScore();
     }
     renderCurrentMatchScore();
+
+    function styleOptionsAndPlaySections() {
+        optionsMenuItem.classList.remove("bold");
+        playMenuItem.classList.add("bold");
+        gameSection.classList.remove("invisible");
+        optionsSection.classList.add("invisible");
+        optionsSection.classList.remove("visible");
+        gameSection.classList.add("visible");
+    }
 
     function setupPlayers() {
         game.addPlayer(player1);
@@ -314,4 +306,15 @@ function renderAnswer(userGuessed) {
         renderedAnswer.classList.add("red");
         renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, renderedAnswer);
     }
+}
+function switchOptionsAndGamePage() {
+
+    optionsMenuItem.classList.toggle("bold");
+    playMenuItem.classList.toggle("bold");
+    gameSection.classList.toggle("invisible");
+    optionsSection.classList.toggle("invisible");
+    optionsSection.classList.toggle("visible");
+    gameSection.classList.toggle("visible");
+
+
 }
