@@ -59,7 +59,7 @@ const persistence = new Persistence();
 const easyFlagsImmutable = getEasyArray();
 const mediumFlagsImmutable = getMediumArray();
 const hardFlagsImmutable = getHardArray();
-const level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
+let level_ItemsArr_Map;
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 let game = new Game("Flag game", flagsPerMatch);
 
@@ -137,6 +137,7 @@ resetBtn.addEventListener("click", function () {
 async function init() {
     countryArray = await getAPIDataAsJsObjects(API_URL);
     masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
+    level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
     setupPlayers();
     reset();
     styleOptionsAndPlaySections();
