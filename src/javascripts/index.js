@@ -304,12 +304,12 @@ function renderAnswer(userGuessed) {
     }
 }
 function changeAnswerColor(userGuessed) {
-    if(userGuessed){
-    renderedAnswer.classList.remove("red");
-    renderedAnswer.classList.add("green");
-    }else{
-    renderedAnswer.classList.remove("green");
-    renderedAnswer.classList.add("red");
+    if (userGuessed) {
+        renderedAnswer.classList.remove("red");
+        renderedAnswer.classList.add("green");
+    } else {
+        renderedAnswer.classList.remove("green");
+        renderedAnswer.classList.add("red");
     }
 }
 function switchOptionsAndGamePage() {
