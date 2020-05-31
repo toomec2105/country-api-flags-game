@@ -121,8 +121,9 @@ playMenuItem.addEventListener("click", function () {
 resetBtn.addEventListener("click", function () {
     game.resetCurrentTurn();
     persistTotalMatchesScore();
-
-    toggleActivePlayer(player1Score, player2Score);
+    if (player2Score.classList.contains("activePlayer")) {
+        toggleActivePlayer(player1Score, player2Score);
+    }
     game.setCurrentPlayer(player1);
     zeroTheScores();
     renderTottalMatches();
@@ -290,17 +291,25 @@ const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").
 
 function renderAnswer(userGuessed) {
     if (userGuessed) {
-        renderedAnswer.classList.remove("red");
-        renderedAnswer.classList.add("green");//-------
+        changeAnswerColor(userGuessed);
         renderResult("Correct!", renderedAnswer);
         updateScore(game);
     }
     else {
-        renderedAnswer.classList.remove("green");
-        renderedAnswer.classList.add("red");
+        changeAnswerColor(userGuessed);
         renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, renderedAnswer);
     }
 }
+function changeAnswerColor(userGuessed) {
+    if(userGuessed){
+    renderedAnswer.classList.remove("red");
+    renderedAnswer.classList.add("green");
+    }else{
+    renderedAnswer.classList.remove("green");
+    renderedAnswer.classList.add("red");
+    }
+}
+
 function switchOptionsAndGamePage() {
     optionsMenuItem.classList.toggle("bold");
     playMenuItem.classList.toggle("bold");
