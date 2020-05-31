@@ -136,22 +136,29 @@ resetBtn.addEventListener("click", function () {
 
 async function init() {
     countryArray = await getAPIDataAsJsObjects(API_URL);
-    masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
-    level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
+    setUpDifficultyLevelsWithMatchingItems();
     setupPlayers();
     reset();
-    styleOptionsAndPlaySections();
-    // view
-    renderTottalMatches();
-    setCursorType(cursorClassElements, "pointer");
-    player1Score.classList.add("activePlayer");
-    optionsSection.classList.add("invisible");
-    playMenuItem.classList.add("bold");
-
     if (persistence.get("player1") === null) {
         persistTotalMatchesScore();
     }
-    renderCurrentMatchScore();
+    // view
+    renderInitialView();
+
+    function renderInitialView() {
+        renderCurrentMatchScore();
+        styleOptionsAndPlaySections();
+        renderTottalMatches();
+        setCursorType(cursorClassElements, "pointer");
+        player1Score.classList.add("activePlayer");
+        optionsSection.classList.add("invisible");
+        playMenuItem.classList.add("bold");
+    }
+
+    function setUpDifficultyLevelsWithMatchingItems() {
+        masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
+        level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
+    }
 
     function styleOptionsAndPlaySections() {
         optionsMenuItem.classList.remove("bold");
