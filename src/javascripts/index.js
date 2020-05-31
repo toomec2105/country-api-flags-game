@@ -13,7 +13,7 @@ import { getLevelItemsArrMap } from "../module-country-api/extract-country-names
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutable-arrays";
 import { setCursorType } from "../module-view/set-cursor-type";
 import { Persistence } from "../module-persistence/persistence";
-import { toggleActivePlayer } from "../module-game/toggleActivePlayer";
+import { toggleActivePlayer as changeActivePlayerColor } from "../module-game/toggleActivePlayer";
 import { checkIfOutOfFlags } from "../module-game/check-if-out-of-flags";
 
 /* ----------------------- HTML elements -------------------------- */
@@ -27,8 +27,8 @@ const bottomRadioButton = document.getElementById("choice3");
 const renderedAnswer = document.getElementById("answer");
 const playerResult = document.getElementById("result");
 const optionsPanel = document.querySelector("form");
-export const player1Score = document.querySelector("#rightScore");
-export const player2Score = document.querySelector("#leftScore");
+const player1Score = document.querySelector("#rightScore");
+const player2Score = document.querySelector("#leftScore");
 const optionsMenuItem = document.querySelector("#settings");
 const player1MatchScore = document.querySelector("#p1MatchScore");
 const player2MatchScore = document.querySelector("#p2MatchScore");
@@ -122,7 +122,7 @@ resetBtn.addEventListener("click", function () {
     game.resetCurrentTurn();
     persistTotalMatchesScore();
     if (player2Score.classList.contains("activePlayer")) {
-        toggleActivePlayer(player1Score, player2Score);
+        changeActivePlayerColor(player1Score, player2Score);
     }
     game.setCurrentPlayer(player1);
     zeroTheScores();
@@ -177,7 +177,7 @@ function initNewMatch() {
     nextQuestionBtnContainer.classList.remove("normalMargin");
     nextQuestionBtnContainer.classList.add("bigMargin");
     renderMatchResult();
-    toggleActivePlayer(player1Score, player2Score);
+    changeActivePlayerColor(player1Score, player2Score);
     zeroTheScores();
     renderCurrentMatchScore();
     renderTottalMatches();
@@ -193,7 +193,7 @@ function changeTurn() {
         game.incrementTurn();
     } else {
         if (game.getCurrentPlayer().getId() === player1.getId()) {
-            toggleActivePlayer(player1Score, player2Score);
+            changeActivePlayerColor(player1Score, player2Score);
             game.setCurrentPlayer(player2);
         } else {
             game.setCurrentPlayer(player1);
