@@ -13,7 +13,8 @@ import { getLevelItemsArrMap } from "../module-country-api/extract-country-names
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutable-arrays";
 import { setCursorType } from "../module-view/set-cursor-type";
 import { Persistence } from "../module-persistence/persistence";
-import { toggleActivePlayer } from "./toggleActivePlayer";
+import { toggleActivePlayer } from "../module-view/toggleActivePlayer";
+import { checkIfOutOfFlags } from "../module-game/check-if-out-of-flags";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -211,12 +212,7 @@ async function reset() {
     setRadioButtons(optionsRadioButtons, "disabled", false);
     setRadioButtons(optionsRadioButtons, "checked", false);
 }
-/* ------------------------------ heplers ----------------------------- */
-function checkIfOutOfFlags(difficultyCoutriesObj) {
-    if (difficultyCoutriesObj[difficulty].length < 2) {
-        difficultyCoutriesObj[difficulty] = eval(difficulty + "FlagsImmutable").slice();
-    }
-}
+/* ---------------------------helpers---------------------------- */
 function renderCountryNamesOnBtns() {
     firstOption.innerText = countryArray[options[0]].name;
     secondOption.innerText = countryArray[options[1]].name;
@@ -251,7 +247,7 @@ function generateOtherCountries() {
 
 function generateOptionsAsIndexes(difficultyCountriesObj) {
     generateOtherCountries();
-    checkIfOutOfFlags(difficultyCountriesObj);
+    checkIfOutOfFlags(difficultyCountriesObj, difficulty);
     const mutableArray = difficultyCountriesObj[difficulty];
 
     const randomIndex = getRandomInt(0, mutableArray.length);
