@@ -13,7 +13,7 @@ import { getLevelItemsArrMap } from "../module-country-api/extract-country-names
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutable-arrays";
 import { setCursorType } from "../module-view/set-cursor-type";
 import { Persistence } from "../module-persistence/persistence";
-import { toggleActivePlayer } from "../module-view/toggleActivePlayer";
+import { toggleActivePlayer } from "../module-game/toggleActivePlayer";
 import { checkIfOutOfFlags } from "../module-game/check-if-out-of-flags";
 
 /* ----------------------- HTML elements -------------------------- */
@@ -124,8 +124,7 @@ resetBtn.addEventListener("click", function () {
 
     toggleActivePlayer(player1Score, player2Score);
     game.setCurrentPlayer(player1);
-    player1.setScore(0);
-    player2.setScore(0);
+    zeroTheScores();
     renderTottalMatches();
     renderCurrentMatchScore();
 });
@@ -177,10 +176,14 @@ function initNewMatch() {
     nextQuestionBtnContainer.classList.add("bigMargin");
     renderMatchResult();
     toggleActivePlayer(player1Score, player2Score);
-    player1.setScore(0);
-    player2.setScore(0);
+    zeroTheScores();
     renderCurrentMatchScore();
     renderTottalMatches();
+}
+
+function zeroTheScores() {
+    player1.setScore(0);
+    player2.setScore(0);
 }
 
 function changeTurn() {
