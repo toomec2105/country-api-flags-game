@@ -105,7 +105,6 @@ nextQuestionBtn.addEventListener("click", function () {
         reset();
         nextFlagAllowed = false;
         nextQuestionBtn.classList.add("invisible");
-        nextQuestionBtn.classList.remove("visible");
     }
 });
 
@@ -292,7 +291,7 @@ const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").
 function renderAnswer(userGuessed) {
     if (userGuessed) {
         renderedAnswer.classList.remove("red");
-        renderedAnswer.classList.add("green");
+        renderedAnswer.classList.add("green");//-------
         renderResult("Correct!", renderedAnswer);
         updateScore(game);
     }
