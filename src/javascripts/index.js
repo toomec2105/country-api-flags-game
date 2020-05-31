@@ -195,13 +195,11 @@ function changeTurn() {
         if (game.getCurrentPlayer().getId() === player1.getId()) {
             toggleActivePlayer(player1Score, player2Score);
             game.setCurrentPlayer(player2);
-
         } else {
             game.setCurrentPlayer(player1);
             initNewMatch();
         }
         game.resetCurrentTurn();
-
     }
 }
 
@@ -254,7 +252,6 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
     generateOtherCountries();
     checkIfOutOfFlags(difficultyCountriesObj, difficulty);
     const mutableArray = difficultyCountriesObj[difficulty];
-
     const randomIndex = getRandomInt(0, mutableArray.length);
     const opt1 = mutableArray[randomIndex];
     mutableArray.splice(randomIndex, 1);
@@ -274,7 +271,6 @@ function renderMatchResult() {
         playerResult.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }
     else {
-
         if (player1.getScore() > player2.getScore()) {
             renderCurrentMatchEndMsg("player1");
         }
@@ -289,7 +285,6 @@ function renderCurrentMatchEndMsg(winner) {
     playerResult.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
 }
 const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").length - 1) / 2);
-
 function renderAnswer(userGuessed) {
     if (userGuessed) {
         changeAnswerColor(userGuessed);
@@ -310,7 +305,6 @@ function changeAnswerColor(userGuessed) {
     renderedAnswer.classList.add("red");
     }
 }
-
 function switchOptionsAndGamePage() {
     optionsMenuItem.classList.toggle("bold");
     playMenuItem.classList.toggle("bold");
