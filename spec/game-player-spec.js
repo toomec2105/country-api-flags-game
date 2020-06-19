@@ -1,5 +1,5 @@
-import { Player } from "../src/modulev2/player-module-v2";
-import { Game } from "../src/modulev2/game-module-v2";
+import { Player } from "../src/module-game/player-module-v2";
+import { Game } from "../src/module-game/game-module-v2";
 
 console.log("-------starting game-player-spec.js---------");
 

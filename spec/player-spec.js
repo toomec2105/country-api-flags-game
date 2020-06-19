@@ -1,4 +1,4 @@
-import { Player } from "../src/modulev2/player-module-v2";
+import { Player } from "../src/module-game/player-module-v2";
 
 console.log("-------starting player-spec.js---------");
 

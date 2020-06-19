@@ -9,12 +9,12 @@ import { updateScore } from "../module-game/update-score";
 import { renderResult } from "../module-view/render-result";
 import { shuffle } from "../module-universal/array-utilities/shuffle";
 import { getUserAnswer } from "../module-view/get-user-answer";
-import { getLevelItemsArrMap } from "../module-country-api/extract-country-names";
+import { getLevelItemsArrMap as getLevel_ItemsArr_Map } from "../module-country-api/extract-country-names";
 import { getEasyArray, getMediumArray, getHardArray, getMasterArray } from "../module-country-api/immutable-arrays";
 import { setCursorType } from "../module-view/set-cursor-type";
 import { Persistence } from "../module-persistence/persistence";
-import { toggleActivePlayer as changeActivePlayerColor } from "../module-game/toggleActivePlayer";
-import { checkIfOutOfFlags } from "../module-game/check-if-out-of-flags";
+import { toggleActivePlayer as changeActivePlayerColor } from "../module-game/toggle-active-player";
+import { restoreOriginalItemsIfOutOfItems } from "../module-game/restore-original-items-if-out-of-items";
 
 /* ----------------------- HTML elements -------------------------- */
 const flagImg = document.getElementById("flag");
@@ -52,7 +52,7 @@ let countryArray;
 let options = [];
 let correctAnswer;
 let nextFlagAllowed = false;
-let difficulty = "medium";
+let difficultyName = "medium";
 let indexOfAnswer = 0;
 let masterFlagsImmutable = [];
 const persistence = new Persistence();
@@ -77,7 +77,7 @@ init();
 
 /* -------------------------- Event listeners ---------------------------- */
 levelChoice.addEventListener("change", function () {
-    difficulty = levelChoice.value;
+    difficultyName = levelChoice.value;
     flagsPerMatch = setQuestionNumber();
     const currPlayerWhenChangeLVL = game.getCurrentPlayer();
     game = new Game("Flag game", flagsPerMatch);
@@ -157,7 +157,7 @@ async function init() {
 
     function setUpDifficultyLevelsWithMatchingItems() {
         masterFlagsImmutable = getMasterArray(easyFlagsImmutable, mediumFlagsImmutable, hardFlagsImmutable, countryArray);
-        level_ItemsArr_Map = getLevelItemsArrMap(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
+        level_ItemsArr_Map = getLevel_ItemsArr_Map(easyFlagsImmutable.slice(), mediumFlagsImmutable.slice(), hardFlagsImmutable.slice(), masterFlagsImmutable.slice());
     }
 
     function styleOptionsAndPlaySections() {
@@ -257,8 +257,8 @@ function generateOtherCountries() {
 
 function generateOptionsAsIndexes(difficultyCountriesObj) {
     generateOtherCountries();
-    checkIfOutOfFlags(difficultyCountriesObj, difficulty);
-    const mutableArray = difficultyCountriesObj[difficulty];
+    restoreOriginalItemsIfOutOfItems(difficultyCountriesObj, difficultyName, "FlagsImmutable");
+    const mutableArray = difficultyCountriesObj[difficultyName];
     const randomIndex = getRandomInt(0, mutableArray.length);
     const opt1 = mutableArray[randomIndex];
     mutableArray.splice(randomIndex, 1);
@@ -275,7 +275,7 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
 
 function renderMatchResult() {
     if (game.isDraw()) {
-        playerResult.innerHTML = "It is a draw!!!! No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+        playerResult.innerHTML = "It is a draw!!!! No more " + difficultyName + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }
     else {
         if (player1.getScore() > player2.getScore()) {
@@ -289,9 +289,9 @@ function renderMatchResult() {
 function renderCurrentMatchEndMsg(winner) {
     const score = persistence.get(winner);
     persistence.put(winner, Number(score) + 1); // We persist only total matches, not current score
-    playerResult.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficulty + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+    playerResult.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficultyName + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
 }
-const setQuestionNumber = () => Math.round((eval(difficulty + "FlagsImmutable").length - 1) / 2);
+const setQuestionNumber = () => Math.round((eval(difficultyName + "FlagsImmutable").length - 1) / 2);
 function renderAnswer(userGuessed) {
     if (userGuessed) {
         changeAnswerColor(userGuessed);
