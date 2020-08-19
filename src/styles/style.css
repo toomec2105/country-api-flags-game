@@ -2,37 +2,29 @@
 @import "reset-local.css";
 @import "typography.css"; */
 
-#menu{
-    background: url(../imgs/sky.jpg) no-repeat;
-    padding-bottom: 0.3rem;
+    #menu{
+        background: url(../imgs/sky.jpg) no-repeat;
+        padding-bottom: 0.3rem;
     }
-    
     #toolBar{
         width: 7rem;
         margin: 0 auto;
-        
     }
-    
-    
     #optionsPage{
         width: 12rem;
         margin: 0 auto;
         margin-top: 1rem;
     }
-    
     #submit{
         display: block;
     }
-    
     body {
         background: rgb(216, 215, 215);
         margin: 0px 0px;
     }
-    
     fieldset {
         padding: 0.3rem;
         margin: 0 2rem;
-    
     }
     .option{
         margin-top: 0.4rem;
@@ -44,38 +36,32 @@
         margin-top: 0px;
         padding-top: 15px;
     }
-    
     img {
         display: block;
         margin: 0 auto;
         max-height: 120px;
     }
-    
     form {
         margin-left: 0.5rem;
         margin-right: 0.5rem;
     }
-    
     legend {
         display: none;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
     }
-    
     #resetBtn {
         display: block;
         margin: 0 auto;
         width: 100px;
         padding: 0.3rem;
     }
-    
     #submit, #nextBtn {
         margin: 0 auto;
         width: 100px;
         padding: 0.3rem;
         margin-bottom: 0.5rem;
-    }
-    
+    }  
     #submit {
         margin-top: 0.7rem;
     }
@@ -88,8 +74,7 @@
         height: 20px;
         margin-top: 0.5rem;
         margin-bottom: 1rem;
-    }
-    
+    } 
     p#copyRight {
         margin-top: 2rem;
     }
@@ -100,23 +85,18 @@
     #scoreBox{
         margin: 0.5rem 2rem;
     }
-    
     .scoreBoard {
         display: inline;
     }
-    
     p#final{
         padding-bottom: 1.5rem;
     }
-    
     .activePlayer {
         color: green;
     }
-    
     .green {
         color: green;
     }
-    
     .red {
         color: red;
     }
@@ -136,21 +116,18 @@
     .invisible{
         display: none;
     }
-    
     #choice1, #choice2, #choice3{
         margin-top: 1rem;
     }
     .bold{
         font-weight: bold;
     }
-    
     #nextBtn{
         margin-left: 115px;
     }
     .visible{
         display: block;
     }
-    
     @media only screen and (min-width: 350px) {
         #nextBtn{
             margin-left: 132px;
@@ -166,20 +143,11 @@
             margin-left: 157px;
         }
     }
-    
-    
     @media only screen and (min-width: 720px) {
         fieldset{
             margin: 0 7rem;
         }
     } 
-        
-        
-        
-        
-        
-    
-    
     @media only screen and (min-width: 750px) {
         h1 {
             height: 70px;
@@ -199,10 +167,7 @@
         .bigMargin{
             margin-top: 130px;
         }
-       
-        
     }
-    
     @media only screen and (min-width: 950px) {
         #submit, #nextBtn, #resetBtn {
             width: 170px;
@@ -214,14 +179,10 @@
         margin-top: 3rem;
         }
     }
-    
     @media only screen and (min-width: 1000px) {
         #scorePanel {
             margin: 1rem;
         }
-        /* #rightScore, #leftScore {
-            margin: 2rem;
-        } */
         #resetBtn {
             margin: 10px auto;
         }
@@ -236,16 +197,13 @@
             height: 120px;
             font-size: 2.5rem;
         }
-      
     }
-    
     @media only screen and (min-width: 1300px) {
         fieldset {
             margin: 0 15rem;
             max-height: 210px;
         }
     }
-    
     @media only screen and (min-width: 1700px) {
         fieldset {
             margin: 0 35rem;
@@ -260,10 +218,5 @@
         }
         #scoreBox{
             margin: 0.5rem 35rem;
-        }
-        /* #rightScore, #leftScore {
-            margin: 2rem;
-        } */
-        
+        }   
     }
-    

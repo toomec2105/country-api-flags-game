@@ -62,7 +62,7 @@ const hardFlagsImmutable = getHardArray();
 let level_ItemsArr_Map;
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 let game = new Game("Flag game", flagsPerMatch);
-
+let currentPage = "play";
 
 /* ----------------------- devMode settings  -------------------------- */
 // comment out to turn on production mode
@@ -111,11 +111,11 @@ nextQuestionBtn.addEventListener("click", function () {
 });
 
 optionsMenuItem.addEventListener("click", function () {
-    switchOptionsAndGamePage();
+    switchOptionsAndGamePage("options");
 });
 
 playMenuItem.addEventListener("click", function () {
-    switchOptionsAndGamePage();
+    switchOptionsAndGamePage("play");
 });
 
 resetBtn.addEventListener("click", function () {
@@ -312,11 +312,15 @@ function changeAnswerColor(userGuessed) {
         renderedAnswer.classList.add("red");
     }
 }
-function switchOptionsAndGamePage() {
-    optionsMenuItem.classList.toggle("bold");
-    playMenuItem.classList.toggle("bold");
-    gameSection.classList.toggle("invisible");
-    optionsSection.classList.toggle("invisible");
-    optionsSection.classList.toggle("visible");
-    gameSection.classList.toggle("visible");
+function switchOptionsAndGamePage(destiny) {
+    if(currentPage.localeCompare(destiny) != 0){
+        optionsMenuItem.classList.toggle("bold");
+        playMenuItem.classList.toggle("bold");
+        gameSection.classList.toggle("invisible");
+        optionsSection.classList.toggle("invisible");
+        optionsSection.classList.toggle("visible");
+        gameSection.classList.toggle("visible");
+        currentPage = destiny;
+    }
+    
 }
