@@ -46,6 +46,10 @@ const nextQuestionBtnContainer = document.getElementById("nextBtnDiv");
 const API_URL = "https://restcountries.eu/rest/v2/all";
 const player1 = new Player(1);
 const player2 = new Player(2);
+const persistence = new Persistence();
+const easyFlagsImmutable = getEasyArray();
+const mediumFlagsImmutable = getMediumArray();
+const hardFlagsImmutable = getHardArray();
 let opt2;
 let opt3;
 let countryArray;
@@ -55,10 +59,6 @@ let nextFlagAllowed = false;
 let difficultyName = "medium";
 let indexOfAnswer = 0;
 let masterFlagsImmutable = [];
-const persistence = new Persistence();
-const easyFlagsImmutable = getEasyArray();
-const mediumFlagsImmutable = getMediumArray();
-const hardFlagsImmutable = getHardArray();
 let level_ItemsArr_Map;
 let flagsPerMatch = Math.round((mediumFlagsImmutable.length - 1) / 2);
 let game = new Game("Flag game", flagsPerMatch);
@@ -110,27 +110,19 @@ nextQuestionBtn.addEventListener("click", function () {
     }
 });
 
-optionsMenuItem.addEventListener("click", function () {
-    switchOptionsAndGamePage("options");
-});
-
-playMenuItem.addEventListener("click", function () {
-    switchOptionsAndGamePage("play");
-});
-
 resetBtn.addEventListener("click", function () {
     game.resetCurrentTurn();
-    persistTotalMatchesScore();
+    resetScoresInLocalStorage();
+
     if (player2Score.classList.contains("activePlayer")) {
         changeActivePlayerColor(player1Score, player2Score);
     }
+
     game.setCurrentPlayer(player1);
     zeroTheScores();
     renderTottalMatches();
     renderCurrentMatchScore();
 });
-
-
 
 /* ------------------------------ main methods --------------------------- */
 
@@ -139,9 +131,11 @@ async function init() {
     setUpDifficultyLevelsWithMatchingItems();
     setupPlayers();
     reset();
+
     if (persistence.get("player1") === null) {
-        persistTotalMatchesScore();
+        resetScoresInLocalStorage();
     }
+
     // view
     renderInitialView();
 
@@ -175,7 +169,8 @@ async function init() {
         game.setCurrentPlayer(player1);
     }
 }
-function persistTotalMatchesScore() {
+
+function resetScoresInLocalStorage() {
     persistence.put("player1", Number(0));
     persistence.put("player2", Number(0));
 }
@@ -223,6 +218,15 @@ async function reset() {
     setRadioButtons(optionsRadioButtons, "checked", false);
 }
 /* ---------------------------helpers---------------------------- */
+
+optionsMenuItem.addEventListener("click", function () {
+    switchOptionsAndGamePage("options");
+});
+
+playMenuItem.addEventListener("click", function () {
+    switchOptionsAndGamePage("play");
+});
+
 function renderCountryNamesOnBtns() {
     firstOption.innerText = countryArray[options[0]].name;
     secondOption.innerText = countryArray[options[1]].name;
@@ -245,6 +249,7 @@ function renderCurrentMatchScore() {
     player2Score.innerHTML = "  :  " + player2.getScore() + "/" + game.getNoOfTurns();
 
 }
+
 function renderTottalMatches() {
     player1MatchScore.innerHTML = persistence.get("player1");
     player2MatchScore.innerHTML = "  :  " + persistence.get("player2");
@@ -262,14 +267,17 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
     const randomIndex = getRandomInt(0, mutableArray.length);
     const opt1 = mutableArray[randomIndex];
     mutableArray.splice(randomIndex, 1);
+
     for (let i = 0; i < countryArray.length; i++) {
         if (opt1 === countryArray[i].name) {
             indexOfAnswer = i;
         }
     }
+
     while (opt2 === indexOfAnswer || indexOfAnswer === opt3 || opt2 === opt3) {
         generateOtherCountries();
     }
+
     return [indexOfAnswer, opt2, opt3];
 }
 
@@ -286,12 +294,16 @@ function renderMatchResult() {
         }
     }
 }
+
 function renderCurrentMatchEndMsg(winner) {
     const score = persistence.get(winner);
     persistence.put(winner, Number(score) + 1); // We persist only total matches, not current score
-    playerResult.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficultyName + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+    playerResult.innerHTML = "player " + ((winner === "player1") ? "one" : "two") + " has won. " + "No more " + difficultyName
+     + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
 }
+
 const setQuestionNumber = () => Math.round((eval(difficultyName + "FlagsImmutable").length - 1) / 2);
+
 function renderAnswer(userGuessed) {
     if (userGuessed) {
         changeAnswerColor(userGuessed);
@@ -303,6 +315,7 @@ function renderAnswer(userGuessed) {
         renderResult("Inncorect! Correct answer is " + countryArray[correctAnswer].name, renderedAnswer);
     }
 }
+
 function changeAnswerColor(userGuessed) {
     if (userGuessed) {
         renderedAnswer.classList.remove("red");
@@ -312,6 +325,7 @@ function changeAnswerColor(userGuessed) {
         renderedAnswer.classList.add("red");
     }
 }
+
 function switchOptionsAndGamePage(destiny) {
     if(currentPage.localeCompare(destiny) != 0){
         optionsMenuItem.classList.toggle("bold");
@@ -322,5 +336,4 @@ function switchOptionsAndGamePage(destiny) {
         gameSection.classList.toggle("visible");
         currentPage = destiny;
     }
-    
 }
