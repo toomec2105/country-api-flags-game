@@ -77,11 +77,11 @@ let currentPage = "play";
 
 /* ----------------------- devMode settings  -------------------------- */
 // comment out to turn on production mode
-const devMode = true;
+/* const devMode = true;
 if (devMode) {
   flagsPerMatch = 3;
   game = new Game("Flag game", flagsPerMatch);
-}
+} */
 /* -----------------------  logic  -------------------------- */
 
 init();
