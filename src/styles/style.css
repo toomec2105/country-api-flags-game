@@ -27,7 +27,7 @@
         margin: 0 2rem;
     }
     .option{
-        margin-top: 0.4rem;
+        margin-top: 0.2rem;
     }
     h1 {
         height: 50px;
@@ -170,38 +170,56 @@
     }
     @media only screen and (min-width: 950px) {
         #submit, #nextBtn, #resetBtn {
-            width: 170px;
+            width: 145px;
+        }
+        #result{
+            margin-bottom: 0px;
         }
         #nextBtn {
-            margin: 1rem auto;
+            margin: 0 auto;
+            margin-top: 0px;
         }
         .bigMargin{
-        margin-top: 3rem;
+        margin-top: 1rem;
+        }
+        .pointer{
+            font-size: 1rem;
         }
     }
     @media only screen and (min-width: 1000px) {
         #scorePanel {
-            margin: 1rem;
+            margin: 0.5rem;
         }
         #resetBtn {
             margin: 10px auto;
         }
         img {
-            max-height: 300px;
+            max-height: 200px;
         }
-        fieldset {
-            margin: 0 5rem;
+        #nextBtn {
+            margin: 0 auto;
         }
         h1 {
-            padding-top: 0.8rem;
-            height: 120px;
-            font-size: 2.5rem;
+            padding-top: 0.5rem;
+            height: 80px;
+            font-size: 2rem;
         }
     }
     @media only screen and (min-width: 1300px) {
+        img {
+            max-height: 300px;
+        }
+        .pointer{
+            font-size: 1rem;
+        }
         fieldset {
             margin: 0 15rem;
             max-height: 210px;
+        }
+     
+        h1{
+            padding-top: 1rem;
+            font-size: 3rem;
         }
     }
     @media only screen and (min-width: 1700px) {
@@ -220,4 +238,3 @@
             margin: 0.5rem 35rem;
         }   
     }
-   

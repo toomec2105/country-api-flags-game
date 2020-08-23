@@ -66,11 +66,11 @@ let currentPage = "play";
 
 /* ----------------------- devMode settings  -------------------------- */
 // comment out to turn on production mode
-/* const devMode = true;
+const devMode = true;
 if (devMode) {
     flagsPerMatch = 3;
     game = new Game("Flag game", flagsPerMatch);
-}  */
+} 
 /* -----------------------  logic  -------------------------- */
 
 init();
@@ -179,6 +179,7 @@ function initNewMatch() {
     nextQuestionBtnContainer.classList.remove("normalMargin");
     nextQuestionBtnContainer.classList.add("bigMargin");
     renderMatchResult();
+    nextQuestionBtnContainer.classList.add("invisible");
     changeActivePlayerColor(player1Score, player2Score);
     zeroTheScores();
     renderCurrentMatchScore();
@@ -265,7 +266,7 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
     restoreOriginalItemsIfOutOfItems(difficultyCountriesObj, difficultyName, "FlagsImmutable");
     const mutableArray = difficultyCountriesObj[difficultyName];
     const randomIndex = getRandomInt(0, mutableArray.length);
-    const opt1 = mutableArray[randomIndex];
+    const opt1 = mutableArray[randomIndex];    
     mutableArray.splice(randomIndex, 1);
 
     for (let i = 0; i < countryArray.length; i++) {
@@ -283,7 +284,8 @@ function generateOptionsAsIndexes(difficultyCountriesObj) {
 
 function renderMatchResult() {
     if (game.isDraw()) {
-        playerResult.innerHTML = "It is a draw!!!! No more " + difficultyName + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
+        playerResult.innerHTML = "It is a draw!!!! No more " + difficultyName 
+        + " flags availeble for this level. Play again with the same flags or change difficulty in the options.";
     }
     else {
         if (player1.getScore() > player2.getScore()) {
@@ -333,6 +335,8 @@ function switchOptionsAndGamePage(destiny) {
         gameSection.classList.toggle("invisible");
         optionsSection.classList.toggle("invisible");
         optionsSection.classList.toggle("visible");
+        nextQuestionBtnContainer.classList.add("visible");
+        nextQuestionBtnContainer.classList.remove("invisible");
         gameSection.classList.toggle("visible");
         currentPage = destiny;
     }
